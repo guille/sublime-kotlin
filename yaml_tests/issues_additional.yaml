@@ -1,0 +1,244 @@
+syntax: "Kotlin.sublime-syntax"
+comment_char: "//"
+tests:
+  - line: 'environment.set("foo")'
+    assertions:
+      - span: "environment"
+        scopes: [variable.other.readwrite.kotlin]
+      - span: "."
+        scopes: [punctuation.accessor.dot.kotlin]
+      - span: "set"
+        scopes: [variable.function.kotlin]
+
+  - line: 'environment.seat("foo")'
+    assertions:
+      - span: "seat"
+        scopes: [variable.function.kotlin]
+
+  - line: "fun <T> copyWhenGreater(list: List<T>, threshold: T): List<String>"
+    assertions:
+      - span: "<"
+        scopes: [meta.type.parameters.kotlin, punctuation.definition.typeparameters.begin.kotlin]
+      - span: "T"
+        nth: 0
+        scopes: [meta.type.parameters.kotlin, support.type.kotlin]
+      - span: "List"
+        nth: 0
+        scopes: [meta.type.kotlin, support.type.kotlin]
+      - span: "T"
+        nth: 1
+        scopes: [meta.type.kotlin, support.type.kotlin]
+      - span: "threshold"
+        scopes: [meta.function.parameters.kotlin, variable.parameter.kotlin]
+      - span: "T"
+        nth: 2
+        scopes: [meta.type.kotlin, support.type.kotlin]
+      - span: "List"
+        nth: 1
+        scopes: [meta.type.kotlin, support.type.kotlin]
+      - span: "String"
+        scopes: [meta.type.kotlin, support.type.kotlin]
+
+  - line: "    where T : CharSequence,"
+    assertions:
+      - span: "where"
+        scopes: [keyword.declaration.kotlin]
+      - span: "T"
+        scopes: [meta.type.kotlin, support.type.kotlin]
+      - span: ":"
+        scopes: [punctuation.separator.type.kotlin]
+      - span: "CharSequence"
+        scopes: [meta.type.kotlin, support.type.kotlin]
+
+  - line: "          T : Comparable<T> {}"
+    assertions:
+      - span: "T"
+        nth: 0
+        scopes: [meta.type.kotlin, support.type.kotlin]
+      - span: "Comparable"
+        scopes: [meta.type.kotlin, support.type.kotlin]
+      - span: "<"
+        scopes: [meta.type.parameters.kotlin, punctuation.definition.typeparameters.begin.kotlin]
+      - span: "T"
+        nth: 1
+        scopes: [meta.type.kotlin, support.type.kotlin]
+
+  - line: "operator fun contains(value: Double) = data.any { it == value }"
+    assertions:
+      - span: "operator"
+        scopes: [storage.modifier.kotlin]
+      - span: "contains"
+        scopes: [meta.function.kotlin, entity.name.function.kotlin]
+      - span: "Double"
+        scopes: [meta.type.kotlin, support.type.kotlin]
+      - span: "any"
+        scopes: [variable.function.kotlin]
+      - span: "it"
+        scopes: [variable.language.kotlin]
+
+  - line: "val result = numbers.asSequence().filter { it % 2 == 0 }"
+    assertions:
+      - span: "asSequence"
+        scopes: [variable.function.kotlin]
+      - span: "filter"
+        scopes: [variable.function.kotlin]
+      - span: "it"
+        scopes: [variable.language.kotlin]
+
+  - line: "when {"
+    assertions:
+      - span: "when"
+        scopes: [keyword.control.conditional.kotlin]
+      - span: "{"
+        scopes: [punctuation.section.block.begin.kotlin]
+
+  - line: "    this < min -> min"
+    assertions:
+      - span: "this"
+        scopes: [variable.language.kotlin]
+      - span: "<"
+        scopes: [keyword.operator.comparison.kotlin]
+      - span: "min"
+        nth: 0
+        scopes: [variable.other.readwrite.kotlin]
+      - span: "->"
+        scopes: [punctuation.separator.when.kotlin]
+      - span: "min"
+        nth: 1
+        scopes: [variable.other.readwrite.kotlin]
+
+  - line: "val sum = numbers.fold(0) { acc, value -> acc + value }"
+    assertions:
+      - span: "fold"
+        scopes: [variable.function.kotlin]
+      - span: "acc"
+        nth: 0
+        scopes: [variable.parameter.kotlin]
+      - span: "value"
+        nth: 0
+        scopes: [variable.parameter.kotlin]
+      - span: "->"
+        scopes: [keyword.declaration.function.arrow.kotlin]
+      - span: "acc"
+        nth: 1
+        scopes: [variable.other.readwrite.kotlin]
+      - span: "value"
+        nth: 1
+        scopes: [variable.other.readwrite.kotlin]
+
+  - line: "private val entries = mutableMapOf<String, Any>()"
+    assertions:
+      - span: "private"
+        scopes: [storage.modifier.kotlin]
+      - span: "entries"
+        scopes: [meta.declaration.variable.kotlin, variable.other.readwrite.kotlin]
+      - span: "mutableMapOf"
+        scopes: [variable.function.kotlin]
+      - span: "<"
+        scopes: [meta.type.parameters.kotlin, punctuation.definition.typeparameters.begin.kotlin]
+      - span: "String"
+        scopes: [meta.type.kotlin, support.type.kotlin]
+      - span: "Any"
+        scopes: [meta.type.kotlin, support.type.kotlin]
+
+  - line: "ReadWriteProperty<Any?, Double> {}"
+    assertions:
+      - span: "ReadWriteProperty"
+        scopes: [meta.type.kotlin, support.type.kotlin]
+      - span: "Any"
+        scopes: [meta.type.kotlin, support.type.kotlin]
+      - span: "?"
+        scopes: [meta.type.kotlin, keyword.operator.nullable.kotlin]
+      - span: "Double"
+        scopes: [meta.type.kotlin, support.type.kotlin]
+
+  - line: "typealias Matrix2D = Array<DoubleArray>"
+    assertions:
+      - span: "typealias"
+        scopes: [keyword.declaration.typealias.kotlin]
+      - span: "Matrix2D"
+        scopes: [meta.typealias.kotlin, entity.name.type.alias.kotlin]
+      - span: "Array"
+        scopes: [meta.type.kotlin, support.type.kotlin]
+      - span: "DoubleArray"
+        scopes: [meta.type.kotlin, support.type.kotlin]
+
+  - line: "fun <T> List<T>.second(): T = this[1]"
+    assertions:
+      - span: "<"
+        nth: 0
+        scopes: [meta.type.parameters.kotlin, punctuation.definition.typeparameters.begin.kotlin]
+      - span: "T"
+        nth: 0
+        scopes: [meta.type.parameters.kotlin, support.type.kotlin]
+      - span: "List"
+        scopes: [meta.function.kotlin, support.type.kotlin]
+      - span: "<"
+        nth: 1
+        scopes: [meta.type.parameters.kotlin, punctuation.definition.typeparameters.begin.kotlin]
+      - span: "T"
+        nth: 1
+        scopes: [meta.type.kotlin, support.type.kotlin]
+      - span: ">"
+        nth: 1
+        scopes: [meta.type.parameters.kotlin, punctuation.definition.typeparameters.end.kotlin]
+      - span: "second"
+        scopes: [meta.function.kotlin, entity.name.function.kotlin]
+      - span: "T"
+        nth: 2
+        scopes: [meta.type.kotlin, support.type.kotlin]
+
+  - line: "typealias Predicate<T> = (T) -> Boolean"
+    assertions:
+      - span: "Predicate"
+        scopes: [meta.typealias.kotlin, entity.name.type.alias.kotlin]
+      - span: "<"
+        scopes: [meta.type.parameters.kotlin, punctuation.definition.typeparameters.begin.kotlin]
+      - span: "T"
+        nth: 0
+        scopes: [meta.type.parameters.kotlin, support.type.kotlin]
+      - span: "("
+        nth: 0
+        scopes: [meta.type.kotlin, punctuation.section.group.begin.kotlin]
+      - span: "T"
+        nth: 1
+        scopes: [meta.type.kotlin, support.type.kotlin]
+      - span: "->"
+        scopes: [meta.type.kotlin, punctuation.separator.return-type.kotlin]
+      - span: "Boolean"
+        scopes: [meta.type.kotlin, support.type.kotlin]
+
+  - line: 'override fun toString() = (0 until rows).joinToString("\n") { }'
+    assertions:
+      - span: "override"
+        scopes: [storage.modifier.kotlin]
+      - span: "toString"
+        nth: 0
+        scopes: [meta.function.kotlin, entity.name.function.kotlin]
+      - span: "until"
+        scopes: [keyword.operator.word.kotlin]
+      - span: "joinToString"
+        scopes: [variable.function.kotlin]
+
+  - line: 'is Result.Success<*> -> "Success: ${result.value} (meta: ${result.metadata})"'
+    assertions:
+      - span: "is"
+        scopes: [keyword.operator.word.kotlin]
+      - span: "Result"
+        scopes: [meta.type.kotlin, support.type.kotlin]
+      - span: "Success"
+        scopes: [meta.type.kotlin, support.type.kotlin]
+      - span: "*"
+        scopes: [meta.type.kotlin, keyword.operator.wildcard.kotlin]
+      - span: "->"
+        scopes: [punctuation.separator.when.kotlin]
+      - span: "result"
+        nth: 0
+        scopes: [meta.interpolation.kotlin, source.kotlin.embedded, variable.other.readwrite.kotlin]
+      - span: "metadata"
+        scopes: [meta.interpolation.kotlin, source.kotlin.embedded, variable.other.readwrite.kotlin]
+
+  - line: "foo"
+    assertions:
+      - span: "foo"
+        scopes: [variable.other.readwrite.kotlin]

@@ -1,0 +1,121 @@
+syntax: "Kotlin.sublime-syntax"
+comment_char: "//"
+tests:
+  - line: "package demo.app"
+    assertions:
+      - span: "package"
+        scopes: [keyword.declaration.package.kotlin]
+      - span: "demo"
+        scopes: [entity.name.namespace.kotlin]
+      - span: "."
+        scopes: [punctuation.accessor.dot.kotlin]
+      - span: "app"
+        scopes: [entity.name.namespace.kotlin]
+
+  - line: "import kotlin.collections.List as KList"
+    assertions:
+      - span: "import"
+        scopes: [keyword.control.import.kotlin]
+      - span: "kotlin"
+        scopes: [entity.name.namespace.kotlin]
+      - span: "collections"
+        scopes: [entity.name.namespace.kotlin]
+      - span: "List"
+        scopes: [entity.name.namespace.kotlin]
+      - span: "as"
+        scopes: [keyword.declaration.alias.kotlin]
+      - span: "KList"
+        scopes: [entity.name.namespace.kotlin]
+
+  - line: "@Serializable data class User"
+    assertions:
+      - span: "@"
+        scopes: [punctuation.definition.annotation.kotlin]
+      - span: "Serializable"
+        scopes: [meta.annotation.kotlin, entity.name.annotation.kotlin]
+      - span: "data"
+        scopes: [storage.modifier.kotlin]
+      - span: "class"
+        scopes: [keyword.declaration.class.kotlin]
+      - span: "User"
+        scopes: [meta.class.kotlin, entity.name.class.kotlin]
+
+  - line: "interface Greeter"
+    assertions:
+      - span: "interface"
+        scopes: [keyword.declaration.interface.kotlin]
+      - span: "Greeter"
+        scopes: [meta.class.kotlin, entity.name.interface.kotlin]
+
+  - line: "object Singleton"
+    assertions:
+      - span: "object"
+        scopes: [keyword.declaration.object.kotlin]
+      - span: "Singleton"
+        scopes: [meta.class.kotlin, entity.name.class.kotlin]
+
+  - line: "companion object Factory"
+    assertions:
+      - span: "companion"
+        scopes: [storage.modifier.kotlin]
+      - span: "object"
+        scopes: [keyword.declaration.object.kotlin]
+      - span: "Factory"
+        scopes: [meta.class.kotlin, entity.name.class.kotlin]
+
+  - line: "typealias UserId = String"
+    assertions:
+      - span: "typealias"
+        scopes: [keyword.declaration.typealias.kotlin]
+      - span: "UserId"
+        scopes: [meta.typealias.kotlin, entity.name.type.alias.kotlin]
+      - span: "="
+        scopes: [keyword.operator.assignment.kotlin]
+
+  - line: "val data = 1"
+    assertions:
+      - span: "val"
+        scopes: [keyword.declaration.kotlin]
+      - span: "data"
+        scopes: [variable.other.readwrite.kotlin]
+      - span: "="
+        scopes: [keyword.operator.assignment.kotlin]
+      - span: "1"
+        scopes: [constant.numeric.integer.decimal.kotlin]
+
+  - line: "var (left, right) = pair"
+    assertions:
+      - span: "var"
+        scopes: [keyword.declaration.kotlin]
+      - span: "("
+        scopes: [meta.declaration.variable.kotlin, punctuation.section.group.begin.kotlin]
+      - span: "left"
+        scopes: [meta.declaration.variable.kotlin, variable.other.readwrite.kotlin]
+      - span: "right"
+        scopes: [meta.declaration.variable.kotlin, variable.other.readwrite.kotlin]
+      - span: ")"
+        scopes: [meta.declaration.variable.kotlin, punctuation.section.group.end.kotlin]
+      - span: "pair"
+        scopes: [variable.other.readwrite.kotlin]
+
+  - line: "val `class` = 1"
+    assertions:
+      - span: "`class`"
+        scopes: [variable.other.readwrite.kotlin]
+
+  - line: "class Box(val value: Int, var size: Int)"
+    assertions:
+      - span: "class"
+        scopes: [keyword.declaration.class.kotlin]
+      - span: "Box"
+        scopes: [meta.class.kotlin, entity.name.class.kotlin]
+      - span: "value"
+        scopes: [meta.function.parameters.kotlin, variable.parameter.kotlin]
+      - span: "Int"
+        nth: 0
+        scopes: [meta.type.kotlin, support.type.kotlin]
+      - span: "size"
+        scopes: [meta.function.parameters.kotlin, variable.parameter.kotlin]
+      - span: "Int"
+        nth: 1
+        scopes: [meta.type.kotlin, support.type.kotlin]

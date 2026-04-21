@@ -1,0 +1,136 @@
+syntax: "Kotlin.sublime-syntax"
+comment_char: "//"
+tests:
+  - line: "if (a ?: b == c && !done) result++ else result--"
+    assertions:
+      - span: "if"
+        scopes: [keyword.control.conditional.kotlin]
+
+  - line: "if (a ?: b == c && !done) result++ else result--"
+    assertions:
+      - span: "?:"
+        scopes: [keyword.operator.elvis.kotlin]
+      - span: "=="
+        scopes: [keyword.operator.comparison.kotlin]
+      - span: "&&"
+        scopes: [keyword.operator.logical.kotlin]
+      - span: "!"
+        scopes: [keyword.operator.logical.kotlin]
+      - span: "++"
+        scopes: [keyword.operator.arithmetic.kotlin]
+      - span: "else"
+        scopes: [keyword.control.conditional.kotlin]
+      - span: "--"
+        scopes: [keyword.operator.arithmetic.kotlin]
+
+  - line: "when (value) { in 1..10 -> true else -> false }"
+    assertions:
+      - span: "when"
+        scopes: [keyword.control.conditional.kotlin]
+      - span: "in"
+        scopes: [keyword.operator.word.kotlin]
+      - span: ".."
+        scopes: [keyword.operator.range.kotlin]
+      - span: "->"
+        nth: 0
+        scopes: [punctuation.separator.when.kotlin]
+      - span: "true"
+        scopes: [constant.language.boolean.kotlin]
+      - span: "else"
+        scopes: [keyword.control.conditional.kotlin]
+      - span: "->"
+        nth: 1
+        scopes: [punctuation.separator.when.kotlin]
+      - span: "false"
+        scopes: [constant.language.boolean.kotlin]
+
+  - line: "for (item in items) continue"
+    assertions:
+      - span: "for"
+        scopes: [keyword.control.loop.kotlin]
+      - span: "item"
+        scopes: [variable.other.readwrite.kotlin]
+      - span: "in"
+        scopes: [keyword.operator.word.kotlin]
+      - span: "continue"
+        scopes: [keyword.control.flow.jump.kotlin]
+
+  - line: "while (x !is String) x = x as? String ?: y"
+    assertions:
+      - span: "while"
+        scopes: [keyword.control.loop.kotlin]
+      - span: "!is"
+        scopes: [keyword.operator.word.kotlin]
+      - span: "String"
+        nth: 0
+        scopes: [meta.type.kotlin, support.type.kotlin]
+      - span: "="
+        scopes: [keyword.operator.assignment.kotlin]
+      - span: "as?"
+        scopes: [keyword.operator.word.kotlin]
+      - span: "String"
+        nth: 1
+        scopes: [meta.type.kotlin, support.type.kotlin]
+      - span: "?:"
+        scopes: [keyword.operator.elvis.kotlin]
+
+  - line: "value += other % 2"
+    assertions:
+      - span: "value"
+        scopes: [variable.other.readwrite.kotlin]
+      - span: "+="
+        scopes: [keyword.operator.assignment.augmented.kotlin]
+      - span: "%"
+        scopes: [keyword.operator.arithmetic.kotlin]
+      - span: "2"
+        scopes: [constant.numeric.integer.decimal.kotlin]
+
+  - line: "numbers[0] != null"
+    assertions:
+      - span: "numbers"
+        scopes: [variable.other.readwrite.kotlin]
+      - span: "["
+        scopes: [punctuation.section.brackets.begin.kotlin]
+      - span: "0"
+        scopes: [constant.numeric.integer.decimal.kotlin]
+      - span: "]"
+        scopes: [punctuation.section.brackets.end.kotlin]
+      - span: "!="
+        scopes: [keyword.operator.comparison.kotlin]
+      - span: "null"
+        scopes: [constant.language.null.kotlin]
+
+  - line: "this@Outer::class"
+    assertions:
+      - span: "this"
+        scopes: [variable.language.kotlin]
+      - span: "@"
+        scopes: [punctuation.definition.label.kotlin]
+      - span: "Outer"
+        scopes: [entity.name.label.kotlin]
+      - span: "::"
+        scopes: [keyword.operator.callable-reference.kotlin]
+      - span: "class"
+        scopes: [keyword.other.kotlin]
+
+  - line: "items?.first()!!"
+    assertions:
+      - span: "items"
+        scopes: [variable.other.readwrite.kotlin]
+      - span: "?."
+        scopes: [keyword.operator.null-safe.kotlin]
+      - span: "first"
+        scopes: [variable.function.kotlin]
+      - span: "!!"
+        scopes: [keyword.operator.null-assertion.kotlin]
+
+  - line: "val flags = 0xFF + 0b10 + 42uL + 1.5e2f"
+    assertions:
+      - span: "0xFF"
+        scopes: [constant.numeric.integer.hexadecimal.kotlin]
+      - span: "0b10"
+        scopes: [constant.numeric.integer.binary.kotlin]
+      - span: "42uL"
+        scopes: [constant.numeric.integer.kotlin]
+      - span: "1.5e2f"
+        scopes: [constant.numeric.float.kotlin]

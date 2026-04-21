@@ -1,0 +1,45 @@
+// SYNTAX TEST "Kotlin.sublime-syntax"
+
+@file:JvmName("Demo")
+// <- punctuation.definition.annotation.kotlin
+ // <- variable.language.annotation-target.kotlin
+//^^^ variable.language.annotation-target.kotlin
+//   ^ punctuation.separator.annotation-target.kotlin
+//    ^^^^^^^ meta.annotation.kotlin entity.name.annotation.kotlin
+//            ^^^^^^ meta.string.kotlin string.quoted.double.kotlin
+
+@[Inject Named("x")] val name = dependency
+// <- punctuation.definition.annotation.kotlin
+ // <- meta.annotation.group.kotlin punctuation.section.brackets.begin.kotlin
+//^^^^^^ meta.annotation.group.kotlin entity.name.annotation.kotlin
+//       ^^^^^ meta.annotation.group.kotlin entity.name.annotation.kotlin
+//                 ^ meta.annotation.group.kotlin punctuation.section.brackets.end.kotlin
+//                   ^^^ keyword.declaration.kotlin
+//                       ^^^^ variable.other.readwrite.kotlin
+
+loop@ for (item in items) break@loop
+// <- entity.name.label.kotlin
+ // <- entity.name.label.kotlin
+//^^ entity.name.label.kotlin
+//  ^ punctuation.definition.label.kotlin
+//    ^^^ keyword.control.loop.kotlin
+//              ^^ keyword.operator.word.kotlin
+//                        ^^^^^ keyword.control.flow.jump.kotlin
+//                             ^ punctuation.definition.label.kotlin
+//                              ^^^^ entity.name.label.kotlin
+
+return@handler value
+// <- keyword.control.flow.jump.kotlin
+ // <- keyword.control.flow.jump.kotlin
+//^^^^ keyword.control.flow.jump.kotlin
+//    ^ punctuation.definition.label.kotlin
+//     ^^^^^^^ entity.name.label.kotlin
+
+super@Outer.toString()
+// <- variable.language.kotlin
+ // <- variable.language.kotlin
+//^^^ variable.language.kotlin
+//   ^ punctuation.definition.label.kotlin
+//    ^^^^^ entity.name.label.kotlin
+//         ^ punctuation.accessor.dot.kotlin
+//          ^^^^^^^^ variable.function.kotlin

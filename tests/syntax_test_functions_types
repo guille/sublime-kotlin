@@ -1,0 +1,86 @@
+// SYNTAX TEST "Kotlin.sublime-syntax"
+
+fun greet(name: String): String = "Hi, $name"
+// <- keyword.declaration.function.kotlin
+ // <- keyword.declaration.function.kotlin
+//^ keyword.declaration.function.kotlin
+//  ^^^^^ meta.function.kotlin entity.name.function.kotlin
+//        ^^^^ meta.function.parameters.kotlin variable.parameter.kotlin
+//              ^^^^^^ meta.type.kotlin support.type.kotlin
+//                       ^^^^^^ meta.type.kotlin support.type.kotlin
+//                              ^ keyword.operator.assignment.kotlin
+//                                     ^^^^^ meta.string.kotlin string.quoted.double.kotlin variable.other.interpolated.kotlin
+
+fun String.lastChar(): Char = this[length - 1]
+// <- keyword.declaration.function.kotlin
+ // <- keyword.declaration.function.kotlin
+//^ keyword.declaration.function.kotlin
+//  ^^^^^^ meta.function.kotlin support.type.kotlin
+//        ^ meta.function.kotlin punctuation.accessor.dot.kotlin
+//         ^^^^^^^^ meta.function.kotlin entity.name.function.kotlin
+//                     ^^^^ meta.type.kotlin support.type.kotlin
+//                            ^^^^ variable.language.kotlin
+//                                ^ punctuation.section.brackets.begin.kotlin
+//                                 ^^^^^^ variable.other.readwrite.kotlin
+//                                        ^ keyword.operator.arithmetic.kotlin
+//                                          ^ constant.numeric.integer.decimal.kotlin
+//                                           ^ punctuation.section.brackets.end.kotlin
+
+val String.firstLetter: Char get() = this[0]
+// <- keyword.declaration.kotlin
+ // <- keyword.declaration.kotlin
+//^ keyword.declaration.kotlin
+//  ^^^^^^ meta.declaration.variable.kotlin support.type.kotlin
+//        ^ meta.declaration.variable.kotlin punctuation.accessor.dot.kotlin
+//         ^^^^^^^^^^^ meta.declaration.variable.kotlin variable.other.readwrite.kotlin
+//                      ^^^^ meta.type.kotlin support.type.kotlin
+//                           ^^^ keyword.declaration.kotlin
+//                                   ^^^^ variable.language.kotlin
+
+fun <T> identity(value: T): T = value
+//  ^ meta.type.parameters.kotlin punctuation.definition.typeparameters.begin.kotlin
+//   ^ meta.type.parameters.kotlin support.type.kotlin
+//    ^ meta.type.parameters.kotlin punctuation.definition.typeparameters.end.kotlin
+//      ^^^^^^^^ meta.function.kotlin entity.name.function.kotlin
+//               ^^^^^ meta.function.parameters.kotlin variable.parameter.kotlin
+//                      ^ meta.type.kotlin support.type.kotlin
+//                          ^ meta.type.kotlin support.type.kotlin
+//                              ^^^^^ variable.other.readwrite.kotlin
+
+fun accepts(block: (Int) -> String) {}
+//          ^^^^^ meta.function.parameters.kotlin variable.parameter.kotlin
+//                  ^^^ meta.type.kotlin support.type.kotlin
+//                       ^^ meta.type.kotlin punctuation.separator.return-type.kotlin
+//                          ^^^^^^ meta.type.kotlin support.type.kotlin
+//                                  ^ punctuation.section.block.begin.kotlin
+//                                   ^ punctuation.section.block.end.kotlin
+
+val answer: Int by lazy { 42 }
+//  ^^^^^^ meta.declaration.variable.kotlin variable.other.readwrite.kotlin
+//          ^^^ meta.type.kotlin support.type.kotlin
+//              ^^ keyword.operator.word.kotlin
+//                        ^^ constant.numeric.integer.decimal.kotlin
+
+val entry: Map.Entry<String, Int>? = null
+//  ^^^^^ meta.declaration.variable.kotlin variable.other.readwrite.kotlin
+//         ^^^ meta.type.kotlin support.type.kotlin
+//            ^ meta.type.kotlin punctuation.accessor.dot.kotlin
+//             ^^^^^ meta.type.kotlin support.type.kotlin
+//                  ^ meta.type.parameters.kotlin punctuation.definition.typeparameters.begin.kotlin
+//                   ^^^^^^ meta.type.kotlin support.type.kotlin
+//                           ^^^ meta.type.kotlin support.type.kotlin
+//                              ^ meta.type.parameters.kotlin punctuation.definition.typeparameters.end.kotlin
+//                               ^ meta.type.kotlin keyword.operator.nullable.kotlin
+//                                   ^^^^ constant.language.null.kotlin
+
+val sure: T & Any = value
+//  ^^^^ meta.declaration.variable.kotlin variable.other.readwrite.kotlin
+//        ^ meta.type.kotlin support.type.kotlin
+//          ^ meta.type.kotlin keyword.operator.type.intersection.kotlin
+//            ^^^ meta.type.kotlin support.type.kotlin
+
+class Child : Parent(), Interface
+//    ^^^^^ meta.class.kotlin entity.name.class.kotlin
+//          ^ punctuation.separator.type.kotlin
+//            ^^^^^^ meta.type.kotlin support.type.kotlin
+//                      ^^^^^^^^^ meta.type.kotlin support.type.kotlin

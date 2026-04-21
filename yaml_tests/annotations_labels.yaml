@@ -1,0 +1,75 @@
+syntax: "Kotlin.sublime-syntax"
+comment_char: "//"
+tests:
+  - line: '@file:JvmName("Demo")'
+    assertions:
+      - span: "@"
+        scopes: [punctuation.definition.annotation.kotlin]
+      - span: "file"
+        scopes: [variable.language.annotation-target.kotlin]
+      - span: ":"
+        scopes: [punctuation.separator.annotation-target.kotlin]
+      - span: "JvmName"
+        scopes: [meta.annotation.kotlin, entity.name.annotation.kotlin]
+      - span: '"Demo"'
+        scopes: [meta.string.kotlin, string.quoted.double.kotlin]
+
+  - line: '@[Inject Named("x")] val name = dependency'
+    assertions:
+      - span: "@"
+        scopes: [punctuation.definition.annotation.kotlin]
+      - span: "["
+        scopes: [meta.annotation.group.kotlin, punctuation.section.brackets.begin.kotlin]
+      - span: "Inject"
+        scopes: [meta.annotation.group.kotlin, entity.name.annotation.kotlin]
+      - span: "Named"
+        scopes: [meta.annotation.group.kotlin, entity.name.annotation.kotlin]
+      - span: "]"
+        scopes: [meta.annotation.group.kotlin, punctuation.section.brackets.end.kotlin]
+      - span: "val"
+        scopes: [keyword.declaration.kotlin]
+      - span: "name"
+        scopes: [variable.other.readwrite.kotlin]
+
+  - line: "loop@ for (item in items) break@loop"
+    assertions:
+      - span: "loop"
+        nth: 0
+        scopes: [entity.name.label.kotlin]
+      - span: "@"
+        nth: 0
+        scopes: [punctuation.definition.label.kotlin]
+      - span: "for"
+        scopes: [keyword.control.loop.kotlin]
+      - span: "in"
+        scopes: [keyword.operator.word.kotlin]
+      - span: "break"
+        scopes: [keyword.control.flow.jump.kotlin]
+      - span: "@"
+        nth: 1
+        scopes: [punctuation.definition.label.kotlin]
+      - span: "loop"
+        nth: 1
+        scopes: [entity.name.label.kotlin]
+
+  - line: "return@handler value"
+    assertions:
+      - span: "return"
+        scopes: [keyword.control.flow.jump.kotlin]
+      - span: "@"
+        scopes: [punctuation.definition.label.kotlin]
+      - span: "handler"
+        scopes: [entity.name.label.kotlin]
+
+  - line: "super@Outer.toString()"
+    assertions:
+      - span: "super"
+        scopes: [variable.language.kotlin]
+      - span: "@"
+        scopes: [punctuation.definition.label.kotlin]
+      - span: "Outer"
+        scopes: [entity.name.label.kotlin]
+      - span: "."
+        scopes: [punctuation.accessor.dot.kotlin]
+      - span: "toString"
+        scopes: [variable.function.kotlin]

@@ -1,0 +1,162 @@
+syntax: "Kotlin.sublime-syntax"
+comment_char: "//"
+tests:
+  - line: 'fun greet(name: String): String = "Hi, $name"'
+    assertions:
+      - span: "fun"
+        scopes: [keyword.declaration.function.kotlin]
+      - span: "greet"
+        scopes: [meta.function.kotlin, entity.name.function.kotlin]
+      - span: "name"
+        scopes: [meta.function.parameters.kotlin, variable.parameter.kotlin]
+      - span: "String"
+        nth: 0
+        scopes: [meta.type.kotlin, support.type.kotlin]
+      - span: "String"
+        nth: 1
+        scopes: [meta.type.kotlin, support.type.kotlin]
+      - span: "="
+        scopes: [keyword.operator.assignment.kotlin]
+      - span: "$name"
+        scopes: [meta.string.kotlin, string.quoted.double.kotlin, variable.other.interpolated.kotlin]
+
+  - line: "fun String.lastChar(): Char = this[length - 1]"
+    assertions:
+      - span: "fun"
+        scopes: [keyword.declaration.function.kotlin]
+      - span: "String"
+        scopes: [meta.function.kotlin, support.type.kotlin]
+      - span: "."
+        nth: 0
+        scopes: [meta.function.kotlin, punctuation.accessor.dot.kotlin]
+      - span: "lastChar"
+        scopes: [meta.function.kotlin, entity.name.function.kotlin]
+      - span: "Char"
+        nth: 1
+        scopes: [meta.type.kotlin, support.type.kotlin]
+      - span: "this"
+        scopes: [variable.language.kotlin]
+      - span: "["
+        scopes: [punctuation.section.brackets.begin.kotlin]
+      - span: "length"
+        scopes: [variable.other.readwrite.kotlin]
+      - span: "-"
+        scopes: [keyword.operator.arithmetic.kotlin]
+      - span: "1"
+        scopes: [constant.numeric.integer.decimal.kotlin]
+      - span: "]"
+        scopes: [punctuation.section.brackets.end.kotlin]
+
+  - line: "val String.firstLetter: Char get() = this[0]"
+    assertions:
+      - span: "val"
+        scopes: [keyword.declaration.kotlin]
+      - span: "String"
+        scopes: [meta.declaration.variable.kotlin, support.type.kotlin]
+      - span: "."
+        nth: 0
+        scopes: [meta.declaration.variable.kotlin, punctuation.accessor.dot.kotlin]
+      - span: "firstLetter"
+        scopes: [meta.declaration.variable.kotlin, variable.other.readwrite.kotlin]
+      - span: "Char"
+        scopes: [meta.type.kotlin, support.type.kotlin]
+      - span: "get"
+        scopes: [keyword.declaration.kotlin]
+      - span: "this"
+        scopes: [variable.language.kotlin]
+
+  - line: "fun <T> identity(value: T): T = value"
+    assertions:
+      - span: "<"
+        scopes: [meta.type.parameters.kotlin, punctuation.definition.typeparameters.begin.kotlin]
+      - span: "T"
+        nth: 0
+        scopes: [meta.type.parameters.kotlin, support.type.kotlin]
+      - span: ">"
+        scopes: [meta.type.parameters.kotlin, punctuation.definition.typeparameters.end.kotlin]
+      - span: "identity"
+        scopes: [meta.function.kotlin, entity.name.function.kotlin]
+      - span: "value"
+        nth: 0
+        scopes: [meta.function.parameters.kotlin, variable.parameter.kotlin]
+      - span: "T"
+        nth: 1
+        scopes: [meta.type.kotlin, support.type.kotlin]
+      - span: "T"
+        nth: 2
+        scopes: [meta.type.kotlin, support.type.kotlin]
+      - span: "value"
+        nth: 1
+        scopes: [variable.other.readwrite.kotlin]
+
+  - line: "fun accepts(block: (Int) -> String) {}"
+    assertions:
+      - span: "block"
+        scopes: [meta.function.parameters.kotlin, variable.parameter.kotlin]
+      - span: "Int"
+        scopes: [meta.type.kotlin, support.type.kotlin]
+      - span: "->"
+        scopes: [meta.type.kotlin, punctuation.separator.return-type.kotlin]
+      - span: "String"
+        scopes: [meta.type.kotlin, support.type.kotlin]
+      - span: "{"
+        scopes: [punctuation.section.block.begin.kotlin]
+      - span: "}"
+        scopes: [punctuation.section.block.end.kotlin]
+
+  - line: "val answer: Int by lazy { 42 }"
+    assertions:
+      - span: "answer"
+        scopes: [meta.declaration.variable.kotlin, variable.other.readwrite.kotlin]
+      - span: "Int"
+        scopes: [meta.type.kotlin, support.type.kotlin]
+      - span: "by"
+        scopes: [keyword.operator.word.kotlin]
+      - span: "42"
+        scopes: [constant.numeric.integer.decimal.kotlin]
+
+  - line: "val entry: Map.Entry<String, Int>? = null"
+    assertions:
+      - span: "entry"
+        scopes: [meta.declaration.variable.kotlin, variable.other.readwrite.kotlin]
+      - span: "Map"
+        scopes: [meta.type.kotlin, support.type.kotlin]
+      - span: "."
+        nth: 0
+        scopes: [meta.type.kotlin, punctuation.accessor.dot.kotlin]
+      - span: "Entry"
+        scopes: [meta.type.kotlin, support.type.kotlin]
+      - span: "<"
+        scopes: [meta.type.parameters.kotlin, punctuation.definition.typeparameters.begin.kotlin]
+      - span: "String"
+        scopes: [meta.type.kotlin, support.type.kotlin]
+      - span: "Int"
+        scopes: [meta.type.kotlin, support.type.kotlin]
+      - span: ">"
+        scopes: [meta.type.parameters.kotlin, punctuation.definition.typeparameters.end.kotlin]
+      - span: "?"
+        scopes: [meta.type.kotlin, keyword.operator.nullable.kotlin]
+      - span: "null"
+        scopes: [constant.language.null.kotlin]
+
+  - line: "val sure: T & Any = value"
+    assertions:
+      - span: "sure"
+        scopes: [meta.declaration.variable.kotlin, variable.other.readwrite.kotlin]
+      - span: "T"
+        scopes: [meta.type.kotlin, support.type.kotlin]
+      - span: "&"
+        scopes: [meta.type.kotlin, keyword.operator.type.intersection.kotlin]
+      - span: "Any"
+        scopes: [meta.type.kotlin, support.type.kotlin]
+
+  - line: "class Child : Parent(), Interface"
+    assertions:
+      - span: "Child"
+        scopes: [meta.class.kotlin, entity.name.class.kotlin]
+      - span: ":"
+        scopes: [punctuation.separator.type.kotlin]
+      - span: "Parent"
+        scopes: [meta.type.kotlin, support.type.kotlin]
+      - span: "Interface"
+        scopes: [meta.type.kotlin, support.type.kotlin]

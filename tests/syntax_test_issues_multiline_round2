@@ -1,0 +1,152 @@
+// SYNTAX TEST "Kotlin.sublime-syntax"
+
+fun <T> copyWhenGreater(list: List<T>, threshold: T): List<String>
+// <- keyword.declaration.function.kotlin
+ // <- keyword.declaration.function.kotlin
+//^ keyword.declaration.function.kotlin
+//      ^^^^^^^^^^^^^^^ meta.function.kotlin entity.name.function.kotlin
+//   ^ meta.type.parameters.kotlin support.type.kotlin
+//                                     ^^^^^^^^^ meta.function.parameters.kotlin variable.parameter.kotlin
+//                                                         ^^^^^^ meta.type.kotlin support.type.kotlin
+
+    where T : CharSequence,
+//  ^^^^^ keyword.declaration.kotlin
+//        ^ meta.type.kotlin support.type.kotlin
+//            ^^^^^^^^^^^^ meta.type.kotlin support.type.kotlin
+
+          T : Comparable<T> {
+//        ^ meta.type.kotlin support.type.kotlin
+//            ^^^^^^^^^^ meta.type.kotlin support.type.kotlin
+//                       ^ meta.type.kotlin support.type.kotlin
+//                          ^ punctuation.section.block.begin.kotlin
+
+    return list.filter { it > threshold }.map { it.toString() }
+//  ^^^^^^ keyword.control.flow.jump.kotlin
+//              ^^^^^^ variable.function.kotlin
+//                       ^^ variable.language.kotlin
+//                                        ^^^ variable.function.kotlin
+//                                              ^^ variable.language.kotlin
+//                                                 ^^^^^^^^ variable.function.kotlin
+
+}
+// <- punctuation.section.block.end.kotlin
+
+class Box<out T : Any>(val value: T) {}
+// <- keyword.declaration.class.kotlin
+ // <- keyword.declaration.class.kotlin
+//^^^ keyword.declaration.class.kotlin
+//    ^^^ meta.class.kotlin entity.name.class.kotlin
+//        ^^^ storage.modifier.kotlin
+//            ^ meta.type.parameters.kotlin support.type.kotlin
+//                ^^^ meta.type.kotlin support.type.kotlin
+//                     ^^^ keyword.declaration.kotlin
+//                         ^^^^^ meta.function.parameters.kotlin variable.parameter.kotlin
+//                                ^ meta.type.kotlin support.type.kotlin
+
+data class Person(
+// <- storage.modifier.kotlin
+ // <- storage.modifier.kotlin
+//^^ storage.modifier.kotlin
+//   ^^^^^ keyword.declaration.class.kotlin
+//         ^^^^^^ meta.class.kotlin entity.name.class.kotlin
+//               ^ punctuation.section.parameters.begin.kotlin
+
+    val name: String,
+//  ^^^ keyword.declaration.kotlin
+//      ^^^^ meta.function.parameters.kotlin variable.parameter.kotlin
+//            ^^^^^^ meta.type.kotlin support.type.kotlin
+
+    val age: Int,
+//  ^^^ keyword.declaration.kotlin
+//      ^^^ meta.function.parameters.kotlin variable.parameter.kotlin
+//           ^^^ meta.type.kotlin support.type.kotlin
+
+    val email: String? = null
+//  ^^^ keyword.declaration.kotlin
+//      ^^^^^ meta.function.parameters.kotlin variable.parameter.kotlin
+//             ^^^^^^ meta.type.kotlin support.type.kotlin
+//                   ^ meta.type.kotlin keyword.operator.nullable.kotlin
+//                       ^^^^ constant.language.null.kotlin
+
+) {
+// <- punctuation.section.parameters.end.kotlin
+//^ punctuation.section.block.begin.kotlin
+
+    operator fun component4() = email?.substringBefore("@") ?: "no-email"
+//  ^^^^^^^^ storage.modifier.kotlin
+//           ^^^ keyword.declaration.function.kotlin
+//               ^^^^^^^^^^ meta.function.kotlin entity.name.function.kotlin
+//                              ^^^^^ variable.other.readwrite.kotlin
+//                                   ^^ keyword.operator.null-safe.kotlin
+//                                     ^^^^^^^^^^^^^^^ variable.function.kotlin
+//                                                          ^^ keyword.operator.elvis.kotlin
+
+}
+// <- punctuation.section.block.end.kotlin
+
+class Config private constructor(val settings: Map<String, String>) {}
+// <- keyword.declaration.class.kotlin
+ // <- keyword.declaration.class.kotlin
+//^^^ keyword.declaration.class.kotlin
+//    ^^^^^^ meta.class.kotlin entity.name.class.kotlin
+//           ^^^^^^^ storage.modifier.kotlin
+//                   ^^^^^^^^^^^ keyword.declaration.kotlin
+//                               ^^^ keyword.declaration.kotlin
+//                                   ^^^^^^^^ meta.function.parameters.kotlin variable.parameter.kotlin
+//                                             ^^^ meta.type.kotlin support.type.kotlin
+//                                                 ^^^^^^ meta.type.kotlin support.type.kotlin
+//                                                         ^^^^^^ meta.type.kotlin support.type.kotlin
+
+value class UserId(val id: String) {}
+// <- storage.modifier.kotlin
+ // <- storage.modifier.kotlin
+//^^^ storage.modifier.kotlin
+//    ^^^^^ keyword.declaration.class.kotlin
+//          ^^^^^^ meta.class.kotlin entity.name.class.kotlin
+//                     ^^ meta.function.parameters.kotlin variable.parameter.kotlin
+//                         ^^^^^^ meta.type.kotlin support.type.kotlin
+
+companion object {
+// <- storage.modifier.kotlin
+ // <- storage.modifier.kotlin
+//^^^^^^^ storage.modifier.kotlin
+//        ^^^^^^ keyword.declaration.object.kotlin
+//               ^ punctuation.section.block.begin.kotlin
+
+    fun <T> from(iterable: Iterable<T>) = Pipeline(iterable.asSequence())
+//  ^^^ keyword.declaration.function.kotlin
+//       ^ meta.type.parameters.kotlin support.type.kotlin
+//          ^^^^ meta.function.kotlin entity.name.function.kotlin
+//               ^^^^^^^^ meta.function.parameters.kotlin variable.parameter.kotlin
+//                         ^^^^^^^^ meta.type.kotlin support.type.kotlin
+//                                        ^^^^^^^^ variable.function.kotlin
+//                                                          ^^^^^^^^^^ variable.function.kotlin
+
+    fun <T> of(vararg items: T) = Pipeline(items.asSequence())
+//  ^^^ keyword.declaration.function.kotlin
+//          ^^ meta.function.kotlin entity.name.function.kotlin
+//             ^^^^^^ storage.modifier.kotlin
+//                    ^^^^^ meta.function.parameters.kotlin variable.parameter.kotlin
+//                           ^ meta.type.kotlin support.type.kotlin
+//                                ^^^^^^^^ variable.function.kotlin
+//                                               ^^^^^^^^^^ variable.function.kotlin
+
+}
+// <- punctuation.section.block.end.kotlin
+
+val attrs = if (attributes.isEmpty()) "" else " " + attributes.entries.joinToString(" ") { """${it.key}="${it.value}"""" }
+//  ^^^^^ meta.declaration.variable.kotlin variable.other.readwrite.kotlin
+//          ^^ keyword.control.conditional.kotlin
+//                         ^^^^^^^ variable.function.kotlin
+//                                                                     ^^^^^^^^^^^^ variable.function.kotlin
+//                                                                                         ^^^ punctuation.definition.string.begin.kotlin
+//                                                                                              ^^ meta.interpolation.kotlin source.kotlin.embedded variable.language.kotlin
+//                                                                                                 ^^^ meta.interpolation.kotlin source.kotlin.embedded variable.other.readwrite.kotlin
+//                                                                                                         ^^ meta.interpolation.kotlin source.kotlin.embedded variable.language.kotlin
+//                                                                                                            ^^^^^ meta.interpolation.kotlin source.kotlin.embedded variable.other.readwrite.kotlin
+//                                                                                                                  ^^^ meta.string.kotlin string.quoted.triple.kotlin punctuation.definition.string.end.kotlin
+
+afterLeak
+// <- variable.other.readwrite.kotlin
+ // <- variable.other.readwrite.kotlin
+//^^^^^^^ variable.other.readwrite.kotlin

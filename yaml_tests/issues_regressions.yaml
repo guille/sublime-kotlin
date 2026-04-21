@@ -1,0 +1,36 @@
+syntax: "Kotlin.sublime-syntax"
+comment_char: "//"
+tests:
+  - line: "// A comment"
+    assertions:
+      - span: "//"
+        scopes: [punctuation.definition.comment.kotlin]
+      - span: "A comment"
+        scopes: [comment.line.double-slash.kotlin]
+
+  - line: 'var name = "John"'
+    assertions:
+      - span: "var"
+        scopes: [keyword.declaration.kotlin]
+      - span: "name"
+        scopes: [variable.other.readwrite.kotlin]
+      - span: "="
+        scopes: [keyword.operator.assignment.kotlin]
+      - span: '"'
+        scopes:
+          [
+            meta.string.kotlin,
+            string.quoted.double.kotlin,
+            punctuation.definition.string.begin.kotlin,
+          ]
+        nth: 0
+      - span: "John"
+        scopes: [meta.string.kotlin, string.quoted.double.kotlin]
+      - span: '"'
+        scopes:
+          [
+            meta.string.kotlin,
+            string.quoted.double.kotlin,
+            punctuation.definition.string.end.kotlin,
+          ]
+        nth: 1

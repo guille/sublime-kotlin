@@ -1,0 +1,271 @@
+syntax: "Kotlin.sublime-syntax"
+comment_char: "//"
+tests:
+  - line: "fun <T> copyWhenGreater(list: List<T>, threshold: T): List<String>"
+    assertions:
+      - span: "fun"
+        scopes: [keyword.declaration.function.kotlin]
+      - span: "copyWhenGreater"
+        scopes: [meta.function.kotlin, entity.name.function.kotlin]
+      - span: "T"
+        nth: 0
+        scopes: [meta.type.parameters.kotlin, support.type.kotlin]
+      - span: "threshold"
+        scopes: [meta.function.parameters.kotlin, variable.parameter.kotlin]
+      - span: "String"
+        scopes: [meta.type.kotlin, support.type.kotlin]
+
+  - line: "    where T : CharSequence,"
+    assertions:
+      - span: "where"
+        scopes: [keyword.declaration.kotlin]
+      - span: "T"
+        scopes: [meta.type.kotlin, support.type.kotlin]
+      - span: "CharSequence"
+        scopes: [meta.type.kotlin, support.type.kotlin]
+
+  - line: "          T : Comparable<T> {"
+    assertions:
+      - span: "T"
+        nth: 0
+        scopes: [meta.type.kotlin, support.type.kotlin]
+      - span: "Comparable"
+        scopes: [meta.type.kotlin, support.type.kotlin]
+      - span: "T"
+        nth: 1
+        scopes: [meta.type.kotlin, support.type.kotlin]
+      - span: "{"
+        scopes: [punctuation.section.block.begin.kotlin]
+
+  - line: "    return list.filter { it > threshold }.map { it.toString() }"
+    assertions:
+      - span: "return"
+        scopes: [keyword.control.flow.jump.kotlin]
+      - span: "filter"
+        scopes: [variable.function.kotlin]
+      - span: "it"
+        nth: 0
+        scopes: [variable.language.kotlin]
+      - span: "map"
+        scopes: [variable.function.kotlin]
+      - span: "it"
+        nth: 1
+        scopes: [variable.language.kotlin]
+      - span: "toString"
+        scopes: [variable.function.kotlin]
+
+  - line: "}"
+    assertions:
+      - span: "}"
+        scopes: [punctuation.section.block.end.kotlin]
+
+  - line: "class Box<out T : Any>(val value: T) {}"
+    assertions:
+      - span: "class"
+        scopes: [keyword.declaration.class.kotlin]
+      - span: "Box"
+        scopes: [meta.class.kotlin, entity.name.class.kotlin]
+      - span: "out"
+        scopes: [storage.modifier.kotlin]
+      - span: "T"
+        nth: 0
+        scopes: [meta.type.parameters.kotlin, support.type.kotlin]
+      - span: "Any"
+        scopes: [meta.type.kotlin, support.type.kotlin]
+      - span: "val"
+        scopes: [keyword.declaration.kotlin]
+      - span: "value"
+        scopes: [meta.function.parameters.kotlin, variable.parameter.kotlin]
+      - span: "T"
+        nth: 1
+        scopes: [meta.type.kotlin, support.type.kotlin]
+
+  - line: "data class Person("
+    assertions:
+      - span: "data"
+        scopes: [storage.modifier.kotlin]
+      - span: "class"
+        scopes: [keyword.declaration.class.kotlin]
+      - span: "Person"
+        scopes: [meta.class.kotlin, entity.name.class.kotlin]
+      - span: "("
+        scopes: [punctuation.section.parameters.begin.kotlin]
+
+  - line: "    val name: String,"
+    assertions:
+      - span: "val"
+        scopes: [keyword.declaration.kotlin]
+      - span: "name"
+        scopes: [meta.function.parameters.kotlin, variable.parameter.kotlin]
+      - span: "String"
+        scopes: [meta.type.kotlin, support.type.kotlin]
+
+  - line: "    val age: Int,"
+    assertions:
+      - span: "val"
+        scopes: [keyword.declaration.kotlin]
+      - span: "age"
+        scopes: [meta.function.parameters.kotlin, variable.parameter.kotlin]
+      - span: "Int"
+        scopes: [meta.type.kotlin, support.type.kotlin]
+
+  - line: "    val email: String? = null"
+    assertions:
+      - span: "val"
+        scopes: [keyword.declaration.kotlin]
+      - span: "email"
+        scopes: [meta.function.parameters.kotlin, variable.parameter.kotlin]
+      - span: "String"
+        scopes: [meta.type.kotlin, support.type.kotlin]
+      - span: "?"
+        scopes: [meta.type.kotlin, keyword.operator.nullable.kotlin]
+      - span: "null"
+        scopes: [constant.language.null.kotlin]
+
+  - line: ") {"
+    assertions:
+      - span: ")"
+        scopes: [punctuation.section.parameters.end.kotlin]
+      - span: "{"
+        scopes: [punctuation.section.block.begin.kotlin]
+
+  - line: '    operator fun component4() = email?.substringBefore("@") ?: "no-email"'
+    assertions:
+      - span: "operator"
+        scopes: [storage.modifier.kotlin]
+      - span: "fun"
+        scopes: [keyword.declaration.function.kotlin]
+      - span: "component4"
+        scopes: [meta.function.kotlin, entity.name.function.kotlin]
+      - span: "email"
+        scopes: [variable.other.readwrite.kotlin]
+      - span: "?."
+        scopes: [keyword.operator.null-safe.kotlin]
+      - span: "substringBefore"
+        scopes: [variable.function.kotlin]
+      - span: "?:"
+        scopes: [keyword.operator.elvis.kotlin]
+
+  - line: "}"
+    assertions:
+      - span: "}"
+        scopes: [punctuation.section.block.end.kotlin]
+
+  - line: "class Config private constructor(val settings: Map<String, String>) {}"
+    assertions:
+      - span: "class"
+        scopes: [keyword.declaration.class.kotlin]
+      - span: "Config"
+        scopes: [meta.class.kotlin, entity.name.class.kotlin]
+      - span: "private"
+        scopes: [storage.modifier.kotlin]
+      - span: "constructor"
+        scopes: [keyword.declaration.kotlin]
+      - span: "val"
+        scopes: [keyword.declaration.kotlin]
+      - span: "settings"
+        scopes: [meta.function.parameters.kotlin, variable.parameter.kotlin]
+      - span: "Map"
+        scopes: [meta.type.kotlin, support.type.kotlin]
+      - span: "String"
+        nth: 0
+        scopes: [meta.type.kotlin, support.type.kotlin]
+      - span: "String"
+        nth: 1
+        scopes: [meta.type.kotlin, support.type.kotlin]
+
+  - line: "value class UserId(val id: String) {}"
+    assertions:
+      - span: "value"
+        scopes: [storage.modifier.kotlin]
+      - span: "class"
+        scopes: [keyword.declaration.class.kotlin]
+      - span: "UserId"
+        scopes: [meta.class.kotlin, entity.name.class.kotlin]
+      - span: "id"
+        scopes: [meta.function.parameters.kotlin, variable.parameter.kotlin]
+      - span: "String"
+        scopes: [meta.type.kotlin, support.type.kotlin]
+
+  - line: "companion object {"
+    assertions:
+      - span: "companion"
+        scopes: [storage.modifier.kotlin]
+      - span: "object"
+        scopes: [keyword.declaration.object.kotlin]
+      - span: "{"
+        scopes: [punctuation.section.block.begin.kotlin]
+
+  - line: "    fun <T> from(iterable: Iterable<T>) = Pipeline(iterable.asSequence())"
+    assertions:
+      - span: "fun"
+        scopes: [keyword.declaration.function.kotlin]
+      - span: "T"
+        nth: 0
+        scopes: [meta.type.parameters.kotlin, support.type.kotlin]
+      - span: "from"
+        scopes: [meta.function.kotlin, entity.name.function.kotlin]
+      - span: "iterable"
+        scopes: [meta.function.parameters.kotlin, variable.parameter.kotlin]
+      - span: "Iterable"
+        scopes: [meta.type.kotlin, support.type.kotlin]
+      - span: "Pipeline"
+        scopes: [variable.function.kotlin]
+      - span: "asSequence"
+        scopes: [variable.function.kotlin]
+
+  - line: "    fun <T> of(vararg items: T) = Pipeline(items.asSequence())"
+    assertions:
+      - span: "fun"
+        scopes: [keyword.declaration.function.kotlin]
+      - span: "of"
+        scopes: [meta.function.kotlin, entity.name.function.kotlin]
+      - span: "vararg"
+        scopes: [storage.modifier.kotlin]
+      - span: "items"
+        scopes: [meta.function.parameters.kotlin, variable.parameter.kotlin]
+      - span: "T"
+        nth: 1
+        scopes: [meta.type.kotlin, support.type.kotlin]
+      - span: "Pipeline"
+        scopes: [variable.function.kotlin]
+      - span: "asSequence"
+        scopes: [variable.function.kotlin]
+
+  - line: "}"
+    assertions:
+      - span: "}"
+        scopes: [punctuation.section.block.end.kotlin]
+
+  - line: 'val attrs = if (attributes.isEmpty()) "" else " " + attributes.entries.joinToString(" ") { """${it.key}="${it.value}"""" }'
+    assertions:
+      - span: "attrs"
+        scopes: [meta.declaration.variable.kotlin, variable.other.readwrite.kotlin]
+      - span: "if"
+        scopes: [keyword.control.conditional.kotlin]
+      - span: "isEmpty"
+        scopes: [variable.function.kotlin]
+      - span: "joinToString"
+        scopes: [variable.function.kotlin]
+      - span: '"""'
+        nth: 0
+        scopes: [punctuation.definition.string.begin.kotlin]
+      - span: "it"
+        nth: 0
+        scopes: [meta.interpolation.kotlin, source.kotlin.embedded, variable.language.kotlin]
+      - span: "key"
+        scopes: [meta.interpolation.kotlin, source.kotlin.embedded, variable.other.readwrite.kotlin]
+      - span: "it"
+        nth: 1
+        scopes: [meta.interpolation.kotlin, source.kotlin.embedded, variable.language.kotlin]
+      - span: "value"
+        nth: 0
+        scopes: [meta.interpolation.kotlin, source.kotlin.embedded, variable.other.readwrite.kotlin]
+      - span: '"""'
+        nth: 1
+        scopes: [meta.string.kotlin, string.quoted.triple.kotlin, punctuation.definition.string.end.kotlin]
+
+  - line: "afterLeak"
+    assertions:
+      - span: "afterLeak"
+        scopes: [variable.other.readwrite.kotlin]

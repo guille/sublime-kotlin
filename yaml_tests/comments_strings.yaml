@@ -1,0 +1,132 @@
+syntax: "Kotlin.sublime-syntax"
+comment_char: "//"
+tests:
+  - line: "#!/usr/bin/env kotlin"
+    assertions:
+      - span: "#!"
+        scopes: [comment.line.shebang.kotlin, punctuation.definition.comment.kotlin]
+      - span: "/usr/bin/env kotlin"
+        scopes: [comment.line.shebang.kotlin]
+
+  - line: "// regular comment"
+    assertions:
+      - span: "//"
+        scopes: [punctuation.definition.comment.kotlin]
+      - span: "regular comment"
+        scopes: [comment.line.double-slash.kotlin]
+
+  - line: "/* outer /* inner */ outer */"
+    assertions:
+      - span: "/*"
+        nth: 0
+        scopes: [comment.block.kotlin, punctuation.definition.comment.begin.kotlin]
+      - span: "/*"
+        nth: 1
+        scopes: [comment.block.kotlin, punctuation.definition.comment.begin.kotlin]
+      - span: "inner"
+        scopes: [comment.block.kotlin]
+      - span: "*/"
+        nth: 0
+        scopes: [comment.block.kotlin, punctuation.definition.comment.end.kotlin]
+      - span: "*/"
+        nth: 1
+        scopes: [comment.block.kotlin, punctuation.definition.comment.end.kotlin]
+
+  - line: 'val escaped = "\n\u0041"'
+    assertions:
+      - span: "val"
+        scopes: [keyword.declaration.kotlin]
+      - span: "escaped"
+        scopes: [variable.other.readwrite.kotlin]
+      - span: "\\n"
+        scopes: [constant.character.escape.kotlin]
+      - span: "\\u0041"
+        scopes: [constant.character.escape.kotlin]
+
+  - line: 'val message = "Hello $name ${user.id}"'
+    assertions:
+      - span: "message"
+        scopes: [variable.other.readwrite.kotlin]
+      - span: '"'
+        nth: 0
+        scopes:
+          [
+            meta.string.kotlin,
+            string.quoted.double.kotlin,
+            punctuation.definition.string.begin.kotlin,
+          ]
+      - span: "Hello "
+        scopes: [meta.string.kotlin, string.quoted.double.kotlin]
+      - span: "$name"
+        scopes: [meta.string.kotlin, string.quoted.double.kotlin, variable.other.interpolated.kotlin]
+      - span: "${"
+        scopes:
+          [
+            meta.interpolation.kotlin,
+            source.kotlin.embedded,
+            punctuation.section.interpolation.begin.kotlin,
+          ]
+      - span: "user"
+        scopes: [meta.interpolation.kotlin, source.kotlin.embedded, variable.other.readwrite.kotlin]
+      - span: "."
+        nth: 0
+        scopes: [meta.interpolation.kotlin, source.kotlin.embedded, punctuation.accessor.dot.kotlin]
+      - span: "id"
+        scopes: [meta.interpolation.kotlin, source.kotlin.embedded, variable.other.readwrite.kotlin]
+      - span: "}"
+        scopes:
+          [
+            meta.interpolation.kotlin,
+            source.kotlin.embedded,
+            punctuation.section.interpolation.end.kotlin,
+          ]
+      - span: '"'
+        nth: 1
+        scopes:
+          [
+            meta.string.kotlin,
+            string.quoted.double.kotlin,
+            punctuation.definition.string.end.kotlin,
+          ]
+
+  - line: 'val raw = """'
+    assertions:
+      - span: "raw"
+        scopes: [variable.other.readwrite.kotlin]
+      - span: '"""'
+        scopes: [punctuation.definition.string.begin.kotlin]
+
+  - line: 'still ${count} lines'
+    assertions:
+      - span: "still "
+        scopes: [meta.string.kotlin, string.quoted.triple.kotlin]
+      - span: "${"
+        scopes:
+          [
+            meta.interpolation.kotlin,
+            source.kotlin.embedded,
+            punctuation.section.interpolation.begin.kotlin,
+          ]
+      - span: "count"
+        scopes: [meta.interpolation.kotlin, source.kotlin.embedded, variable.other.readwrite.kotlin]
+      - span: "}"
+        scopes:
+          [
+            meta.interpolation.kotlin,
+            source.kotlin.embedded,
+            punctuation.section.interpolation.end.kotlin,
+          ]
+      - span: " lines"
+        scopes: [meta.string.kotlin, string.quoted.triple.kotlin]
+
+  - line: '"""'
+    assertions:
+      - span: '"""'
+        scopes: [meta.string.kotlin, string.quoted.triple.kotlin, punctuation.definition.string.end.kotlin]
+
+  - line: "val letter = 'A'"
+    assertions:
+      - span: "letter"
+        scopes: [variable.other.readwrite.kotlin]
+      - span: "'A'"
+        scopes: [constant.character.kotlin]

@@ -1,0 +1,84 @@
+// SYNTAX TEST "Kotlin.sublime-syntax"
+
+package demo.app
+// <- keyword.declaration.package.kotlin
+ // <- keyword.declaration.package.kotlin
+//^^^^^ keyword.declaration.package.kotlin
+//      ^^^^ entity.name.namespace.kotlin
+//          ^ punctuation.accessor.dot.kotlin
+//           ^^^ entity.name.namespace.kotlin
+
+import kotlin.collections.List as KList
+// <- keyword.control.import.kotlin
+ // <- keyword.control.import.kotlin
+//^^^^ keyword.control.import.kotlin
+//     ^^^^^^ entity.name.namespace.kotlin
+//            ^^^^^^^^^^^ entity.name.namespace.kotlin
+//                        ^^^^ entity.name.namespace.kotlin
+//                             ^^ keyword.declaration.alias.kotlin
+//                                ^^^^^ entity.name.namespace.kotlin
+
+@Serializable data class User
+// <- punctuation.definition.annotation.kotlin
+ // <- meta.annotation.kotlin entity.name.annotation.kotlin
+//^^^^^^^^^^^ meta.annotation.kotlin entity.name.annotation.kotlin
+//            ^^^^ storage.modifier.kotlin
+//                 ^^^^^ keyword.declaration.class.kotlin
+//                       ^^^^ meta.class.kotlin entity.name.class.kotlin
+
+interface Greeter
+// <- keyword.declaration.interface.kotlin
+ // <- keyword.declaration.interface.kotlin
+//^^^^^^^ keyword.declaration.interface.kotlin
+//        ^^^^^^^ meta.class.kotlin entity.name.interface.kotlin
+
+object Singleton
+// <- keyword.declaration.object.kotlin
+ // <- keyword.declaration.object.kotlin
+//^^^^ keyword.declaration.object.kotlin
+//     ^^^^^^^^^ meta.class.kotlin entity.name.class.kotlin
+
+companion object Factory
+// <- storage.modifier.kotlin
+ // <- storage.modifier.kotlin
+//^^^^^^^ storage.modifier.kotlin
+//        ^^^^^^ keyword.declaration.object.kotlin
+//               ^^^^^^^ meta.class.kotlin entity.name.class.kotlin
+
+typealias UserId = String
+// <- keyword.declaration.typealias.kotlin
+ // <- keyword.declaration.typealias.kotlin
+//^^^^^^^ keyword.declaration.typealias.kotlin
+//        ^^^^^^ meta.typealias.kotlin entity.name.type.alias.kotlin
+//               ^ keyword.operator.assignment.kotlin
+
+val data = 1
+// <- keyword.declaration.kotlin
+ // <- keyword.declaration.kotlin
+//^ keyword.declaration.kotlin
+//  ^^^^ variable.other.readwrite.kotlin
+//       ^ keyword.operator.assignment.kotlin
+//         ^ constant.numeric.integer.decimal.kotlin
+
+var (left, right) = pair
+// <- keyword.declaration.kotlin
+ // <- keyword.declaration.kotlin
+//^ keyword.declaration.kotlin
+//  ^ meta.declaration.variable.kotlin punctuation.section.group.begin.kotlin
+//   ^^^^ meta.declaration.variable.kotlin variable.other.readwrite.kotlin
+//         ^^^^^ meta.declaration.variable.kotlin variable.other.readwrite.kotlin
+//              ^ meta.declaration.variable.kotlin punctuation.section.group.end.kotlin
+//                  ^^^^ variable.other.readwrite.kotlin
+
+val `class` = 1
+//  ^^^^^^^ variable.other.readwrite.kotlin
+
+class Box(val value: Int, var size: Int)
+// <- keyword.declaration.class.kotlin
+ // <- keyword.declaration.class.kotlin
+//^^^ keyword.declaration.class.kotlin
+//    ^^^ meta.class.kotlin entity.name.class.kotlin
+//            ^^^^^ meta.function.parameters.kotlin variable.parameter.kotlin
+//                   ^^^ meta.type.kotlin support.type.kotlin
+//                            ^^^^ meta.function.parameters.kotlin variable.parameter.kotlin
+//                                  ^^^ meta.type.kotlin support.type.kotlin

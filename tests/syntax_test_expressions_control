@@ -1,0 +1,86 @@
+// SYNTAX TEST "Kotlin.sublime-syntax"
+
+if (a ?: b == c && !done) result++ else result--
+// <- keyword.control.conditional.kotlin
+ // <- keyword.control.conditional.kotlin
+
+if (a ?: b == c && !done) result++ else result--
+//    ^^ keyword.operator.elvis.kotlin
+//         ^^ keyword.operator.comparison.kotlin
+//              ^^ keyword.operator.logical.kotlin
+//                 ^ keyword.operator.logical.kotlin
+//                              ^^ keyword.operator.arithmetic.kotlin
+//                                 ^^^^ keyword.control.conditional.kotlin
+//                                            ^^ keyword.operator.arithmetic.kotlin
+
+when (value) { in 1..10 -> true else -> false }
+// <- keyword.control.conditional.kotlin
+ // <- keyword.control.conditional.kotlin
+//^^ keyword.control.conditional.kotlin
+//             ^^ keyword.operator.word.kotlin
+//                 ^^ keyword.operator.range.kotlin
+//                      ^^ punctuation.separator.when.kotlin
+//                         ^^^^ constant.language.boolean.kotlin
+//                              ^^^^ keyword.control.conditional.kotlin
+//                                   ^^ punctuation.separator.when.kotlin
+//                                      ^^^^^ constant.language.boolean.kotlin
+
+for (item in items) continue
+// <- keyword.control.loop.kotlin
+ // <- keyword.control.loop.kotlin
+//^ keyword.control.loop.kotlin
+//   ^^^^ variable.other.readwrite.kotlin
+//        ^^ keyword.operator.word.kotlin
+//                  ^^^^^^^^ keyword.control.flow.jump.kotlin
+
+while (x !is String) x = x as? String ?: y
+// <- keyword.control.loop.kotlin
+ // <- keyword.control.loop.kotlin
+//^^^ keyword.control.loop.kotlin
+//       ^^^ keyword.operator.word.kotlin
+//           ^^^^^^ meta.type.kotlin support.type.kotlin
+//                     ^ keyword.operator.assignment.kotlin
+//                         ^^^ keyword.operator.word.kotlin
+//                             ^^^^^^ meta.type.kotlin support.type.kotlin
+//                                    ^^ keyword.operator.elvis.kotlin
+
+value += other % 2
+// <- variable.other.readwrite.kotlin
+ // <- variable.other.readwrite.kotlin
+//^^^ variable.other.readwrite.kotlin
+//    ^^ keyword.operator.assignment.augmented.kotlin
+//             ^ keyword.operator.arithmetic.kotlin
+//               ^ constant.numeric.integer.decimal.kotlin
+
+numbers[0] != null
+// <- variable.other.readwrite.kotlin
+ // <- variable.other.readwrite.kotlin
+//^^^^^ variable.other.readwrite.kotlin
+//     ^ punctuation.section.brackets.begin.kotlin
+//      ^ constant.numeric.integer.decimal.kotlin
+//       ^ punctuation.section.brackets.end.kotlin
+//         ^^ keyword.operator.comparison.kotlin
+//            ^^^^ constant.language.null.kotlin
+
+this@Outer::class
+// <- variable.language.kotlin
+ // <- variable.language.kotlin
+//^^ variable.language.kotlin
+//  ^ punctuation.definition.label.kotlin
+//   ^^^^^ entity.name.label.kotlin
+//        ^^ keyword.operator.callable-reference.kotlin
+//          ^^^^^ keyword.other.kotlin
+
+items?.first()!!
+// <- variable.other.readwrite.kotlin
+ // <- variable.other.readwrite.kotlin
+//^^^ variable.other.readwrite.kotlin
+//   ^^ keyword.operator.null-safe.kotlin
+//     ^^^^^ variable.function.kotlin
+//            ^^ keyword.operator.null-assertion.kotlin
+
+val flags = 0xFF + 0b10 + 42uL + 1.5e2f
+//          ^^^^ constant.numeric.integer.hexadecimal.kotlin
+//                 ^^^^ constant.numeric.integer.binary.kotlin
+//                        ^^^^ constant.numeric.integer.kotlin
+//                               ^^^^^^ constant.numeric.float.kotlin

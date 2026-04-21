@@ -1,0 +1,16 @@
+// SYNTAX TEST "Kotlin.sublime-syntax"
+
+// A comment
+// <- punctuation.definition.comment.kotlin
+ // <- punctuation.definition.comment.kotlin
+// ^^^^^^^^^ comment.line.double-slash.kotlin
+
+var name = "John"
+// <- keyword.declaration.kotlin
+ // <- keyword.declaration.kotlin
+//^ keyword.declaration.kotlin
+//  ^^^^ variable.other.readwrite.kotlin
+//       ^ keyword.operator.assignment.kotlin
+//         ^ meta.string.kotlin string.quoted.double.kotlin punctuation.definition.string.begin.kotlin
+//          ^^^^ meta.string.kotlin string.quoted.double.kotlin
+//              ^ meta.string.kotlin string.quoted.double.kotlin punctuation.definition.string.end.kotlin
