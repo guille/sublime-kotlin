@@ -77,7 +77,7 @@ data class Person(
 //           ^^^ keyword.declaration.function.kotlin
 //               ^^^^^^^^^^ meta.function.kotlin entity.name.function.kotlin
 //                              ^^^^^ variable.other.readwrite.kotlin
-//                                   ^^ keyword.accessor.null-safe.kotlin
+//                                   ^^ punctuation.accessor.null-safe.kotlin
 //                                     ^^^^^^^^^^^^^^^ variable.function.kotlin
 //                                                          ^^ keyword.operator.elvis.kotlin
 

@@ -797,11 +797,11 @@ contexts:
   callable-references:
     - match: '(::)(class)\b'
       captures:
-        1: keyword.accessor.callable-reference.kotlin
+        1: punctuation.accessor.callable-reference.kotlin
         2: keyword.other.kotlin
     - match: '(::)({{identifier}})'
       captures:
-        1: keyword.accessor.callable-reference.kotlin
+        1: punctuation.accessor.callable-reference.kotlin
         2: variable.function.kotlin
 
   labels:
@@ -814,7 +814,7 @@ contexts:
     - match: '\?:'
       scope: keyword.operator.elvis.kotlin
     - match: '\?\.'
-      scope: keyword.accessor.null-safe.kotlin
+      scope: punctuation.accessor.null-safe.kotlin
     - match: '!!'
       scope: keyword.operator.null-assertion.kotlin
     - match: '!is\b'

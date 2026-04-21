@@ -140,7 +140,7 @@ tests:
       - span: "email"
         scopes: [variable.other.readwrite.kotlin]
       - span: "?."
-        scopes: [keyword.accessor.null-safe.kotlin]
+        scopes: [punctuation.accessor.null-safe.kotlin]
       - span: "substringBefore"
         scopes: [variable.function.kotlin]
       - span: "?:"
@@ -237,7 +237,8 @@ tests:
       - span: "}"
         scopes: [punctuation.section.block.end.kotlin]
 
-  - line: 'val attrs = if (attributes.isEmpty()) "" else " " + attributes.entries.joinToString(" ") { """${it.key}="${it.value}"""" }'
+  - line: 'val attrs = if (attributes.isEmpty()) "" else " " +
+      attributes.entries.joinToString(" ") { """${it.key}="${it.value}"""" }'
     assertions:
       - span: "attrs"
         scopes: [meta.declaration.variable.kotlin, variable.other.readwrite.kotlin]
@@ -252,18 +253,47 @@ tests:
         scopes: [punctuation.definition.string.begin.kotlin]
       - span: "it"
         nth: 0
-        scopes: [source.kotlin, meta.interpolation.kotlin, source.kotlin.embedded, variable.language.kotlin]
+        scopes:
+          [
+            source.kotlin,
+            meta.interpolation.kotlin,
+            source.kotlin.embedded,
+            variable.language.kotlin,
+          ]
       - span: "key"
-        scopes: [source.kotlin, meta.interpolation.kotlin, source.kotlin.embedded, variable.other.readwrite.kotlin]
+        scopes:
+          [
+            source.kotlin,
+            meta.interpolation.kotlin,
+            source.kotlin.embedded,
+            variable.other.readwrite.kotlin,
+          ]
       - span: "it"
         nth: 1
-        scopes: [source.kotlin, meta.interpolation.kotlin, source.kotlin.embedded, variable.language.kotlin]
+        scopes:
+          [
+            source.kotlin,
+            meta.interpolation.kotlin,
+            source.kotlin.embedded,
+            variable.language.kotlin,
+          ]
       - span: "value"
         nth: 0
-        scopes: [source.kotlin, meta.interpolation.kotlin, source.kotlin.embedded, variable.other.readwrite.kotlin]
+        scopes:
+          [
+            source.kotlin,
+            meta.interpolation.kotlin,
+            source.kotlin.embedded,
+            variable.other.readwrite.kotlin,
+          ]
       - span: '"""'
         nth: 1
-        scopes: [meta.string.kotlin, string.quoted.triple.kotlin, punctuation.definition.string.end.kotlin]
+        scopes:
+          [
+            meta.string.kotlin,
+            string.quoted.triple.kotlin,
+            punctuation.definition.string.end.kotlin,
+          ]
 
   - line: "afterLeak"
     assertions:

@@ -68,14 +68,14 @@ this@Outer::class
 //^^ variable.language.kotlin
 //  ^ punctuation.definition.label.kotlin
 //   ^^^^^ entity.name.label.kotlin
-//        ^^ keyword.accessor.callable-reference.kotlin
+//        ^^ punctuation.accessor.callable-reference.kotlin
 //          ^^^^^ keyword.other.kotlin
 
 items?.first()!!
 // <- variable.other.readwrite.kotlin
  // <- variable.other.readwrite.kotlin
 //^^^ variable.other.readwrite.kotlin
-//   ^^ keyword.accessor.null-safe.kotlin
+//   ^^ punctuation.accessor.null-safe.kotlin
 //     ^^^^^ variable.function.kotlin
 //            ^^ keyword.operator.null-assertion.kotlin
 
