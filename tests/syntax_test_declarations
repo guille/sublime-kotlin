@@ -20,7 +20,7 @@ import kotlin.collections.List as KList
 //^^^^ keyword.control.import.kotlin
 //     ^^^^^^ support.module.kotlin
 //            ^^^^^^^^^^^ support.module.kotlin
-//                        ^^^^ support.class.kotlin
+//                        ^^^^ meta.import.kotlin -support
 //                             ^^ keyword.declaration.alias.kotlin
 //                                ^^^^^ entity.name.import.alias.kotlin
 
@@ -32,10 +32,10 @@ import kotlin.contracts.*
 import kotlin.properties.Delegates
 //     ^^^^^^ support.module.kotlin
 //            ^^^^^^^^^^ support.module.kotlin
-//                       ^^^^^^^^^ support.class.kotlin
+//                       ^^^^^^^^^ meta.import.kotlin -support
 
 import kotlin.properties.Foo as Bar
-//                       ^^^ support.class.kotlin
+//                       ^^^ meta.import.kotlin -support
 //                              ^^^ entity.name.import.alias.kotlin
 
 @Serializable data class User

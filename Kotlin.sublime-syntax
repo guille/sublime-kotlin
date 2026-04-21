@@ -114,13 +114,10 @@ contexts:
       scope: keyword.declaration.alias.kotlin
       push: import-alias-name
     - match: '{{identifier}}(?=\s+as\b)'
-      scope: support.class.kotlin
     - match: '{{identifier}}(?=\s*(?:;|$))'
-      scope: support.class.kotlin
     - match: '{{identifier}}(?=\s*\.)'
       scope: support.module.kotlin
     - match: '{{identifier}}'
-      scope: support.class.kotlin
     - match: '\*'
       scope: keyword.operator.wildcard.kotlin
     - match: '\.'

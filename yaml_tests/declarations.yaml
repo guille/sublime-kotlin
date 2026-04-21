@@ -32,7 +32,7 @@ tests:
       - span: "collections"
         scopes: [support.module.kotlin]
       - span: "List"
-        scopes: [support.class.kotlin]
+        scopes: [meta.import.kotlin, -support]
       - span: "as"
         scopes: [keyword.declaration.alias.kotlin]
       - span: "KList"
@@ -54,12 +54,12 @@ tests:
       - span: "properties"
         scopes: [support.module.kotlin]
       - span: "Delegates"
-        scopes: [support.class.kotlin]
+        scopes: [meta.import.kotlin, -support]
 
   - line: "import kotlin.properties.Foo as Bar"
     assertions:
       - span: "Foo"
-        scopes: [support.class.kotlin]
+        scopes: [meta.import.kotlin, -support]
       - span: "Bar"
         scopes: [entity.name.import.alias.kotlin]
 
