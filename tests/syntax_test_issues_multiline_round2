@@ -77,7 +77,7 @@ data class Person(
 //           ^^^ keyword.declaration.function.kotlin
 //               ^^^^^^^^^^ meta.function.kotlin entity.name.function.kotlin
 //                              ^^^^^ variable.other.readwrite.kotlin
-//                                   ^^ keyword.operator.null-safe.kotlin
+//                                   ^^ keyword.accessor.null-safe.kotlin
 //                                     ^^^^^^^^^^^^^^^ variable.function.kotlin
 //                                                          ^^ keyword.operator.elvis.kotlin
 
@@ -140,10 +140,10 @@ val attrs = if (attributes.isEmpty()) "" else " " + attributes.entries.joinToStr
 //                         ^^^^^^^ variable.function.kotlin
 //                                                                     ^^^^^^^^^^^^ variable.function.kotlin
 //                                                                                         ^^^ punctuation.definition.string.begin.kotlin
-//                                                                                              ^^ meta.interpolation.kotlin source.kotlin.embedded variable.language.kotlin
-//                                                                                                 ^^^ meta.interpolation.kotlin source.kotlin.embedded variable.other.readwrite.kotlin
-//                                                                                                         ^^ meta.interpolation.kotlin source.kotlin.embedded variable.language.kotlin
-//                                                                                                            ^^^^^ meta.interpolation.kotlin source.kotlin.embedded variable.other.readwrite.kotlin
+//                                                                                              ^^ source.kotlin meta.interpolation.kotlin source.kotlin.embedded variable.language.kotlin
+//                                                                                                 ^^^ source.kotlin meta.interpolation.kotlin source.kotlin.embedded variable.other.readwrite.kotlin
+//                                                                                                         ^^ source.kotlin meta.interpolation.kotlin source.kotlin.embedded variable.language.kotlin
+//                                                                                                            ^^^^^ source.kotlin meta.interpolation.kotlin source.kotlin.embedded variable.other.readwrite.kotlin
 //                                                                                                                  ^^^ meta.string.kotlin string.quoted.triple.kotlin punctuation.definition.string.end.kotlin
 
 afterLeak

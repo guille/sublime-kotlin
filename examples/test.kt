@@ -5,7 +5,7 @@ package com.example.showcase
 
 import kotlin.contracts.*
 import kotlin.properties.Delegates
-import kotlin.properties.ReadWriteProperty
+import kotlin.properties.ReadWriteProperty as Foo
 import kotlin.reflect.*
 import kotlin.reflect.full.*
 

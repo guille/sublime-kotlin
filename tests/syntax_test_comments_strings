@@ -32,9 +32,9 @@ val message = "Hello $name ${user.id}"
 //             ^^^^^^ meta.string.kotlin string.quoted.double.kotlin
 //                   ^^^^^ meta.string.kotlin string.quoted.double.kotlin variable.other.interpolated.kotlin
 //                         ^^ meta.interpolation.kotlin source.kotlin.embedded punctuation.section.interpolation.begin.kotlin
-//                           ^^^^ meta.interpolation.kotlin source.kotlin.embedded variable.other.readwrite.kotlin
-//                               ^ meta.interpolation.kotlin source.kotlin.embedded punctuation.accessor.dot.kotlin
-//                                ^^ meta.interpolation.kotlin source.kotlin.embedded variable.other.readwrite.kotlin
+//                           ^^^^ source.kotlin meta.interpolation.kotlin source.kotlin.embedded variable.other.readwrite.kotlin
+//                               ^ source.kotlin meta.interpolation.kotlin source.kotlin.embedded punctuation.accessor.dot.kotlin
+//                                ^^ source.kotlin meta.interpolation.kotlin source.kotlin.embedded variable.other.readwrite.kotlin
 //                                  ^ meta.interpolation.kotlin source.kotlin.embedded punctuation.section.interpolation.end.kotlin
 //                                   ^ meta.string.kotlin string.quoted.double.kotlin punctuation.definition.string.end.kotlin
 
@@ -47,7 +47,7 @@ still ${count} lines
  // <- meta.string.kotlin string.quoted.triple.kotlin
 //^^^^ meta.string.kotlin string.quoted.triple.kotlin
 //    ^^ meta.interpolation.kotlin source.kotlin.embedded punctuation.section.interpolation.begin.kotlin
-//      ^^^^^ meta.interpolation.kotlin source.kotlin.embedded variable.other.readwrite.kotlin
+//      ^^^^^ source.kotlin meta.interpolation.kotlin source.kotlin.embedded variable.other.readwrite.kotlin
 //           ^ meta.interpolation.kotlin source.kotlin.embedded punctuation.section.interpolation.end.kotlin
 //            ^^^^^^ meta.string.kotlin string.quoted.triple.kotlin
 

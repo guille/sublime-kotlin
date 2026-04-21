@@ -4,19 +4,39 @@ package demo.app
 // <- keyword.declaration.package.kotlin
  // <- keyword.declaration.package.kotlin
 //^^^^^ keyword.declaration.package.kotlin
-//      ^^^^ entity.name.namespace.kotlin
+//      ^^^^ variable.namespace.java
 //          ^ punctuation.accessor.dot.kotlin
-//           ^^^ entity.name.namespace.kotlin
+//           ^^^ entity.name.namespace.package.kotlin
+
+package foo.bar.test;
+//      ^^^ variable.namespace.java
+//          ^^^ variable.namespace.java
+//              ^^^^ entity.name.namespace.package.kotlin
+//                  ^ punctuation.terminator.statement.kotlin
 
 import kotlin.collections.List as KList
 // <- keyword.control.import.kotlin
  // <- keyword.control.import.kotlin
 //^^^^ keyword.control.import.kotlin
-//     ^^^^^^ entity.name.namespace.kotlin
-//            ^^^^^^^^^^^ entity.name.namespace.kotlin
-//                        ^^^^ entity.name.namespace.kotlin
+//     ^^^^^^ support.module.kotlin
+//            ^^^^^^^^^^^ support.module.kotlin
+//                        ^^^^ support.class.kotlin
 //                             ^^ keyword.declaration.alias.kotlin
-//                                ^^^^^ entity.name.namespace.kotlin
+//                                ^^^^^ entity.name.import.alias.kotlin
+
+import kotlin.contracts.*
+//     ^^^^^^ support.module.kotlin
+//            ^^^^^^^^^ support.module.kotlin
+//                      ^ keyword.operator.wildcard.kotlin
+
+import kotlin.properties.Delegates
+//     ^^^^^^ support.module.kotlin
+//            ^^^^^^^^^^ support.module.kotlin
+//                       ^^^^^^^^^ support.class.kotlin
+
+import kotlin.properties.Foo as Bar
+//                       ^^^ support.class.kotlin
+//                              ^^^ entity.name.import.alias.kotlin
 
 @Serializable data class User
 // <- punctuation.definition.annotation.kotlin

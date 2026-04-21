@@ -127,8 +127,8 @@ is Result.Success<*> -> "Success: ${result.value} (meta: ${result.metadata})"
 //        ^^^^^^^ meta.type.kotlin support.type.kotlin
 //                ^ meta.type.kotlin keyword.operator.wildcard.kotlin
 //                   ^^ punctuation.separator.when.kotlin
-//                                  ^^^^^^ meta.interpolation.kotlin source.kotlin.embedded variable.other.readwrite.kotlin
-//                                                                ^^^^^^^^ meta.interpolation.kotlin source.kotlin.embedded variable.other.readwrite.kotlin
+//                                  ^^^^^^ source.kotlin meta.interpolation.kotlin source.kotlin.embedded variable.other.readwrite.kotlin
+//                                                                ^^^^^^^^ source.kotlin meta.interpolation.kotlin source.kotlin.embedded variable.other.readwrite.kotlin
 
 foo
 // <- variable.other.readwrite.kotlin

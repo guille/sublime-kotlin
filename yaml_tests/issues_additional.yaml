@@ -234,9 +234,9 @@ tests:
         scopes: [punctuation.separator.when.kotlin]
       - span: "result"
         nth: 0
-        scopes: [meta.interpolation.kotlin, source.kotlin.embedded, variable.other.readwrite.kotlin]
+        scopes: [source.kotlin, meta.interpolation.kotlin, source.kotlin.embedded, variable.other.readwrite.kotlin]
       - span: "metadata"
-        scopes: [meta.interpolation.kotlin, source.kotlin.embedded, variable.other.readwrite.kotlin]
+        scopes: [source.kotlin, meta.interpolation.kotlin, source.kotlin.embedded, variable.other.readwrite.kotlin]
 
   - line: "foo"
     assertions:

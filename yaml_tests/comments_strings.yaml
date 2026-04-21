@@ -67,12 +67,12 @@ tests:
             punctuation.section.interpolation.begin.kotlin,
           ]
       - span: "user"
-        scopes: [meta.interpolation.kotlin, source.kotlin.embedded, variable.other.readwrite.kotlin]
+        scopes: [source.kotlin, meta.interpolation.kotlin, source.kotlin.embedded, variable.other.readwrite.kotlin]
       - span: "."
         nth: 0
-        scopes: [meta.interpolation.kotlin, source.kotlin.embedded, punctuation.accessor.dot.kotlin]
+        scopes: [source.kotlin, meta.interpolation.kotlin, source.kotlin.embedded, punctuation.accessor.dot.kotlin]
       - span: "id"
-        scopes: [meta.interpolation.kotlin, source.kotlin.embedded, variable.other.readwrite.kotlin]
+        scopes: [source.kotlin, meta.interpolation.kotlin, source.kotlin.embedded, variable.other.readwrite.kotlin]
       - span: "}"
         scopes:
           [
@@ -108,7 +108,7 @@ tests:
             punctuation.section.interpolation.begin.kotlin,
           ]
       - span: "count"
-        scopes: [meta.interpolation.kotlin, source.kotlin.embedded, variable.other.readwrite.kotlin]
+        scopes: [source.kotlin, meta.interpolation.kotlin, source.kotlin.embedded, variable.other.readwrite.kotlin]
       - span: "}"
         scopes:
           [

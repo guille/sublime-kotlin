@@ -96,8 +96,10 @@ contexts:
 
   package-statement:
     - meta_content_scope: meta.namespace.kotlin
+    - match: '{{identifier}}(?=\s*\.)'
+      scope: variable.namespace.java
     - match: '{{identifier}}'
-      scope: entity.name.namespace.kotlin
+      scope: entity.name.namespace.package.kotlin
     - match: '\.'
       scope: punctuation.accessor.dot.kotlin
     - match: ';'
@@ -110,8 +112,15 @@ contexts:
     - meta_content_scope: meta.import.kotlin
     - match: '\bas\b'
       scope: keyword.declaration.alias.kotlin
+      push: import-alias-name
+    - match: '{{identifier}}(?=\s+as\b)'
+      scope: support.class.kotlin
+    - match: '{{identifier}}(?=\s*(?:;|$))'
+      scope: support.class.kotlin
+    - match: '{{identifier}}(?=\s*\.)'
+      scope: support.module.kotlin
     - match: '{{identifier}}'
-      scope: entity.name.namespace.kotlin
+      scope: support.class.kotlin
     - match: '\*'
       scope: keyword.operator.wildcard.kotlin
     - match: '\.'
@@ -120,6 +129,13 @@ contexts:
       scope: punctuation.terminator.statement.kotlin
       pop: true
     - match: '$'
+      pop: true
+
+  import-alias-name:
+    - match: '{{identifier}}'
+      scope: entity.name.import.alias.kotlin
+      pop: true
+    - match: '(?=\S)'
       pop: true
 
   typealias-declaration:
@@ -643,7 +659,7 @@ contexts:
     - match: '\$'
 
   string-interpolation:
-    - clear_scopes: true
+    - clear_scopes: 1
     - meta_scope: meta.interpolation.kotlin source.kotlin.embedded
     - match: '\{'
       scope: punctuation.section.block.begin.kotlin
@@ -656,7 +672,7 @@ contexts:
     - include: main
 
   interpolation-block:
-    - clear_scopes: true
+    - clear_scopes: 1
     - meta_scope: source.kotlin.embedded
     - match: '\{'
       scope: punctuation.section.block.begin.kotlin

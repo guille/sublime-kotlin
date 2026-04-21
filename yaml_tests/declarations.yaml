@@ -6,26 +6,62 @@ tests:
       - span: "package"
         scopes: [keyword.declaration.package.kotlin]
       - span: "demo"
-        scopes: [entity.name.namespace.kotlin]
+        scopes: [variable.namespace.java]
       - span: "."
         scopes: [punctuation.accessor.dot.kotlin]
       - span: "app"
-        scopes: [entity.name.namespace.kotlin]
+        scopes: [entity.name.namespace.package.kotlin]
+
+  - line: "package foo.bar.test;"
+    assertions:
+      - span: "foo"
+        scopes: [variable.namespace.java]
+      - span: "bar"
+        scopes: [variable.namespace.java]
+      - span: "test"
+        scopes: [entity.name.namespace.package.kotlin]
+      - span: ";"
+        scopes: [punctuation.terminator.statement.kotlin]
 
   - line: "import kotlin.collections.List as KList"
     assertions:
       - span: "import"
         scopes: [keyword.control.import.kotlin]
       - span: "kotlin"
-        scopes: [entity.name.namespace.kotlin]
+        scopes: [support.module.kotlin]
       - span: "collections"
-        scopes: [entity.name.namespace.kotlin]
+        scopes: [support.module.kotlin]
       - span: "List"
-        scopes: [entity.name.namespace.kotlin]
+        scopes: [support.class.kotlin]
       - span: "as"
         scopes: [keyword.declaration.alias.kotlin]
       - span: "KList"
-        scopes: [entity.name.namespace.kotlin]
+        scopes: [entity.name.import.alias.kotlin]
+
+  - line: "import kotlin.contracts.*"
+    assertions:
+      - span: "kotlin"
+        scopes: [support.module.kotlin]
+      - span: "contracts"
+        scopes: [support.module.kotlin]
+      - span: "*"
+        scopes: [keyword.operator.wildcard.kotlin]
+
+  - line: "import kotlin.properties.Delegates"
+    assertions:
+      - span: "kotlin"
+        scopes: [support.module.kotlin]
+      - span: "properties"
+        scopes: [support.module.kotlin]
+      - span: "Delegates"
+        scopes: [support.class.kotlin]
+
+  - line: "import kotlin.properties.Foo as Bar"
+    assertions:
+      - span: "Foo"
+        scopes: [support.class.kotlin]
+      - span: "Bar"
+        scopes: [entity.name.import.alias.kotlin]
 
   - line: "@Serializable data class User"
     assertions:

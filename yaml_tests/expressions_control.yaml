@@ -109,7 +109,7 @@ tests:
       - span: "Outer"
         scopes: [entity.name.label.kotlin]
       - span: "::"
-        scopes: [keyword.operator.callable-reference.kotlin]
+        scopes: [keyword.accessor.callable-reference.kotlin]
       - span: "class"
         scopes: [keyword.other.kotlin]
 
@@ -118,7 +118,7 @@ tests:
       - span: "items"
         scopes: [variable.other.readwrite.kotlin]
       - span: "?."
-        scopes: [keyword.operator.null-safe.kotlin]
+        scopes: [keyword.accessor.null-safe.kotlin]
       - span: "first"
         scopes: [variable.function.kotlin]
       - span: "!!"
