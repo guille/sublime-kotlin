@@ -4,7 +4,7 @@
 	<key>name</key>
 	<string>Comments</string>
 	<key>scope</key>
-	<string>source.Kotlin</string>
+	<string>source.kotlin</string>
 	<key>settings</key>
 	<dict>
 		<key>shellVariables</key>
