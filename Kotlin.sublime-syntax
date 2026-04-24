@@ -180,7 +180,7 @@ contexts:
       push: class-parameters
     - match: ':'
       scope: punctuation.separator.type.kotlin
-      push: type-expression-list
+      push: delegation-specifiers
     - match: '(?=[{;=])'
       pop: true
     - match: '(?=\b(?:package|import|class|interface|object|fun|val|var|typealias)\b)'
@@ -200,7 +200,7 @@ contexts:
       push: type-arguments
     - match: ':'
       scope: punctuation.separator.type.kotlin
-      push: type-expression-list
+      push: delegation-specifiers
     - match: '(?=[{;=])'
       pop: true
     - match: '(?=\b(?:package|import|class|interface|object|fun|val|var|typealias)\b)'
@@ -219,7 +219,7 @@ contexts:
   object-after-name:
     - match: ':'
       scope: punctuation.separator.type.kotlin
-      push: type-expression-list
+      push: delegation-specifiers
     - match: '(?=[{(])'
       pop: true
     - match: '(?=\b(?:package|import|class|interface|object|fun|val|var|typealias)\b)'
@@ -508,6 +508,52 @@ contexts:
       scope: punctuation.section.group.begin.kotlin
       push: nested-parentheses
     - include: type-expression-content
+
+  delegation-specifiers:
+    - meta_content_scope: meta.type.kotlin
+    - match: '(?=[{;=])'
+      pop: true
+    - match: '$'
+      pop: true
+    - match: ','
+      scope: punctuation.separator.sequence.kotlin
+    - match: '\bby\b'
+      scope: keyword.operator.word.kotlin
+      push: delegation-expression
+    - match: '\('
+      scope: punctuation.section.group.begin.kotlin
+      push: delegation-arguments
+    - include: type-expression-content
+
+  delegation-expression:
+    - match: '(?=\s*(?:,|\{|;|$))'
+      pop: true
+    - include: strings
+    - include: literals
+    - include: targeted-keywords
+    - include: callable-references
+    - include: labels
+    - include: operators
+    - include: keywords
+    - include: punctuation
+    - include: identifiers
+
+  delegation-arguments:
+    - match: '\('
+      scope: punctuation.section.group.begin.kotlin
+      push: delegation-arguments
+    - match: '\)'
+      scope: punctuation.section.group.end.kotlin
+      pop: true
+    - include: strings
+    - include: literals
+    - include: targeted-keywords
+    - include: callable-references
+    - include: labels
+    - include: operators
+    - include: keywords
+    - include: punctuation
+    - include: identifiers
 
   type-parentheses:
     - meta_scope: meta.group.kotlin

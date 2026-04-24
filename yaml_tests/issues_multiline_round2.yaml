@@ -174,6 +174,50 @@ tests:
         nth: 1
         scopes: [meta.type.kotlin, support.type.kotlin]
 
+  - line: "class DelegatedJoke(val joke: Joke) : JokeInterface by joke {"
+    assertions:
+      - span: "class"
+        scopes: [keyword.declaration.class.kotlin]
+      - span: "DelegatedJoke"
+        scopes: [meta.class.kotlin, entity.name.class.kotlin]
+      - span: "val"
+        scopes: [keyword.declaration.kotlin]
+      - span: "joke"
+        nth: 0
+        scopes: [meta.function.parameters.kotlin, variable.parameter.kotlin]
+      - span: "Joke"
+        nth: 1
+        scopes: [meta.type.kotlin, support.type.kotlin]
+      - span: "JokeInterface"
+        scopes: [meta.type.kotlin, support.type.kotlin]
+      - span: "by"
+        scopes: [keyword.operator.word.kotlin]
+      - span: "joke"
+        nth: 1
+        scopes: [variable.other.readwrite.kotlin]
+      - span: "{"
+        scopes: [punctuation.section.block.begin.kotlin]
+
+  - line: "}"
+    assertions:
+      - span: "}"
+        scopes: [punctuation.section.block.end.kotlin]
+
+  - line: "class Derived(value: String) : Base(value), ExtraInterface {"
+    assertions:
+      - span: "Base"
+        scopes: [meta.type.kotlin, support.type.kotlin]
+      - span: "value"
+        nth: 1
+        scopes: [variable.other.readwrite.kotlin]
+      - span: "ExtraInterface"
+        scopes: [meta.type.kotlin, support.type.kotlin]
+
+  - line: "}"
+    assertions:
+      - span: "}"
+        scopes: [punctuation.section.block.end.kotlin]
+
   - line: "value class UserId(val id: String) {}"
     assertions:
       - span: "value"

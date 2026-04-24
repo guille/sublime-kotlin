@@ -97,6 +97,30 @@ class Config private constructor(val settings: Map<String, String>) {}
 //                                                 ^^^^^^ meta.type.kotlin support.type.kotlin
 //                                                         ^^^^^^ meta.type.kotlin support.type.kotlin
 
+class DelegatedJoke(val joke: Joke) : JokeInterface by joke {
+// <- keyword.declaration.class.kotlin
+ // <- keyword.declaration.class.kotlin
+//^^^ keyword.declaration.class.kotlin
+//    ^^^^^^^^^^^^^ meta.class.kotlin entity.name.class.kotlin
+//                  ^^^ keyword.declaration.kotlin
+//                      ^^^^ meta.function.parameters.kotlin variable.parameter.kotlin
+//                            ^^^^ meta.type.kotlin support.type.kotlin
+//                                    ^^^^^^^^^^^^^ meta.type.kotlin support.type.kotlin
+//                                                  ^^ keyword.operator.word.kotlin
+//                                                     ^^^^ variable.other.readwrite.kotlin
+//                                                          ^ punctuation.section.block.begin.kotlin
+
+}
+// <- punctuation.section.block.end.kotlin
+
+class Derived(value: String) : Base(value), ExtraInterface {
+//                             ^^^^ meta.type.kotlin support.type.kotlin
+//                                  ^^^^^ variable.other.readwrite.kotlin
+//                                          ^^^^^^^^^^^^^^ meta.type.kotlin support.type.kotlin
+
+}
+// <- punctuation.section.block.end.kotlin
+
 value class UserId(val id: String) {}
 // <- storage.modifier.kotlin
  // <- storage.modifier.kotlin
