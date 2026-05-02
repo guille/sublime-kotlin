@@ -2,7 +2,7 @@
 
 This package contains a Sublime Text syntax for the [Kotlin](https://kotlinlang.org/) language. It is only available for versions of ST equal or newer to 4075.
 
-Its main aim is replacing an [older package](https://github.com/vkostyukov/kotlin-sublime-package) that had lackluster support for newer features and broke highlighting in many edge cases. If you liked the old one better for some reason
+Its main aim is replacing an [older package](https://github.com/vkostyukov/kotlin-sublime-package) that had lackluster support for newer features and broke highlighting in many edge cases.
 
 >[!NOTE]
 > The other package sets a `source.Kotlin` scope. This one follows a more standard `source.kotlin`
