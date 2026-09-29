@@ -11,33 +11,33 @@ environment.seat("foo")
 //          ^^^^ variable.function.kotlin
 
 fun <T> copyWhenGreater(list: List<T>, threshold: T): List<String>
-//  ^ meta.type.parameters.kotlin punctuation.definition.typeparameters.begin.kotlin
-//   ^ meta.type.parameters.kotlin support.type.kotlin
-//                            ^^^^ meta.type.kotlin support.type.kotlin
-//                                 ^ meta.type.kotlin support.type.kotlin
-//                                     ^^^^^^^^^ meta.function.parameters.kotlin variable.parameter.kotlin
-//                                                ^ meta.type.kotlin support.type.kotlin
-//                                                    ^^^^ meta.type.kotlin support.type.kotlin
-//                                                         ^^^^^^ meta.type.kotlin support.type.kotlin
+//  ^ meta.type.parameters.kotlin & punctuation.definition.typeparameters.begin.kotlin
+//   ^ meta.type.parameters.kotlin & support.type.kotlin
+//                            ^^^^ meta.type.kotlin & support.type.kotlin
+//                                 ^ meta.type.kotlin & support.type.kotlin
+//                                     ^^^^^^^^^ meta.function.parameters.kotlin & variable.parameter.kotlin
+//                                                ^ meta.type.kotlin & support.type.kotlin
+//                                                    ^^^^ meta.type.kotlin & support.type.kotlin
+//                                                         ^^^^^^ meta.type.kotlin & support.type.kotlin
 
     where T : CharSequence,
 //  ^^^^^ keyword.declaration.kotlin
-//        ^ meta.type.kotlin support.type.kotlin
+//        ^ meta.type.kotlin & support.type.kotlin
 //          ^ punctuation.separator.type.kotlin
-//            ^^^^^^^^^^^^ meta.type.kotlin support.type.kotlin
+//            ^^^^^^^^^^^^ meta.type.kotlin & support.type.kotlin
 
           T : Comparable<T> {}
-//        ^ meta.type.kotlin support.type.kotlin
-//            ^^^^^^^^^^ meta.type.kotlin support.type.kotlin
-//                      ^ meta.type.parameters.kotlin punctuation.definition.typeparameters.begin.kotlin
-//                       ^ meta.type.kotlin support.type.kotlin
+//        ^ meta.type.kotlin & support.type.kotlin
+//            ^^^^^^^^^^ meta.type.kotlin & support.type.kotlin
+//                      ^ meta.type.parameters.kotlin & punctuation.definition.typeparameters.begin.kotlin
+//                       ^ meta.type.kotlin & support.type.kotlin
 
 operator fun contains(value: Double) = data.any { it == value }
 // <- storage.modifier.kotlin
  // <- storage.modifier.kotlin
 //^^^^^^ storage.modifier.kotlin
-//           ^^^^^^^^ meta.function.kotlin entity.name.function.kotlin
-//                           ^^^^^^ meta.type.kotlin support.type.kotlin
+//           ^^^^^^^^ meta.function.kotlin & entity.name.function.kotlin
+//                           ^^^^^^ meta.type.kotlin & support.type.kotlin
 //                                          ^^^ variable.function.kotlin
 //                                                ^^ variable.language.kotlin
 
@@ -71,64 +71,64 @@ private val entries = mutableMapOf<String, Any>()
 // <- storage.modifier.kotlin
  // <- storage.modifier.kotlin
 //^^^^^ storage.modifier.kotlin
-//          ^^^^^^^ meta.declaration.variable.kotlin variable.other.readwrite.kotlin
+//          ^^^^^^^ meta.declaration.variable.kotlin & variable.other.readwrite.kotlin
 //                    ^^^^^^^^^^^^ variable.function.kotlin
-//                                ^ meta.type.parameters.kotlin punctuation.definition.typeparameters.begin.kotlin
-//                                 ^^^^^^ meta.type.kotlin support.type.kotlin
-//                                         ^^^ meta.type.kotlin support.type.kotlin
+//                                ^ meta.type.parameters.kotlin & punctuation.definition.typeparameters.begin.kotlin
+//                                 ^^^^^^ meta.type.kotlin & support.type.kotlin
+//                                         ^^^ meta.type.kotlin & support.type.kotlin
 
 ReadWriteProperty<Any?, Double> {}
-// <- meta.type.kotlin support.type.kotlin
- // <- meta.type.kotlin support.type.kotlin
-//^^^^^^^^^^^^^^^ meta.type.kotlin support.type.kotlin
-//                ^^^ meta.type.kotlin support.type.kotlin
-//                   ^ meta.type.kotlin keyword.operator.nullable.kotlin
-//                      ^^^^^^ meta.type.kotlin support.type.kotlin
+// <- meta.type.kotlin & support.type.kotlin
+ // <- meta.type.kotlin & support.type.kotlin
+//^^^^^^^^^^^^^^^ meta.type.kotlin & support.type.kotlin
+//                ^^^ meta.type.kotlin & support.type.kotlin
+//                   ^ meta.type.kotlin & keyword.operator.nullable.kotlin
+//                      ^^^^^^ meta.type.kotlin & support.type.kotlin
 
 typealias Matrix2D = Array<DoubleArray>
 // <- keyword.declaration.typealias.kotlin
  // <- keyword.declaration.typealias.kotlin
 //^^^^^^^ keyword.declaration.typealias.kotlin
-//        ^^^^^^^^ meta.typealias.kotlin entity.name.type.alias.kotlin
-//                   ^^^^^ meta.type.kotlin support.type.kotlin
-//                         ^^^^^^^^^^^ meta.type.kotlin support.type.kotlin
+//        ^^^^^^^^ meta.typealias.kotlin & entity.name.type.alias.kotlin
+//                   ^^^^^ meta.type.kotlin & support.type.kotlin
+//                         ^^^^^^^^^^^ meta.type.kotlin & support.type.kotlin
 
 fun <T> List<T>.second(): T = this[1]
-//  ^ meta.type.parameters.kotlin punctuation.definition.typeparameters.begin.kotlin
-//   ^ meta.type.parameters.kotlin support.type.kotlin
-//      ^^^^ meta.function.kotlin support.type.kotlin
-//          ^ meta.type.parameters.kotlin punctuation.definition.typeparameters.begin.kotlin
-//           ^ meta.type.kotlin support.type.kotlin
-//            ^ meta.type.parameters.kotlin punctuation.definition.typeparameters.end.kotlin
-//              ^^^^^^ meta.function.kotlin entity.name.function.kotlin
-//                        ^ meta.type.kotlin support.type.kotlin
+//  ^ meta.type.parameters.kotlin & punctuation.definition.typeparameters.begin.kotlin
+//   ^ meta.type.parameters.kotlin & support.type.kotlin
+//      ^^^^ meta.function.kotlin & support.type.kotlin
+//          ^ meta.type.parameters.kotlin & punctuation.definition.typeparameters.begin.kotlin
+//           ^ meta.type.kotlin & support.type.kotlin
+//            ^ meta.type.parameters.kotlin & punctuation.definition.typeparameters.end.kotlin
+//              ^^^^^^ meta.function.kotlin & entity.name.function.kotlin
+//                        ^ meta.type.kotlin & support.type.kotlin
 
 typealias Predicate<T> = (T) -> Boolean
-//        ^^^^^^^^^ meta.typealias.kotlin entity.name.type.alias.kotlin
-//                 ^ meta.type.parameters.kotlin punctuation.definition.typeparameters.begin.kotlin
-//                  ^ meta.type.parameters.kotlin support.type.kotlin
-//                       ^ meta.type.kotlin punctuation.section.group.begin.kotlin
-//                        ^ meta.type.kotlin support.type.kotlin
-//                           ^^ meta.type.kotlin punctuation.separator.return-type.kotlin
-//                              ^^^^^^^ meta.type.kotlin support.type.kotlin
+//        ^^^^^^^^^ meta.typealias.kotlin & entity.name.type.alias.kotlin
+//                 ^ meta.type.parameters.kotlin & punctuation.definition.typeparameters.begin.kotlin
+//                  ^ meta.type.parameters.kotlin & support.type.kotlin
+//                       ^ meta.type.kotlin & punctuation.section.group.begin.kotlin
+//                        ^ meta.type.kotlin & support.type.kotlin
+//                           ^^ meta.type.kotlin & punctuation.separator.return-type.kotlin
+//                              ^^^^^^^ meta.type.kotlin & support.type.kotlin
 
 override fun toString() = (0 until rows).joinToString("\n") { }
 // <- storage.modifier.kotlin
  // <- storage.modifier.kotlin
 //^^^^^^ storage.modifier.kotlin
-//           ^^^^^^^^ meta.function.kotlin entity.name.function.kotlin
+//           ^^^^^^^^ meta.function.kotlin & entity.name.function.kotlin
 //                           ^^^^^ keyword.operator.word.kotlin
 //                                       ^^^^^^^^^^^^ variable.function.kotlin
 
 is Result.Success<*> -> "Success: ${result.value} (meta: ${result.metadata})"
 // <- keyword.operator.word.kotlin
  // <- keyword.operator.word.kotlin
-// ^^^^^^ meta.type.kotlin support.type.kotlin
-//        ^^^^^^^ meta.type.kotlin support.type.kotlin
-//                ^ meta.type.kotlin keyword.operator.wildcard.kotlin
+// ^^^^^^ meta.type.kotlin & support.type.kotlin
+//        ^^^^^^^ meta.type.kotlin & support.type.kotlin
+//                ^ meta.type.kotlin & keyword.operator.wildcard.kotlin
 //                   ^^ punctuation.separator.when.kotlin
-//                                  ^^^^^^ source.kotlin meta.interpolation.kotlin source.kotlin.embedded variable.other.readwrite.kotlin
-//                                                                ^^^^^^^^ source.kotlin meta.interpolation.kotlin source.kotlin.embedded variable.other.readwrite.kotlin
+//                                  ^^^^^^ source.kotlin & meta.interpolation.kotlin & source.kotlin.embedded & variable.other.readwrite.kotlin
+//                                                                ^^^^^^^^ source.kotlin & meta.interpolation.kotlin & source.kotlin.embedded & variable.other.readwrite.kotlin
 
 foo
 // <- variable.other.readwrite.kotlin

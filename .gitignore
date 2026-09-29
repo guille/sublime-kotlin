@@ -2,5 +2,5 @@
 st_syntax_tests
 AGENTS.md
 support/
-parse_syntax_test_output.py
-yaml2syntaxtest.py
+.harness/
+tests/.comment_chars.json

@@ -1,8 +1,8 @@
 // SYNTAX TEST "Kotlin.sublime-syntax"
 
 #!/usr/bin/env kotlin
-// <- comment.line.shebang.kotlin punctuation.definition.comment.kotlin
- // <- comment.line.shebang.kotlin punctuation.definition.comment.kotlin
+// <- comment.line.shebang.kotlin & punctuation.definition.comment.kotlin
+ // <- comment.line.shebang.kotlin & punctuation.definition.comment.kotlin
 //^^^^^^^^^^^^^^^^^^^ comment.line.shebang.kotlin
 
 // regular comment
@@ -11,12 +11,12 @@
 // ^^^^^^^^^^^^^^^ comment.line.double-slash.kotlin
 
 /* outer /* inner */ outer */
-// <- comment.block.kotlin punctuation.definition.comment.begin.kotlin
- // <- comment.block.kotlin punctuation.definition.comment.begin.kotlin
-//       ^^ comment.block.kotlin punctuation.definition.comment.begin.kotlin
+// <- comment.block.kotlin & punctuation.definition.comment.begin.kotlin
+ // <- comment.block.kotlin & punctuation.definition.comment.begin.kotlin
+//       ^^ comment.block.kotlin & punctuation.definition.comment.begin.kotlin
 //          ^^^^^ comment.block.kotlin
-//                ^^ comment.block.kotlin punctuation.definition.comment.end.kotlin
-//                         ^^ comment.block.kotlin punctuation.definition.comment.end.kotlin
+//                ^^ comment.block.kotlin & punctuation.definition.comment.end.kotlin
+//                         ^^ comment.block.kotlin & punctuation.definition.comment.end.kotlin
 
 val escaped = "\n\u0041"
 // <- keyword.declaration.kotlin
@@ -28,33 +28,33 @@ val escaped = "\n\u0041"
 
 val message = "Hello $name ${user.id}"
 //  ^^^^^^^ variable.other.readwrite.kotlin
-//            ^ meta.string.kotlin string.quoted.double.kotlin punctuation.definition.string.begin.kotlin
-//             ^^^^^^ meta.string.kotlin string.quoted.double.kotlin
-//                   ^^^^^ meta.string.kotlin string.quoted.double.kotlin variable.other.interpolated.kotlin
-//                         ^^ meta.interpolation.kotlin source.kotlin.embedded punctuation.section.interpolation.begin.kotlin
-//                           ^^^^ source.kotlin meta.interpolation.kotlin source.kotlin.embedded variable.other.readwrite.kotlin
-//                               ^ source.kotlin meta.interpolation.kotlin source.kotlin.embedded punctuation.accessor.dot.kotlin
-//                                ^^ source.kotlin meta.interpolation.kotlin source.kotlin.embedded variable.other.readwrite.kotlin
-//                                  ^ meta.interpolation.kotlin source.kotlin.embedded punctuation.section.interpolation.end.kotlin
-//                                   ^ meta.string.kotlin string.quoted.double.kotlin punctuation.definition.string.end.kotlin
+//            ^ meta.string.kotlin & string.quoted.double.kotlin & punctuation.definition.string.begin.kotlin
+//             ^^^^^^ meta.string.kotlin & string.quoted.double.kotlin
+//                   ^^^^^ meta.string.kotlin & string.quoted.double.kotlin & variable.other.interpolated.kotlin
+//                         ^^ meta.interpolation.kotlin & source.kotlin.embedded & punctuation.section.interpolation.begin.kotlin
+//                           ^^^^ source.kotlin & meta.interpolation.kotlin & source.kotlin.embedded & variable.other.readwrite.kotlin
+//                               ^ source.kotlin & meta.interpolation.kotlin & source.kotlin.embedded & punctuation.accessor.dot.kotlin
+//                                ^^ source.kotlin & meta.interpolation.kotlin & source.kotlin.embedded & variable.other.readwrite.kotlin
+//                                  ^ meta.interpolation.kotlin & source.kotlin.embedded & punctuation.section.interpolation.end.kotlin
+//                                   ^ meta.string.kotlin & string.quoted.double.kotlin & punctuation.definition.string.end.kotlin
 
 val raw = """
 //  ^^^ variable.other.readwrite.kotlin
 //        ^^^ punctuation.definition.string.begin.kotlin
 
 still ${count} lines
-// <- meta.string.kotlin string.quoted.triple.kotlin
- // <- meta.string.kotlin string.quoted.triple.kotlin
-//^^^^ meta.string.kotlin string.quoted.triple.kotlin
-//    ^^ meta.interpolation.kotlin source.kotlin.embedded punctuation.section.interpolation.begin.kotlin
-//      ^^^^^ source.kotlin meta.interpolation.kotlin source.kotlin.embedded variable.other.readwrite.kotlin
-//           ^ meta.interpolation.kotlin source.kotlin.embedded punctuation.section.interpolation.end.kotlin
-//            ^^^^^^ meta.string.kotlin string.quoted.triple.kotlin
+// <- meta.string.kotlin & string.quoted.triple.kotlin
+ // <- meta.string.kotlin & string.quoted.triple.kotlin
+//^^^^ meta.string.kotlin & string.quoted.triple.kotlin
+//    ^^ meta.interpolation.kotlin & source.kotlin.embedded & punctuation.section.interpolation.begin.kotlin
+//      ^^^^^ source.kotlin & meta.interpolation.kotlin & source.kotlin.embedded & variable.other.readwrite.kotlin
+//           ^ meta.interpolation.kotlin & source.kotlin.embedded & punctuation.section.interpolation.end.kotlin
+//            ^^^^^^ meta.string.kotlin & string.quoted.triple.kotlin
 
 """
-// <- meta.string.kotlin string.quoted.triple.kotlin punctuation.definition.string.end.kotlin
- // <- meta.string.kotlin string.quoted.triple.kotlin punctuation.definition.string.end.kotlin
-//^ meta.string.kotlin string.quoted.triple.kotlin punctuation.definition.string.end.kotlin
+// <- meta.string.kotlin & string.quoted.triple.kotlin & punctuation.definition.string.end.kotlin
+ // <- meta.string.kotlin & string.quoted.triple.kotlin & punctuation.definition.string.end.kotlin
+//^ meta.string.kotlin & string.quoted.triple.kotlin & punctuation.definition.string.end.kotlin
 
 val letter = 'A'
 //  ^^^^^^ variable.other.readwrite.kotlin

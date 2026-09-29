@@ -5,15 +5,15 @@
  // <- variable.language.annotation-target.kotlin
 //^^^ variable.language.annotation-target.kotlin
 //   ^ punctuation.separator.annotation-target.kotlin
-//    ^^^^^^^ meta.annotation.kotlin entity.name.annotation.kotlin
-//            ^^^^^^ meta.string.kotlin string.quoted.double.kotlin
+//    ^^^^^^^ meta.annotation.kotlin & entity.name.annotation.kotlin
+//            ^^^^^^ meta.string.kotlin & string.quoted.double.kotlin
 
 @[Inject Named("x")] val name = dependency
 // <- punctuation.definition.annotation.kotlin
- // <- meta.annotation.group.kotlin punctuation.section.brackets.begin.kotlin
-//^^^^^^ meta.annotation.group.kotlin entity.name.annotation.kotlin
-//       ^^^^^ meta.annotation.group.kotlin entity.name.annotation.kotlin
-//                 ^ meta.annotation.group.kotlin punctuation.section.brackets.end.kotlin
+ // <- meta.annotation.group.kotlin & punctuation.section.brackets.begin.kotlin
+//^^^^^^ meta.annotation.group.kotlin & entity.name.annotation.kotlin
+//       ^^^^^ meta.annotation.group.kotlin & entity.name.annotation.kotlin
+//                 ^ meta.annotation.group.kotlin & punctuation.section.brackets.end.kotlin
 //                   ^^^ keyword.declaration.kotlin
 //                       ^^^^ variable.other.readwrite.kotlin
 

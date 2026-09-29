@@ -11,6 +11,6 @@ var name = "John"
 //^ keyword.declaration.kotlin
 //  ^^^^ variable.other.readwrite.kotlin
 //       ^ keyword.operator.assignment.kotlin
-//         ^ meta.string.kotlin string.quoted.double.kotlin punctuation.definition.string.begin.kotlin
-//          ^^^^ meta.string.kotlin string.quoted.double.kotlin
-//              ^ meta.string.kotlin string.quoted.double.kotlin punctuation.definition.string.end.kotlin
+//         ^ meta.string.kotlin & string.quoted.double.kotlin & punctuation.definition.string.begin.kotlin
+//          ^^^^ meta.string.kotlin & string.quoted.double.kotlin
+//              ^ meta.string.kotlin & string.quoted.double.kotlin & punctuation.definition.string.end.kotlin

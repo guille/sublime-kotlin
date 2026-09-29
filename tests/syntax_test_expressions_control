@@ -38,10 +38,10 @@ while (x !is String) x = x as? String ?: y
  // <- keyword.control.loop.kotlin
 //^^^ keyword.control.loop.kotlin
 //       ^^^ keyword.operator.word.kotlin
-//           ^^^^^^ meta.type.kotlin support.type.kotlin
+//           ^^^^^^ meta.type.kotlin & support.type.kotlin
 //                     ^ keyword.operator.assignment.kotlin
 //                         ^^^ keyword.operator.word.kotlin
-//                             ^^^^^^ meta.type.kotlin support.type.kotlin
+//                             ^^^^^^ meta.type.kotlin & support.type.kotlin
 //                                    ^^ keyword.operator.elvis.kotlin
 
 value += other % 2
