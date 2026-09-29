@@ -69,6 +69,8 @@ contexts:
   declarations:
     - match: '\bvalue\b(?=\s+class\b)'
       scope: storage.modifier.kotlin
+    - match: '\bfun\b(?=\s+interface\b)'
+      scope: storage.modifier.kotlin
     - match: '\bpackage\b'
       scope: keyword.declaration.package.kotlin
       push: package-statement
@@ -181,6 +183,8 @@ contexts:
     - match: ':'
       scope: punctuation.separator.type.kotlin
       push: delegation-specifiers
+    - match: '(?=\bwhere\b)'
+      pop: true
     - match: '(?=[{;=])'
       pop: true
     - match: '(?=\b(?:package|import|class|interface|object|fun|val|var|typealias)\b)'
@@ -201,6 +205,8 @@ contexts:
     - match: ':'
       scope: punctuation.separator.type.kotlin
       push: delegation-specifiers
+    - match: '(?=\bwhere\b)'
+      pop: true
     - match: '(?=[{;=])'
       pop: true
     - match: '(?=\b(?:package|import|class|interface|object|fun|val|var|typealias)\b)'
@@ -511,7 +517,7 @@ contexts:
 
   delegation-specifiers:
     - meta_content_scope: meta.type.kotlin
-    - match: '(?=[{;=])'
+    - match: '(?=[{;=]|\bwhere\b)'
       pop: true
     - match: '$'
       pop: true
@@ -576,6 +582,8 @@ contexts:
     - match: ':'
       scope: punctuation.separator.type.kotlin
       push: type-expression
+    - match: '\breified\b'
+      scope: storage.modifier.kotlin
     - include: type-expression-content
 
   value-type-arguments:

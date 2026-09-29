@@ -1,0 +1,333 @@
+// SYNTAX TEST "Kotlin.sublime-syntax"
+
+fun interface Fn {
+// <- storage.modifier.kotlin -keyword.declaration.function -meta.function
+ // <- storage.modifier.kotlin -keyword.declaration.function -meta.function
+//^ storage.modifier.kotlin -keyword.declaration.function -meta.function
+//  ^^^^^^^^^ keyword.declaration.interface.kotlin -meta.function
+//            ^^ meta.class.kotlin entity.name.interface.kotlin
+//               ^ punctuation.section.block.begin.kotlin -meta.lambda
+
+    fun run(x: Int): Int
+//  ^^^ keyword.declaration.function.kotlin -meta.lambda
+//      ^^^ meta.function.kotlin entity.name.function.kotlin -meta.lambda
+//          ^ meta.function.parameters.kotlin variable.parameter.kotlin
+//                   ^^^ meta.type.kotlin support.type.kotlin
+
+}
+// <- punctuation.section.block.end.kotlin
+
+fun main() { val f = Fn { it + 1 } }
+// <- keyword.declaration.function.kotlin
+ // <- keyword.declaration.function.kotlin
+//^ keyword.declaration.function.kotlin
+//  ^^^^ entity.name.function.kotlin
+//           ^^^ keyword.declaration.kotlin
+//               ^ variable.other.readwrite.kotlin
+//                   ^^ variable.function.kotlin
+//                        ^^ variable.language.kotlin
+
+fun  interface  Spaced
+// <- storage.modifier.kotlin
+ // <- storage.modifier.kotlin
+//^ storage.modifier.kotlin
+//   ^^^^^^^^^ keyword.declaration.interface.kotlin
+//              ^^^^^^ entity.name.interface.kotlin
+
+public fun interface Predicate<in T> {
+// <- storage.modifier.kotlin
+ // <- storage.modifier.kotlin
+//^^^^ storage.modifier.kotlin
+//     ^^^ storage.modifier.kotlin
+//         ^^^^^^^^^ keyword.declaration.interface.kotlin
+//                   ^^^^^^^^^ meta.class.kotlin entity.name.interface.kotlin
+//                            ^ punctuation.definition.typeparameters.begin.kotlin
+//                             ^^ storage.modifier.kotlin
+//                                ^ support.type.kotlin
+
+    fun accept(value: T): Boolean
+//      ^^^^^^ entity.name.function.kotlin -meta.lambda
+//             ^^^^^ variable.parameter.kotlin
+//                        ^^^^^^^ support.type.kotlin
+
+}
+// <- punctuation.section.block.end.kotlin
+
+internal fun interface Mapper<A, B> : Base<A> {
+// <- storage.modifier.kotlin
+ // <- storage.modifier.kotlin
+//^^^^^^ storage.modifier.kotlin
+//       ^^^ storage.modifier.kotlin
+//                     ^^^^^^ entity.name.interface.kotlin
+//                                  ^ punctuation.separator.type.kotlin
+//                                    ^^^^ support.type.kotlin
+//                                            ^ punctuation.section.block.begin.kotlin
+
+    override fun invoke(a: A): B
+//  ^^^^^^^^ storage.modifier.kotlin
+//               ^^^^^^ entity.name.function.kotlin -meta.lambda
+
+}
+// <- punctuation.section.block.end.kotlin
+
+@FunctionalInterface fun interface Callback
+ // <- meta.annotation.kotlin entity.name.annotation.kotlin
+//^^^^^^^^^^^^^^^^^^ meta.annotation.kotlin entity.name.annotation.kotlin
+//                   ^^^ storage.modifier.kotlin
+//                       ^^^^^^^^^ keyword.declaration.interface.kotlin
+//                                 ^^^^^^^^ entity.name.interface.kotlin
+
+private fun interface Handler { fun handle() }
+//      ^^^ storage.modifier.kotlin
+//                    ^^^^^^^ entity.name.interface.kotlin
+//                              ^^^ keyword.declaration.function.kotlin
+//                                  ^^^^^^ entity.name.function.kotlin -meta.lambda
+
+val isEven = IntPredicate { it % 2 == 0 }
+//           ^^^^^^^^^^^^ variable.function.kotlin
+//                        ^ meta.lambda.kotlin
+//                          ^^ variable.language.kotlin
+
+fun interfaceLike() {}
+// <- keyword.declaration.function.kotlin
+ // <- keyword.declaration.function.kotlin
+//^ keyword.declaration.function.kotlin
+//  ^^^^^^^^^^^^^ entity.name.function.kotlin
+
+fun `interface`() {}
+// <- keyword.declaration.function.kotlin
+ // <- keyword.declaration.function.kotlin
+//^ keyword.declaration.function.kotlin
+//  ^^^^^^^^^^^ entity.name.function.kotlin
+
+fun Fn.extension() = run(1)
+// <- keyword.declaration.function.kotlin
+ // <- keyword.declaration.function.kotlin
+//^ keyword.declaration.function.kotlin
+//  ^^ support.type.kotlin
+//     ^^^^^^^^^ entity.name.function.kotlin
+
+sealed interface Shape
+// <- storage.modifier.kotlin
+ // <- storage.modifier.kotlin
+//^^^^ storage.modifier.kotlin
+//     ^^^^^^^^^ keyword.declaration.interface.kotlin
+//               ^^^^^ entity.name.interface.kotlin
+
+sealed class Result<out T> : Base()
+// <- storage.modifier.kotlin
+ // <- storage.modifier.kotlin
+//^^^^ storage.modifier.kotlin
+//           ^^^^^^ entity.name.class.kotlin
+//                  ^^^ storage.modifier.kotlin
+//                           ^^^^ support.type.kotlin
+
+@JvmInline value class Password(private val s: String)
+ // <- entity.name.annotation.kotlin
+//^^^^^^^^ entity.name.annotation.kotlin
+//         ^^^^^ storage.modifier.kotlin
+//               ^^^^^ keyword.declaration.class.kotlin
+//                     ^^^^^^^^ entity.name.class.kotlin
+//                              ^^^^^^^ storage.modifier.kotlin
+//                                          ^ variable.parameter.kotlin
+
+val value = 1
+//  ^^^^^ -storage.modifier
+
+data object Empty
+// <- storage.modifier.kotlin
+ // <- storage.modifier.kotlin
+//^^ storage.modifier.kotlin
+//   ^^^^^^ keyword.declaration.object.kotlin
+//          ^^^^^ entity.name.class.kotlin
+
+enum class Color(val rgb: Int) {
+// <- storage.modifier.kotlin
+ // <- storage.modifier.kotlin
+//^^ storage.modifier.kotlin
+//   ^^^^^ keyword.declaration.class.kotlin
+//         ^^^^^ entity.name.class.kotlin
+//                   ^^^ variable.parameter.kotlin
+
+    RED(0xFF0000),
+//      ^^^^^^^^ constant.numeric
+
+}
+// <- punctuation.section.block.end.kotlin
+
+annotation class Fancy(val why: String)
+// <- storage.modifier.kotlin
+ // <- storage.modifier.kotlin
+//^^^^^^^^ storage.modifier.kotlin
+//               ^^^^^ entity.name.class.kotlin
+
+inner class Inner
+// <- storage.modifier.kotlin
+ // <- storage.modifier.kotlin
+//^^^ storage.modifier.kotlin
+//          ^^^^^ entity.name.class.kotlin
+
+abstract class Base : Iface, Other()
+// <- storage.modifier.kotlin
+ // <- storage.modifier.kotlin
+//^^^^^^ storage.modifier.kotlin
+//             ^^^^ entity.name.class.kotlin
+//                    ^^^^^ support.type.kotlin
+//                           ^^^^^ support.type.kotlin
+
+open class Open protected constructor(x: Int)
+// <- storage.modifier.kotlin
+ // <- storage.modifier.kotlin
+//^^ storage.modifier.kotlin
+//              ^^^^^^^^^ storage.modifier.kotlin
+//                        ^^^^^^^^^^^ keyword.declaration.kotlin
+//                                    ^ variable.parameter.kotlin
+
+expect fun platformName(): String
+// <- storage.modifier.kotlin
+ // <- storage.modifier.kotlin
+//^^^^ storage.modifier.kotlin
+//     ^^^ keyword.declaration.function.kotlin
+//         ^^^^^^^^^^^^ entity.name.function.kotlin
+
+actual fun interface Platform
+// <- storage.modifier.kotlin
+ // <- storage.modifier.kotlin
+//^^^^ storage.modifier.kotlin
+//     ^^^ storage.modifier.kotlin
+//         ^^^^^^^^^ keyword.declaration.interface.kotlin
+//                   ^^^^^^^^ entity.name.interface.kotlin
+
+suspend fun load(): Data
+// <- storage.modifier.kotlin
+ // <- storage.modifier.kotlin
+//^^^^^ storage.modifier.kotlin
+//      ^^^ keyword.declaration.function.kotlin
+//          ^^^^ entity.name.function.kotlin
+
+inline fun <reified T> typeOf(): String = T::class.simpleName!!
+// <- storage.modifier.kotlin
+ // <- storage.modifier.kotlin
+//^^^^ storage.modifier.kotlin
+//          ^^^^^^^ storage.modifier.kotlin
+//                     ^^^^^^ entity.name.function.kotlin
+
+infix fun Int.plus2(o: Int) = this + o
+// <- storage.modifier.kotlin
+ // <- storage.modifier.kotlin
+//^^^ storage.modifier.kotlin
+//        ^^^ support.type.kotlin
+//            ^^^^^ entity.name.function.kotlin
+//                            ^^^^ variable.language.kotlin
+
+operator fun get(i: Int) = i
+// <- storage.modifier.kotlin
+ // <- storage.modifier.kotlin
+//^^^^^^ storage.modifier.kotlin
+//           ^^^ entity.name.function.kotlin
+
+tailrec fun loop(n: Int): Int = if (n == 0) 0 else loop(n - 1)
+// <- storage.modifier.kotlin
+ // <- storage.modifier.kotlin
+//^^^^^ storage.modifier.kotlin
+//          ^^^^ entity.name.function.kotlin
+//                                                 ^^^^ variable.function.kotlin
+
+const val MAX = 10
+// <- storage.modifier.kotlin
+ // <- storage.modifier.kotlin
+//^^^ storage.modifier.kotlin
+//    ^^^ keyword.declaration.kotlin
+
+lateinit var name: String
+// <- storage.modifier.kotlin
+ // <- storage.modifier.kotlin
+//^^^^^^ storage.modifier.kotlin
+//       ^^^ keyword.declaration.kotlin
+
+companion object {
+// <- storage.modifier.kotlin
+ // <- storage.modifier.kotlin
+//^^^^^^^ storage.modifier.kotlin
+//        ^^^^^^ keyword.declaration.object.kotlin
+//               ^ punctuation.section.block.begin.kotlin
+
+}
+// <- punctuation.section.block.end.kotlin
+
+val listener = object : Fn { override fun run(x: Int) = x }
+//             ^^^^^^ keyword.declaration.object.kotlin
+//                      ^^ support.type.kotlin
+//                           ^^^^^^^^ storage.modifier.kotlin
+//                                        ^^^ entity.name.function.kotlin
+
+fun interface Generic<T> where T : Any {
+// <- storage.modifier.kotlin
+ // <- storage.modifier.kotlin
+//^ storage.modifier.kotlin
+//            ^^^^^^^ entity.name.interface.kotlin
+//                       ^^^^^ keyword.declaration.kotlin
+//                                 ^^^ support.type.kotlin
+
+    fun apply(t: T): T
+//      ^^^^^ entity.name.function.kotlin -meta.lambda
+
+}
+// <- punctuation.section.block.end.kotlin
+
+class Outer { fun interface Nested { fun call() } }
+//    ^^^^^ entity.name.class.kotlin
+//            ^^^ storage.modifier.kotlin
+//                          ^^^^^^ entity.name.interface.kotlin
+//                                   ^^^ keyword.declaration.function.kotlin
+//                                       ^^^^ entity.name.function.kotlin -meta.lambda
+
+class Repo<T> where T : Entity, T : Comparable<T> {
+//    ^^^^ entity.name.class.kotlin
+//            ^^^^^ keyword.declaration.kotlin
+//                      ^^^^^^ support.type.kotlin
+//                                  ^^^^^^^^^^ support.type.kotlin
+//                                                ^ punctuation.section.block.begin.kotlin
+
+}
+// <- punctuation.section.block.end.kotlin
+
+class Sorted<T>(val items: List<T>) : Base<T>() where T : Comparable<T>
+//    ^^^^^^ entity.name.class.kotlin
+//                  ^^^^^ variable.parameter.kotlin
+//                                    ^^^^ support.type.kotlin
+//                                              ^^^^^ keyword.declaration.kotlin
+//                                                        ^^^^^^^^^^ support.type.kotlin
+
+interface Store<K, V> : Map<K, V> where K : Any
+//        ^^^^^ entity.name.interface.kotlin
+//                      ^^^ support.type.kotlin
+//                                ^^^^^ keyword.declaration.kotlin
+//                                          ^^^ support.type.kotlin
+
+class Somewhere
+//    ^^^^^^^^^ entity.name.class.kotlin
+
+inline fun <reified A, reified B : Any> pair(): Pair<A, B> = TODO()
+//          ^^^^^^^ meta.type.parameters.kotlin storage.modifier.kotlin
+//                     ^^^^^^^ meta.type.parameters.kotlin storage.modifier.kotlin
+//                  ^ support.type.kotlin
+//                                 ^^^ support.type.kotlin
+//                                      ^^^^ entity.name.function.kotlin
+
+inline fun <reified T : Any> Any.cast(): T = this as T
+//          ^^^^^^^ storage.modifier.kotlin
+//                               ^^^^ entity.name.function.kotlin
+//                                                ^^ keyword.operator.word.kotlin
+
+class Cache<K, V> : Store<K, V>
+//    ^^^^^ entity.name.class.kotlin
+//                  ^^^^^ support.type.kotlin
+
+    where K : Any, V : Any {
+//  ^^^^^ keyword.declaration.kotlin -meta.type
+//        ^ support.type.kotlin
+//                         ^ punctuation.section.block.begin.kotlin
+
+}
+// <- punctuation.section.block.end.kotlin

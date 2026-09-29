@@ -1,0 +1,516 @@
+syntax: "Kotlin.sublime-syntax"
+comment_char: "//"
+tests:
+  - line: "fun interface Fn {"
+    assertions:
+      - span: "fun"
+        scopes: [storage.modifier.kotlin, -keyword.declaration.function, -meta.function]
+      - span: "interface"
+        scopes: [keyword.declaration.interface.kotlin, -meta.function]
+      - span: "Fn"
+        scopes: [meta.class.kotlin, entity.name.interface.kotlin]
+      - span: "{"
+        scopes: [punctuation.section.block.begin.kotlin, -meta.lambda]
+
+  - line: "    fun run(x: Int): Int"
+    assertions:
+      - span: "fun"
+        scopes: [keyword.declaration.function.kotlin, -meta.lambda]
+      - span: "run"
+        scopes: [meta.function.kotlin, entity.name.function.kotlin, -meta.lambda]
+      - span: "x"
+        scopes: [meta.function.parameters.kotlin, variable.parameter.kotlin]
+      - span: "Int"
+        nth: 1
+        scopes: [meta.type.kotlin, support.type.kotlin]
+
+  - line: "}"
+    assertions:
+      - span: "}"
+        scopes: [punctuation.section.block.end.kotlin]
+
+  - line: "fun main() { val f = Fn { it + 1 } }"
+    assertions:
+      - span: "fun"
+        scopes: [keyword.declaration.function.kotlin]
+      - span: "main"
+        scopes: [entity.name.function.kotlin]
+      - span: "val"
+        scopes: [keyword.declaration.kotlin]
+      - span: "f"
+        nth: 1
+        scopes: [variable.other.readwrite.kotlin]
+      - span: "Fn"
+        scopes: [variable.function.kotlin]
+      - span: "it"
+        scopes: [variable.language.kotlin]
+
+  - line: "fun  interface  Spaced"
+    assertions:
+      - span: "fun"
+        scopes: [storage.modifier.kotlin]
+      - span: "interface"
+        scopes: [keyword.declaration.interface.kotlin]
+      - span: "Spaced"
+        scopes: [entity.name.interface.kotlin]
+
+  - line: "public fun interface Predicate<in T> {"
+    assertions:
+      - span: "public"
+        scopes: [storage.modifier.kotlin]
+      - span: "fun"
+        scopes: [storage.modifier.kotlin]
+      - span: "interface"
+        scopes: [keyword.declaration.interface.kotlin]
+      - span: "Predicate"
+        scopes: [meta.class.kotlin, entity.name.interface.kotlin]
+      - span: "<"
+        scopes: [punctuation.definition.typeparameters.begin.kotlin]
+      - span: "in"
+        nth: 1
+        scopes: [storage.modifier.kotlin]
+      - span: "T"
+        scopes: [support.type.kotlin]
+
+  - line: "    fun accept(value: T): Boolean"
+    assertions:
+      - span: "accept"
+        scopes: [entity.name.function.kotlin, -meta.lambda]
+      - span: "value"
+        scopes: [variable.parameter.kotlin]
+      - span: "Boolean"
+        scopes: [support.type.kotlin]
+
+  - line: "}"
+    assertions:
+      - span: "}"
+        scopes: [punctuation.section.block.end.kotlin]
+
+  - line: "internal fun interface Mapper<A, B> : Base<A> {"
+    assertions:
+      - span: "internal"
+        scopes: [storage.modifier.kotlin]
+      - span: "fun"
+        scopes: [storage.modifier.kotlin]
+      - span: "Mapper"
+        scopes: [entity.name.interface.kotlin]
+      - span: ":"
+        scopes: [punctuation.separator.type.kotlin]
+      - span: "Base"
+        scopes: [support.type.kotlin]
+      - span: "{"
+        scopes: [punctuation.section.block.begin.kotlin]
+
+  - line: "    override fun invoke(a: A): B"
+    assertions:
+      - span: "override"
+        scopes: [storage.modifier.kotlin]
+      - span: "invoke"
+        scopes: [entity.name.function.kotlin, -meta.lambda]
+
+  - line: "}"
+    assertions:
+      - span: "}"
+        scopes: [punctuation.section.block.end.kotlin]
+
+  - line: "@FunctionalInterface fun interface Callback"
+    assertions:
+      - span: "FunctionalInterface"
+        scopes: [meta.annotation.kotlin, entity.name.annotation.kotlin]
+      - span: "fun"
+        scopes: [storage.modifier.kotlin]
+      - span: "interface"
+        scopes: [keyword.declaration.interface.kotlin]
+      - span: "Callback"
+        scopes: [entity.name.interface.kotlin]
+
+  - line: "private fun interface Handler { fun handle() }"
+    assertions:
+      - span: "fun"
+        nth: 0
+        scopes: [storage.modifier.kotlin]
+      - span: "Handler"
+        scopes: [entity.name.interface.kotlin]
+      - span: "fun"
+        nth: 1
+        scopes: [keyword.declaration.function.kotlin]
+      - span: "handle"
+        scopes: [entity.name.function.kotlin, -meta.lambda]
+
+  - line: "val isEven = IntPredicate { it % 2 == 0 }"
+    assertions:
+      - span: "IntPredicate"
+        scopes: [variable.function.kotlin]
+      - span: "{"
+        scopes: [meta.lambda.kotlin]
+      - span: "it"
+        scopes: [variable.language.kotlin]
+
+  - line: "fun interfaceLike() {}"
+    assertions:
+      - span: "fun"
+        scopes: [keyword.declaration.function.kotlin]
+      - span: "interfaceLike"
+        scopes: [entity.name.function.kotlin]
+
+  - line: "fun `interface`() {}"
+    assertions:
+      - span: "fun"
+        scopes: [keyword.declaration.function.kotlin]
+      - span: "`interface`"
+        scopes: [entity.name.function.kotlin]
+
+  - line: "fun Fn.extension() = run(1)"
+    assertions:
+      - span: "fun"
+        scopes: [keyword.declaration.function.kotlin]
+      - span: "Fn"
+        scopes: [support.type.kotlin]
+      - span: "extension"
+        scopes: [entity.name.function.kotlin]
+
+  # Adjacent: other soft-keyword modifiers before declarations
+
+  - line: "sealed interface Shape"
+    assertions:
+      - span: "sealed"
+        scopes: [storage.modifier.kotlin]
+      - span: "interface"
+        scopes: [keyword.declaration.interface.kotlin]
+      - span: "Shape"
+        scopes: [entity.name.interface.kotlin]
+
+  - line: "sealed class Result<out T> : Base()"
+    assertions:
+      - span: "sealed"
+        scopes: [storage.modifier.kotlin]
+      - span: "Result"
+        scopes: [entity.name.class.kotlin]
+      - span: "out"
+        scopes: [storage.modifier.kotlin]
+      - span: "Base"
+        scopes: [support.type.kotlin]
+
+  - line: "@JvmInline value class Password(private val s: String)"
+    assertions:
+      - span: "JvmInline"
+        scopes: [entity.name.annotation.kotlin]
+      - span: "value"
+        scopes: [storage.modifier.kotlin]
+      - span: "class"
+        scopes: [keyword.declaration.class.kotlin]
+      - span: "Password"
+        scopes: [entity.name.class.kotlin]
+      - span: "private"
+        scopes: [storage.modifier.kotlin]
+      - span: "s"
+        nth: 4
+        scopes: [variable.parameter.kotlin]
+
+  - line: "val value = 1"
+    assertions:
+      - span: "value"
+        scopes: [-storage.modifier]
+
+  - line: "data object Empty"
+    assertions:
+      - span: "data"
+        scopes: [storage.modifier.kotlin]
+      - span: "object"
+        scopes: [keyword.declaration.object.kotlin]
+      - span: "Empty"
+        scopes: [entity.name.class.kotlin]
+
+  - line: "enum class Color(val rgb: Int) {"
+    assertions:
+      - span: "enum"
+        scopes: [storage.modifier.kotlin]
+      - span: "class"
+        scopes: [keyword.declaration.class.kotlin]
+      - span: "Color"
+        scopes: [entity.name.class.kotlin]
+      - span: "rgb"
+        scopes: [variable.parameter.kotlin]
+
+  - line: "    RED(0xFF0000),"
+    assertions:
+      - span: "0xFF0000"
+        scopes: [constant.numeric]
+
+  - line: "}"
+    assertions:
+      - span: "}"
+        scopes: [punctuation.section.block.end.kotlin]
+
+  - line: "annotation class Fancy(val why: String)"
+    assertions:
+      - span: "annotation"
+        scopes: [storage.modifier.kotlin]
+      - span: "Fancy"
+        scopes: [entity.name.class.kotlin]
+
+  - line: "inner class Inner"
+    assertions:
+      - span: "inner"
+        scopes: [storage.modifier.kotlin]
+      - span: "Inner"
+        scopes: [entity.name.class.kotlin]
+
+  - line: "abstract class Base : Iface, Other()"
+    assertions:
+      - span: "abstract"
+        scopes: [storage.modifier.kotlin]
+      - span: "Base"
+        scopes: [entity.name.class.kotlin]
+      - span: "Iface"
+        scopes: [support.type.kotlin]
+      - span: "Other"
+        scopes: [support.type.kotlin]
+
+  - line: "open class Open protected constructor(x: Int)"
+    assertions:
+      - span: "open"
+        scopes: [storage.modifier.kotlin]
+      - span: "protected"
+        scopes: [storage.modifier.kotlin]
+      - span: "constructor"
+        scopes: [keyword.declaration.kotlin]
+      - span: "x"
+        scopes: [variable.parameter.kotlin]
+
+  - line: "expect fun platformName(): String"
+    assertions:
+      - span: "expect"
+        scopes: [storage.modifier.kotlin]
+      - span: "fun"
+        scopes: [keyword.declaration.function.kotlin]
+      - span: "platformName"
+        scopes: [entity.name.function.kotlin]
+
+  - line: "actual fun interface Platform"
+    assertions:
+      - span: "actual"
+        scopes: [storage.modifier.kotlin]
+      - span: "fun"
+        scopes: [storage.modifier.kotlin]
+      - span: "interface"
+        scopes: [keyword.declaration.interface.kotlin]
+      - span: "Platform"
+        scopes: [entity.name.interface.kotlin]
+
+  - line: "suspend fun load(): Data"
+    assertions:
+      - span: "suspend"
+        scopes: [storage.modifier.kotlin]
+      - span: "fun"
+        scopes: [keyword.declaration.function.kotlin]
+      - span: "load"
+        scopes: [entity.name.function.kotlin]
+
+  - line: "inline fun <reified T> typeOf(): String = T::class.simpleName!!"
+    assertions:
+      - span: "inline"
+        scopes: [storage.modifier.kotlin]
+      - span: "reified"
+        scopes: [storage.modifier.kotlin]
+      - span: "typeOf"
+        scopes: [entity.name.function.kotlin]
+
+  - line: "infix fun Int.plus2(o: Int) = this + o"
+    assertions:
+      - span: "infix"
+        scopes: [storage.modifier.kotlin]
+      - span: "Int"
+        nth: 0
+        scopes: [support.type.kotlin]
+      - span: "plus2"
+        scopes: [entity.name.function.kotlin]
+      - span: "this"
+        scopes: [variable.language.kotlin]
+
+  - line: "operator fun get(i: Int) = i"
+    assertions:
+      - span: "operator"
+        scopes: [storage.modifier.kotlin]
+      - span: "get"
+        scopes: [entity.name.function.kotlin]
+
+  - line: "tailrec fun loop(n: Int): Int = if (n == 0) 0 else loop(n - 1)"
+    assertions:
+      - span: "tailrec"
+        scopes: [storage.modifier.kotlin]
+      - span: "loop"
+        nth: 0
+        scopes: [entity.name.function.kotlin]
+      - span: "loop"
+        nth: 1
+        scopes: [variable.function.kotlin]
+
+  - line: "const val MAX = 10"
+    assertions:
+      - span: "const"
+        scopes: [storage.modifier.kotlin]
+      - span: "val"
+        scopes: [keyword.declaration.kotlin]
+
+  - line: "lateinit var name: String"
+    assertions:
+      - span: "lateinit"
+        scopes: [storage.modifier.kotlin]
+      - span: "var"
+        scopes: [keyword.declaration.kotlin]
+
+  - line: "companion object {"
+    assertions:
+      - span: "companion"
+        scopes: [storage.modifier.kotlin]
+      - span: "object"
+        scopes: [keyword.declaration.object.kotlin]
+      - span: "{"
+        scopes: [punctuation.section.block.begin.kotlin]
+
+  - line: "}"
+    assertions:
+      - span: "}"
+        scopes: [punctuation.section.block.end.kotlin]
+
+  - line: "val listener = object : Fn { override fun run(x: Int) = x }"
+    assertions:
+      - span: "object"
+        scopes: [keyword.declaration.object.kotlin]
+      - span: "Fn"
+        scopes: [support.type.kotlin]
+      - span: "override"
+        scopes: [storage.modifier.kotlin]
+      - span: "run"
+        scopes: [entity.name.function.kotlin]
+
+  - line: "fun interface Generic<T> where T : Any {"
+    assertions:
+      - span: "fun"
+        nth: 0
+        scopes: [storage.modifier.kotlin]
+      - span: "Generic"
+        scopes: [entity.name.interface.kotlin]
+      - span: "where"
+        scopes: [keyword.declaration.kotlin]
+      - span: "Any"
+        scopes: [support.type.kotlin]
+
+  - line: "    fun apply(t: T): T"
+    assertions:
+      - span: "apply"
+        scopes: [entity.name.function.kotlin, -meta.lambda]
+
+  - line: "}"
+    assertions:
+      - span: "}"
+        scopes: [punctuation.section.block.end.kotlin]
+
+  - line: "class Outer { fun interface Nested { fun call() } }"
+    assertions:
+      - span: "Outer"
+        scopes: [entity.name.class.kotlin]
+      - span: "fun"
+        nth: 0
+        scopes: [storage.modifier.kotlin]
+      - span: "Nested"
+        scopes: [entity.name.interface.kotlin]
+      - span: "fun"
+        nth: 1
+        scopes: [keyword.declaration.function.kotlin]
+      - span: "call"
+        scopes: [entity.name.function.kotlin, -meta.lambda]
+
+  - line: "class Repo<T> where T : Entity, T : Comparable<T> {"
+    assertions:
+      - span: "Repo"
+        scopes: [entity.name.class.kotlin]
+      - span: "where"
+        scopes: [keyword.declaration.kotlin]
+      - span: "Entity"
+        scopes: [support.type.kotlin]
+      - span: "Comparable"
+        scopes: [support.type.kotlin]
+      - span: "{"
+        scopes: [punctuation.section.block.begin.kotlin]
+
+  - line: "}"
+    assertions:
+      - span: "}"
+        scopes: [punctuation.section.block.end.kotlin]
+
+  - line: "class Sorted<T>(val items: List<T>) : Base<T>() where T : Comparable<T>"
+    assertions:
+      - span: "Sorted"
+        scopes: [entity.name.class.kotlin]
+      - span: "items"
+        scopes: [variable.parameter.kotlin]
+      - span: "Base"
+        scopes: [support.type.kotlin]
+      - span: "where"
+        scopes: [keyword.declaration.kotlin]
+      - span: "Comparable"
+        scopes: [support.type.kotlin]
+
+  - line: "interface Store<K, V> : Map<K, V> where K : Any"
+    assertions:
+      - span: "Store"
+        scopes: [entity.name.interface.kotlin]
+      - span: "Map"
+        scopes: [support.type.kotlin]
+      - span: "where"
+        scopes: [keyword.declaration.kotlin]
+      - span: "Any"
+        scopes: [support.type.kotlin]
+
+  - line: "class Somewhere"
+    assertions:
+      - span: "Somewhere"
+        scopes: [entity.name.class.kotlin]
+
+  - line: "inline fun <reified A, reified B : Any> pair(): Pair<A, B> = TODO()"
+    assertions:
+      - span: "reified"
+        nth: 0
+        scopes: [meta.type.parameters.kotlin, storage.modifier.kotlin]
+      - span: "reified"
+        nth: 1
+        scopes: [meta.type.parameters.kotlin, storage.modifier.kotlin]
+      - span: "A"
+        scopes: [support.type.kotlin]
+      - span: "Any"
+        scopes: [support.type.kotlin]
+      - span: "pair"
+        scopes: [entity.name.function.kotlin]
+
+  - line: "inline fun <reified T : Any> Any.cast(): T = this as T"
+    assertions:
+      - span: "reified"
+        scopes: [storage.modifier.kotlin]
+      - span: "cast"
+        scopes: [entity.name.function.kotlin]
+      - span: "as"
+        nth: 1
+        scopes: [keyword.operator.word.kotlin]
+
+  - line: "class Cache<K, V> : Store<K, V>"
+    assertions:
+      - span: "Cache"
+        scopes: [entity.name.class.kotlin]
+      - span: "Store"
+        scopes: [support.type.kotlin]
+
+  - line: "    where K : Any, V : Any {"
+    assertions:
+      - span: "where"
+        scopes: [keyword.declaration.kotlin, -meta.type]
+      - span: "K"
+        scopes: [support.type.kotlin]
+      - span: "{"
+        scopes: [punctuation.section.block.begin.kotlin]
+
+  - line: "}"
+    assertions:
+      - span: "}"
+        scopes: [punctuation.section.block.end.kotlin]
