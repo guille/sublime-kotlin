@@ -1,0 +1,235 @@
+syntax: "Kotlin.sublime-syntax"
+comment_char: "//"
+tests:
+  # An unclosed parameter list ends at a line that starts a declaration.
+  - line: "fun f(action"
+    assertions:
+      - span: "action"
+        scopes: [meta.function.parameters.kotlin, variable.parameter.kotlin]
+
+  - line: "data class C(val m: String)"
+    assertions:
+      - span: "data"
+        scopes: [storage.modifier.kotlin, "- meta.function.parameters"]
+      - span: "class"
+        scopes: [meta.class.kotlin, keyword.declaration.class.kotlin]
+      - span: "C"
+        scopes: [entity.name.class.kotlin]
+      - span: "m"
+        scopes: [variable.parameter.kotlin]
+      - span: ")"
+        scopes: [punctuation.section.parameters.end.kotlin]
+
+  - line: "fun g(): Int {"
+    assertions:
+      - span: "fun"
+        scopes: [keyword.declaration.function.kotlin, "- meta.function.parameters"]
+      - span: "g"
+        scopes: [entity.name.function.kotlin]
+
+  - line: "}"
+    assertions:
+      - span: "}"
+        scopes: [punctuation.section.block.end.kotlin, "- meta.function.parameters"]
+
+  - line: "fun h(x:"
+    assertions:
+      - span: "x"
+        scopes: [variable.parameter.kotlin]
+
+  - line: "private val y = 2"
+    assertions:
+      - span: "private"
+        scopes: [storage.modifier.kotlin, "- meta.function.parameters"]
+      - span: "y"
+        scopes: [meta.declaration.variable.kotlin, variable.other.readwrite.kotlin]
+      - span: "2"
+        scopes: [constant.numeric.integer.decimal.kotlin, "- meta.type"]
+
+  # Class parameters keep going at val/var lines, but not at other declarations.
+  - line: "data class W(val jobs: List<"
+    assertions:
+      - span: "jobs"
+        scopes: [variable.parameter.kotlin]
+
+  - line: "fun after() = 1"
+    assertions:
+      - span: "fun"
+        scopes: [keyword.declaration.function.kotlin, "- meta.function.parameters", "- meta.type"]
+      - span: "after"
+        scopes: [entity.name.function.kotlin]
+
+  # An unclosed `<` ends there too.
+  - line: "val k: Key<"
+    assertions:
+      - span: "<"
+        scopes: [meta.type.parameters.kotlin]
+
+  - line: "public val x: Int = 1"
+    assertions:
+      - span: "public"
+        scopes: [storage.modifier.kotlin, "- meta.type"]
+      - span: "x"
+        scopes: [variable.other.readwrite.kotlin, "- support.type"]
+      - span: "Int"
+        scopes: [meta.type.kotlin, support.type.kotlin, "- meta.type.parameters"]
+
+  - line: "internal actual fun <E"
+    assertions:
+      - span: "E"
+        scopes: [meta.type.parameters.kotlin, support.type.kotlin]
+
+  - line: "fun z() = 1"
+    assertions:
+      - span: "fun"
+        scopes: [keyword.declaration.function.kotlin, "- entity.name"]
+      - span: "z"
+        scopes: [entity.name.function.kotlin]
+
+  - line: "class"
+    assertions:
+      - span: "class"
+        scopes: [keyword.declaration.class.kotlin]
+
+  - line: "fun y() = 2"
+    assertions:
+      - span: "fun"
+        scopes: [keyword.declaration.function.kotlin, "- entity.name"]
+      - span: "y"
+        scopes: [entity.name.function.kotlin]
+
+  # Multi-line lists still work.
+  - line: "class Ok("
+    assertions:
+      - span: "("
+        scopes: [punctuation.section.parameters.begin.kotlin]
+
+  - line: "    @Inject private val a: Int,"
+    assertions:
+      - span: "private"
+        scopes: [meta.function.parameters.kotlin, storage.modifier.kotlin]
+      - span: "a:"
+        scopes: [meta.function.parameters.kotlin]
+      - span: "a"
+        nth: 2
+        scopes: [variable.parameter.kotlin]
+
+  - line: "    val b: List<"
+    assertions:
+      - span: "b"
+        scopes: [meta.function.parameters.kotlin, variable.parameter.kotlin]
+
+  - line: "        String>,"
+    assertions:
+      - span: "String"
+        scopes: [meta.function.parameters.kotlin, meta.type.parameters.kotlin, support.type.kotlin]
+
+  - line: "    override var c: Int = 1"
+    assertions:
+      - span: "override"
+        scopes: [meta.function.parameters.kotlin, storage.modifier.kotlin]
+      - span: "c"
+        scopes: [variable.parameter.kotlin]
+
+  - line: ")"
+    assertions:
+      - span: ")"
+        scopes: [meta.function.parameters.kotlin, punctuation.section.parameters.end.kotlin]
+
+  - line: "fun f(a: Int,"
+    assertions:
+      - span: "a"
+        scopes: [variable.parameter.kotlin]
+
+  - line: "    val: Int, fun: Int) {}"
+    assertions:
+      - span: "val"
+        scopes: [meta.function.parameters.kotlin, variable.parameter.kotlin]
+      - span: "fun"
+        scopes: [meta.function.parameters.kotlin, variable.parameter.kotlin]
+      - span: ")"
+        scopes: [punctuation.section.parameters.end.kotlin]
+
+  - line: "fun <T,"
+    assertions:
+      - span: "T"
+        scopes: [meta.type.parameters.kotlin, support.type.kotlin]
+
+  - line: "    R> pair(): Pair<T, R> = TODO()"
+    assertions:
+      - span: "R"
+        nth: 0
+        scopes: [meta.type.parameters.kotlin, support.type.kotlin]
+      - span: "pair"
+        scopes: [entity.name.function.kotlin]
+
+  # Closing brackets that can't belong to the open list end it.
+  - line: "class P {"
+    assertions:
+      - span: "{"
+        scopes: [punctuation.section.block.begin.kotlin]
+
+  - line: "    fun <"
+    assertions:
+      - span: "<"
+        scopes: [meta.type.parameters.kotlin]
+
+  - line: "}"
+    assertions:
+      - span: "}"
+        scopes: [punctuation.section.block.end.kotlin, "- meta.type.parameters", "- meta.function"]
+
+  - line: "class Q {"
+    assertions:
+      - span: "{"
+        scopes: [punctuation.section.block.begin.kotlin]
+
+  - line: "    fun f(a: Int"
+    assertions:
+      - span: "a"
+        scopes: [variable.parameter.kotlin]
+
+  - line: "}"
+    assertions:
+      - span: "}"
+        scopes: [punctuation.section.block.end.kotlin, "- meta.function.parameters"]
+
+  - line: "fun"
+    assertions:
+      - span: "fun"
+        scopes: [keyword.declaration.function.kotlin]
+
+  - line: "}"
+    assertions:
+      - span: "}"
+        scopes: [punctuation.section.block.end.kotlin]
+
+  # Other multi-line contexts recover the same way.
+  - line: "typealias UserId ="
+    assertions:
+      - span: "="
+        scopes: [keyword.operator.assignment.kotlin]
+
+  - line: "val data = 1"
+    assertions:
+      - span: "val"
+        scopes: [keyword.declaration.kotlin, "- meta.type"]
+      - span: "data"
+        scopes: [variable.other.readwrite.kotlin, "- support.type"]
+
+  - line: "val listener = object :"
+    assertions:
+      - span: ":"
+        scopes: [punctuation.separator.type.kotlin]
+
+  - line: "fun interface Generic<T> where T : Any {"
+    assertions:
+      - span: "fun"
+        scopes: [storage.modifier.kotlin, "- meta.type"]
+      - span: "Generic"
+        scopes: [entity.name.interface.kotlin]
+
+  - line: "}"
+    assertions:
+      - span: "}"
+        scopes: [punctuation.section.block.end.kotlin]

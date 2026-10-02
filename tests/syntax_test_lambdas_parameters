@@ -1,0 +1,218 @@
+// SYNTAX TEST "Kotlin.sublime-syntax"
+
+fun f(cause: Ex? = null, b: Int = g(1, 2), c: () -> Unit = { x -> x }) {}
+//    ^^^^^ meta.function.parameters.kotlin & variable.parameter.kotlin
+//                 ^^^^ meta.function.parameters.kotlin & constant.language.null.kotlin & - variable.parameter
+//                       ^ variable.parameter.kotlin
+//                                ^ meta.function.parameters.kotlin & variable.function.kotlin
+//                                  ^ constant.numeric.integer.decimal.kotlin & - variable.parameter
+//                                     ^ constant.numeric.integer.decimal.kotlin & - variable.parameter
+//    ^ variable.parameter.kotlin
+//                                                         ^ meta.lambda.kotlin & punctuation.section.block.begin.kotlin
+//                                                           ^ meta.lambda.kotlin & variable.parameter.kotlin
+//                                                                ^ meta.lambda.kotlin & variable.other.readwrite.kotlin
+//                                                                  ^ meta.lambda.kotlin & punctuation.section.block.end.kotlin
+//                                                                   ^ punctuation.section.parameters.end.kotlin & - meta.lambda
+
+class C(val a: Int = null, var b: String = name)
+//          ^ variable.parameter.kotlin
+//                   ^^^^ constant.language.null.kotlin & - variable.parameter
+//                             ^ variable.parameter.kotlin
+//                                         ^^^^ variable.other.readwrite.kotlin & - variable.parameter
+//                                             ^ punctuation.section.parameters.end.kotlin
+
+fun f(x: Int = 1) = x
+//             ^ meta.function.parameters.kotlin & constant.numeric.integer.decimal.kotlin
+//              ^ punctuation.section.parameters.end.kotlin
+//                ^^^ - meta.function.parameters
+
+run {
+    val j = when {
+        a -> 1
+//      ^ meta.lambda.kotlin & variable.other.readwrite.kotlin & - variable.parameter
+//      ^ - meta.block
+//        ^^ punctuation.separator.when.kotlin & - keyword.declaration.function.arrow
+
+        else -> 2
+//      ^^^^ keyword.control.conditional.kotlin & - variable.parameter
+//           ^^ punctuation.separator.when.kotlin
+
+    }
+}
+// <- meta.lambda.kotlin & punctuation.section.block.end.kotlin
+
+x
+// <- - meta.lambda
+
+list.fold(0) { acc, v -> foo(a, b) }
+//             ^^^ variable.parameter.kotlin
+//                  ^ variable.parameter.kotlin
+//                    ^^ keyword.declaration.function.arrow.kotlin
+//                           ^ variable.other.readwrite.kotlin & - variable.parameter
+
+list.map {
+    x, y -> x
+//  ^ meta.lambda.kotlin & variable.parameter.kotlin
+//     ^ variable.parameter.kotlin
+//       ^^ keyword.declaration.function.arrow.kotlin
+
+}
+// <- meta.lambda.kotlin & punctuation.section.block.end.kotlin
+
+run { foo(a, b) }
+//        ^ meta.lambda.kotlin & variable.other.readwrite.kotlin & - variable.parameter
+//              ^ meta.lambda.kotlin & punctuation.section.block.end.kotlin
+
+run { foo(it.x) }
+//        ^^ meta.lambda.kotlin & variable.language.kotlin
+//           ^ variable.other.readwrite.kotlin
+
+subprojects.filter { !unpublished.contains(it.name) && it.name !in sourceless }
+//                                         ^^ variable.language.kotlin
+//                                                     ^^ variable.language.kotlin
+//                                                             ^^^ keyword.operator.word.kotlin
+
+list.map { listOf(it[0], arrayOf(it)) }
+//                ^^ variable.language.kotlin
+//                               ^^ variable.language.kotlin
+
+val item = items
+//  ^^^^ variable.other.readwrite.kotlin & - variable.language
+//         ^^^^^ variable.other.readwrite.kotlin & - variable.language
+
+val g = { x: Int -> foo(x) }
+//      ^ meta.lambda.kotlin & punctuation.section.block.begin.kotlin
+//        ^ meta.lambda.kotlin & variable.parameter.kotlin
+//           ^^^ meta.type.kotlin & support.type.kotlin
+//               ^^ keyword.declaration.function.arrow.kotlin & - meta.type
+//                  ^^^ variable.function.kotlin & - meta.type & - support.type
+//                      ^ variable.other.readwrite.kotlin & - meta.type & - meta.group
+//                         ^ meta.lambda.kotlin & punctuation.section.block.end.kotlin
+
+val handler = { e: Throwable ->
+//              ^ meta.lambda.kotlin & variable.parameter.kotlin
+//            ^^^ meta.lambda.kotlin
+//                 ^^^^^^^^^ meta.type.kotlin & support.type.kotlin
+//                           ^^ keyword.declaration.function.arrow.kotlin
+
+    assertTrue(e is Ex && e.cause is TestEx, "$e")
+//  ^^^^^^^^^^ meta.lambda.kotlin & variable.function.kotlin & - meta.type
+//                     ^^ keyword.operator.logical.kotlin & - meta.type
+//                  ^^ meta.type.kotlin & support.type.kotlin
+//                                           ^ punctuation.definition.string.begin.kotlin & - meta.type
+
+}
+// <- meta.lambda.kotlin & punctuation.section.block.end.kotlin
+
+list.map { x: Int, y: List<String> -> x }
+//         ^ variable.parameter.kotlin
+//               ^ punctuation.separator.sequence.kotlin & - meta.type
+//                 ^ variable.parameter.kotlin
+//                         ^^^^^^ meta.type.kotlin & support.type.kotlin
+//                                 ^^ keyword.declaration.function.arrow.kotlin
+//                                    ^ variable.other.readwrite.kotlin
+
+fun f() = { a: Int -> a }
+//        ^ meta.lambda.kotlin
+//          ^ variable.parameter.kotlin
+
+val n: Int = 1
+//           ^ constant.numeric.integer.decimal.kotlin & - meta.lambda
+
+val f: (Int) -> Unit = {}
+//           ^^ meta.type.kotlin & punctuation.separator.return-type.kotlin
+//              ^^^^ meta.type.kotlin & support.type.kotlin
+//                     ^ meta.lambda.kotlin
+
+val h: suspend Foo.() -> Unit
+//                    ^^ meta.type.kotlin & punctuation.separator.return-type.kotlin
+//                       ^^^^ meta.type.kotlin & support.type.kotlin
+
+val k: ((Int) -> String)? = null
+//            ^^ meta.type.kotlin & meta.group.kotlin & punctuation.separator.return-type.kotlin
+//                      ^ meta.type.kotlin & keyword.operator.nullable.kotlin
+//                          ^^^^ constant.language.null.kotlin
+
+list.forEach { (k, v): Map.Entry<String, Int> -> k && v }
+//              ^ meta.lambda.kotlin & variable.parameter.kotlin
+//                 ^ variable.parameter.kotlin
+//                         ^^^^^ meta.type.kotlin & support.type.kotlin
+//                                            ^^ keyword.declaration.function.arrow.kotlin & - meta.type
+//                                               ^ variable.other.readwrite.kotlin & - meta.type
+//                                                 ^^ keyword.operator.logical.kotlin & - keyword.operator.type
+
+map.map { (key, value), i -> key }
+//         ^^^ variable.parameter.kotlin
+//              ^^^^^ variable.parameter.kotlin
+//                      ^ variable.parameter.kotlin
+//                           ^^^ variable.other.readwrite.kotlin
+
+run { (a + b) * 2 }
+//     ^ variable.other.readwrite.kotlin & - variable.parameter
+//            ^ keyword.operator.arithmetic.kotlin
+
+obj.call { x: Int, y: String -> if (x > 0 && y == "a") 'c' else this@call }
+//         ^ variable.parameter.kotlin
+//                 ^ variable.parameter.kotlin
+//                                        ^^ keyword.operator.logical.kotlin & - meta.type
+//                                                ^^^ string.quoted.double.kotlin & - meta.type
+//                                                     ^^^ constant.character.kotlin
+//                                      ^ constant.numeric.integer.decimal.kotlin
+//                                                              ^^^^ variable.language.kotlin & - support.type
+//                                                                  ^ punctuation.definition.label.kotlin & - meta.annotation
+
+obj.call { e: Throwable ->
+    flow { emit(e) }
+//  ^^^^ variable.function.kotlin & - meta.type
+//       ^ meta.lambda.kotlin meta.lambda.kotlin
+
+}
+// <- meta.lambda.kotlin & punctuation.section.block.end.kotlin
+
+foo({ x: Int -> this@outer.bar(1) })
+//  ^ meta.lambda.kotlin & punctuation.section.block.begin.kotlin
+//    ^ variable.parameter.kotlin
+//           ^^ keyword.declaration.function.arrow.kotlin
+//              ^^^^ meta.lambda.kotlin & variable.language.kotlin
+//                                ^ meta.lambda.kotlin & punctuation.section.block.end.kotlin
+//                                 ^ punctuation.section.group.end.kotlin & - meta.lambda
+
+foo(1, { e: Throwable -> flow { emit(1) } }, { it })
+//       ^ meta.lambda.kotlin & variable.parameter.kotlin
+//                       ^^^^ variable.function.kotlin
+//                              ^^^^ meta.lambda.kotlin meta.lambda.kotlin
+//                                         ^ punctuation.separator.sequence.kotlin & - meta.lambda
+//                                             ^^ meta.lambda.kotlin & variable.language.kotlin
+
+foo(object : Runnable { override fun run() { a(1, 2) } }, { y -> y })
+//                    ^ punctuation.section.block.begin.kotlin & - meta.lambda
+//                               ^^^ keyword.declaration.function.kotlin & - meta.lambda
+//                                                     ^ punctuation.section.block.end.kotlin & - meta.lambda
+//                                                          ^ meta.lambda.kotlin & variable.parameter.kotlin
+
+object Single {
+    fun f() { }
+}
+// <- punctuation.section.block.end.kotlin
+
+val after = 1
+// <- keyword.declaration.kotlin
+ // <- keyword.declaration.kotlin
+//^ keyword.declaration.kotlin
+//          ^ constant.numeric.integer.decimal.kotlin
+
+val w = run {
+    fun stub() {
+//             ^ meta.lambda.kotlin & punctuation.section.block.begin.kotlin & - meta.block
+
+    }
+//  ^ meta.lambda.kotlin & punctuation.section.block.end.kotlin & - meta.block
+
+}
+// <- meta.lambda.kotlin & punctuation.section.block.end.kotlin
+
+fun top() {
+//        ^ - meta.lambda & - meta.block
+
+}
+// <- - meta.lambda

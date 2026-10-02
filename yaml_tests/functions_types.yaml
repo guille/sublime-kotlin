@@ -160,3 +160,121 @@ tests:
         scopes: [meta.type.kotlin, support.type.kotlin]
       - span: "Interface"
         scopes: [meta.type.kotlin, support.type.kotlin]
+
+  # Parenthesized function type as extension receiver.
+  - line: "infix fun <A, B, C> ((B) -> C).compose(other: (A) -> B): (A) -> C = { this(other(it)) }"
+    assertions:
+      - span: "(("
+        scopes: [meta.function.kotlin, meta.type.kotlin, meta.group.kotlin, punctuation.section.group.begin.kotlin, "- meta.function.parameters"]
+      - span: "B"
+        nth: 1
+        scopes: [meta.type.kotlin, support.type.kotlin, "- variable.parameter"]
+      - span: "->"
+        nth: 0
+        scopes: [meta.type.kotlin, punctuation.separator.return-type.kotlin]
+      - span: "C"
+        nth: 1
+        scopes: [meta.type.kotlin, support.type.kotlin]
+      - span: ")."
+        scopes: [meta.function.kotlin]
+      - span: "compose"
+        scopes: [meta.function.kotlin, entity.name.function.kotlin]
+      - span: "other"
+        nth: 0
+        scopes: [meta.function.parameters.kotlin, variable.parameter.kotlin]
+
+  - line: "fun (x: Int) = x"
+    assertions:
+      - span: "("
+        scopes: [meta.function.parameters.kotlin, punctuation.section.parameters.begin.kotlin]
+      - span: "x"
+        nth: 0
+        scopes: [variable.parameter.kotlin]
+
+
+  # A generic call with a trailing lambda.
+  - line: "assertFailsWith<WebSocketException> {"
+    assertions:
+      - span: "assertFailsWith"
+        scopes: [variable.function.kotlin, "- meta.type"]
+      - span: "<"
+        scopes: [meta.type.parameters.kotlin, punctuation.definition.typeparameters.begin.kotlin]
+      - span: "WebSocketException"
+        scopes: [meta.type.kotlin, support.type.kotlin]
+      - span: "{"
+        scopes: [meta.lambda.kotlin, punctuation.section.block.begin.kotlin]
+
+  - line: "    f()"
+    assertions:
+      - span: "f"
+        scopes: [meta.lambda.kotlin, variable.function.kotlin]
+
+  - line: "}"
+    assertions:
+      - span: "}"
+        scopes: [meta.lambda.kotlin, punctuation.section.block.end.kotlin]
+
+  - line: "plugins.withType<NodeJsPlugin> { the<X>() }"
+    assertions:
+      - span: "withType"
+        scopes: [variable.function.kotlin]
+      - span: "{"
+        scopes: [meta.lambda.kotlin]
+      - span: "the"
+        scopes: [meta.lambda.kotlin, variable.function.kotlin]
+      - span: "X"
+        scopes: [meta.type.kotlin, support.type.kotlin]
+
+  - line: "run { get<Articles> { call.respond(it) } }"
+    assertions:
+      - span: "get"
+        scopes: [variable.function.kotlin, "- meta.type"]
+      - span: "Articles"
+        scopes: [support.type.kotlin]
+      - span: "it"
+        scopes: [meta.lambda.kotlin meta.lambda.kotlin, variable.language.kotlin]
+      - span: "{"
+        nth: 1
+        scopes: [meta.lambda.kotlin meta.lambda.kotlin, "- meta.block"]
+
+  - line: "ReadWriteProperty<Any?, Double> {}"
+    assertions:
+      - span: "ReadWriteProperty"
+        scopes: [variable.function.kotlin]
+      - span: "{"
+        scopes: [meta.lambda.kotlin]
+
+  - prefix_lines: ["val d = object :"]
+    line: "    ReadWriteProperty<Any?, Double> {}"
+    assertions:
+      - span: "ReadWriteProperty"
+        scopes: [meta.type.kotlin, support.type.kotlin]
+      - span: "{"
+        scopes: ["- meta.lambda"]
+
+  # Callable references on generic types.
+  - line: "val g = FlowCollector<Any?>::emit"
+    assertions:
+      - span: "FlowCollector"
+        scopes: [meta.type.kotlin, support.type.kotlin]
+      - span: "Any"
+        scopes: [meta.type.kotlin, support.type.kotlin]
+      - span: "?"
+        scopes: [keyword.operator.nullable.kotlin]
+      - span: "::"
+        scopes: [punctuation.accessor.callable-reference.kotlin]
+      - span: "emit"
+        scopes: [variable.function.kotlin]
+
+  - line: "val c = List<String>::class"
+    assertions:
+      - span: "List"
+        scopes: [support.type.kotlin]
+      - span: "class"
+        scopes: [keyword.other.kotlin]
+
+  - line: "val b = a < b && c > ::d"
+    assertions:
+      - span: "a"
+        nth: 1
+        scopes: [variable.other.readwrite.kotlin, "- support.type"]

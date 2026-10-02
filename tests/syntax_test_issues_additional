@@ -77,13 +77,11 @@ private val entries = mutableMapOf<String, Any>()
 //                                 ^^^^^^ meta.type.kotlin & support.type.kotlin
 //                                         ^^^ meta.type.kotlin & support.type.kotlin
 
-ReadWriteProperty<Any?, Double> {}
-// <- meta.type.kotlin & support.type.kotlin
- // <- meta.type.kotlin & support.type.kotlin
-//^^^^^^^^^^^^^^^ meta.type.kotlin & support.type.kotlin
-//                ^^^ meta.type.kotlin & support.type.kotlin
-//                   ^ meta.type.kotlin & keyword.operator.nullable.kotlin
-//                      ^^^^^^ meta.type.kotlin & support.type.kotlin
+val d = object : ReadWriteProperty<Any?, Double> {}
+//               ^^^^^^^^^^^^^^^^^ meta.type.kotlin & support.type.kotlin
+//                                 ^^^ meta.type.kotlin & support.type.kotlin
+//                                    ^ meta.type.kotlin & keyword.operator.nullable.kotlin
+//                                       ^^^^^^ meta.type.kotlin & support.type.kotlin
 
 typealias Matrix2D = Array<DoubleArray>
 // <- keyword.declaration.typealias.kotlin

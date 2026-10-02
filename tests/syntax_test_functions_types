@@ -84,3 +84,67 @@ class Child : Parent(), Interface
 //          ^ punctuation.separator.type.kotlin
 //            ^^^^^^ meta.type.kotlin & support.type.kotlin
 //                      ^^^^^^^^^ meta.type.kotlin & support.type.kotlin
+
+infix fun <A, B, C> ((B) -> C).compose(other: (A) -> B): (A) -> C = { this(other(it)) }
+//                  ^^ meta.function.kotlin & meta.type.kotlin & meta.group.kotlin & punctuation.section.group.begin.kotlin & - meta.function.parameters
+//                    ^ meta.type.kotlin & support.type.kotlin & - variable.parameter
+//                       ^^ meta.type.kotlin & punctuation.separator.return-type.kotlin
+//                          ^ meta.type.kotlin & support.type.kotlin
+//                           ^^ meta.function.kotlin
+//                             ^^^^^^^ meta.function.kotlin & entity.name.function.kotlin
+//                                     ^^^^^ meta.function.parameters.kotlin & variable.parameter.kotlin
+
+fun (x: Int) = x
+//  ^ meta.function.parameters.kotlin & punctuation.section.parameters.begin.kotlin
+//   ^ variable.parameter.kotlin
+
+assertFailsWith<WebSocketException> {
+// <- variable.function.kotlin & - meta.type
+ // <- variable.function.kotlin & - meta.type
+//^^^^^^^^^^^^^ variable.function.kotlin & - meta.type
+//             ^ meta.type.parameters.kotlin & punctuation.definition.typeparameters.begin.kotlin
+//              ^^^^^^^^^^^^^^^^^^ meta.type.kotlin & support.type.kotlin
+//                                  ^ meta.lambda.kotlin & punctuation.section.block.begin.kotlin
+
+    f()
+//  ^ meta.lambda.kotlin & variable.function.kotlin
+
+}
+// <- meta.lambda.kotlin & punctuation.section.block.end.kotlin
+
+plugins.withType<NodeJsPlugin> { the<X>() }
+//      ^^^^^^^^ variable.function.kotlin
+//                             ^ meta.lambda.kotlin
+//                               ^^^ meta.lambda.kotlin & variable.function.kotlin
+//                                   ^ meta.type.kotlin & support.type.kotlin
+
+run { get<Articles> { call.respond(it) } }
+//    ^^^ variable.function.kotlin & - meta.type
+//        ^^^^^^^^ support.type.kotlin
+//                                 ^^ meta.lambda.kotlin meta.lambda.kotlin & variable.language.kotlin
+//                  ^ meta.lambda.kotlin meta.lambda.kotlin & - meta.block
+
+ReadWriteProperty<Any?, Double> {}
+// <- variable.function.kotlin
+ // <- variable.function.kotlin
+//^^^^^^^^^^^^^^^ variable.function.kotlin
+//                              ^ meta.lambda.kotlin
+
+val d = object :
+    ReadWriteProperty<Any?, Double> {}
+//  ^^^^^^^^^^^^^^^^^ meta.type.kotlin & support.type.kotlin
+//                                  ^ - meta.lambda
+
+val g = FlowCollector<Any?>::emit
+//      ^^^^^^^^^^^^^ meta.type.kotlin & support.type.kotlin
+//                    ^^^ meta.type.kotlin & support.type.kotlin
+//                       ^ keyword.operator.nullable.kotlin
+//                         ^^ punctuation.accessor.callable-reference.kotlin
+//                           ^^^^ variable.function.kotlin
+
+val c = List<String>::class
+//      ^^^^ support.type.kotlin
+//                    ^^^^^ keyword.other.kotlin
+
+val b = a < b && c > ::d
+//      ^ variable.other.readwrite.kotlin & - support.type

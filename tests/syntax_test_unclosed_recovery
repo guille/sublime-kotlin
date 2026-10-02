@@ -1,0 +1,154 @@
+// SYNTAX TEST "Kotlin.sublime-syntax"
+
+fun f(action
+//    ^^^^^^ meta.function.parameters.kotlin & variable.parameter.kotlin
+
+data class C(val m: String)
+// <- storage.modifier.kotlin & - meta.function.parameters
+ // <- storage.modifier.kotlin & - meta.function.parameters
+//^^ storage.modifier.kotlin & - meta.function.parameters
+//   ^^^^^ meta.class.kotlin & keyword.declaration.class.kotlin
+//         ^ entity.name.class.kotlin
+//               ^ variable.parameter.kotlin
+//                        ^ punctuation.section.parameters.end.kotlin
+
+fun g(): Int {
+// <- keyword.declaration.function.kotlin & - meta.function.parameters
+ // <- keyword.declaration.function.kotlin & - meta.function.parameters
+//^ keyword.declaration.function.kotlin & - meta.function.parameters
+//  ^ entity.name.function.kotlin
+
+}
+// <- punctuation.section.block.end.kotlin & - meta.function.parameters
+
+fun h(x:
+//    ^ variable.parameter.kotlin
+
+private val y = 2
+// <- storage.modifier.kotlin & - meta.function.parameters
+ // <- storage.modifier.kotlin & - meta.function.parameters
+//^^^^^ storage.modifier.kotlin & - meta.function.parameters
+//          ^ meta.declaration.variable.kotlin & variable.other.readwrite.kotlin
+//              ^ constant.numeric.integer.decimal.kotlin & - meta.type
+
+data class W(val jobs: List<
+//               ^^^^ variable.parameter.kotlin
+
+fun after() = 1
+// <- keyword.declaration.function.kotlin & - meta.function.parameters & - meta.type
+ // <- keyword.declaration.function.kotlin & - meta.function.parameters & - meta.type
+//^ keyword.declaration.function.kotlin & - meta.function.parameters & - meta.type
+//  ^^^^^ entity.name.function.kotlin
+
+val k: Key<
+//        ^ meta.type.parameters.kotlin
+
+public val x: Int = 1
+// <- storage.modifier.kotlin & - meta.type
+ // <- storage.modifier.kotlin & - meta.type
+//^^^^ storage.modifier.kotlin & - meta.type
+//         ^ variable.other.readwrite.kotlin & - support.type
+//            ^^^ meta.type.kotlin & support.type.kotlin & - meta.type.parameters
+
+internal actual fun <E
+//                   ^ meta.type.parameters.kotlin & support.type.kotlin
+
+fun z() = 1
+// <- keyword.declaration.function.kotlin & - entity.name
+ // <- keyword.declaration.function.kotlin & - entity.name
+//^ keyword.declaration.function.kotlin & - entity.name
+//  ^ entity.name.function.kotlin
+
+class
+// <- keyword.declaration.class.kotlin
+ // <- keyword.declaration.class.kotlin
+//^^^ keyword.declaration.class.kotlin
+
+fun y() = 2
+// <- keyword.declaration.function.kotlin & - entity.name
+ // <- keyword.declaration.function.kotlin & - entity.name
+//^ keyword.declaration.function.kotlin & - entity.name
+//  ^ entity.name.function.kotlin
+
+class Ok(
+//      ^ punctuation.section.parameters.begin.kotlin
+
+    @Inject private val a: Int,
+//          ^^^^^^^ meta.function.parameters.kotlin & storage.modifier.kotlin
+//                      ^^ meta.function.parameters.kotlin
+//                      ^ variable.parameter.kotlin
+
+    val b: List<
+//      ^ meta.function.parameters.kotlin & variable.parameter.kotlin
+
+        String>,
+//      ^^^^^^ meta.function.parameters.kotlin & meta.type.parameters.kotlin & support.type.kotlin
+
+    override var c: Int = 1
+//  ^^^^^^^^ meta.function.parameters.kotlin & storage.modifier.kotlin
+//               ^ variable.parameter.kotlin
+
+)
+// <- meta.function.parameters.kotlin & punctuation.section.parameters.end.kotlin
+
+fun f(a: Int,
+//    ^ variable.parameter.kotlin
+
+    val: Int, fun: Int) {}
+//  ^^^ meta.function.parameters.kotlin & variable.parameter.kotlin
+//            ^^^ meta.function.parameters.kotlin & variable.parameter.kotlin
+//                    ^ punctuation.section.parameters.end.kotlin
+
+fun <T,
+//   ^ meta.type.parameters.kotlin & support.type.kotlin
+
+    R> pair(): Pair<T, R> = TODO()
+//  ^ meta.type.parameters.kotlin & support.type.kotlin
+//     ^^^^ entity.name.function.kotlin
+
+class P {
+//      ^ punctuation.section.block.begin.kotlin
+
+    fun <
+//      ^ meta.type.parameters.kotlin
+
+}
+// <- punctuation.section.block.end.kotlin & - meta.type.parameters & - meta.function
+
+class Q {
+//      ^ punctuation.section.block.begin.kotlin
+
+    fun f(a: Int
+//        ^ variable.parameter.kotlin
+
+}
+// <- punctuation.section.block.end.kotlin & - meta.function.parameters
+
+fun
+// <- keyword.declaration.function.kotlin
+ // <- keyword.declaration.function.kotlin
+//^ keyword.declaration.function.kotlin
+
+}
+// <- punctuation.section.block.end.kotlin
+
+typealias UserId =
+//               ^ keyword.operator.assignment.kotlin
+
+val data = 1
+// <- keyword.declaration.kotlin & - meta.type
+ // <- keyword.declaration.kotlin & - meta.type
+//^ keyword.declaration.kotlin & - meta.type
+//  ^^^^ variable.other.readwrite.kotlin & - support.type
+
+val listener = object :
+//                    ^ punctuation.separator.type.kotlin
+
+fun interface Generic<T> where T : Any {
+// <- storage.modifier.kotlin & - meta.type
+ // <- storage.modifier.kotlin & - meta.type
+//^ storage.modifier.kotlin & - meta.type
+//            ^^^^^^^ entity.name.interface.kotlin
+
+}
+// <- punctuation.section.block.end.kotlin

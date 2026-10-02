@@ -73,3 +73,33 @@ tests:
         scopes: [punctuation.accessor.dot.kotlin]
       - span: "toString"
         scopes: [variable.function.kotlin]
+
+  # Annotation names carry meta.annotation once.
+  - line: '@Suppress("x")'
+    assertions:
+      - span: "Suppress"
+        scopes: [entity.name.annotation.kotlin, "- (meta.annotation meta.annotation)"]
+      - span: "("
+        scopes: [meta.annotation.kotlin meta.annotation.arguments.kotlin]
+
+  - line: '@file:Suppress("x")'
+    assertions:
+      - span: "Suppress"
+        scopes: [entity.name.annotation.kotlin, "- (meta.annotation meta.annotation)"]
+
+  - line: "@Target(AnnotationTarget.CLASS) class A"
+    assertions:
+      - span: "Target"
+        scopes: [meta.annotation.kotlin, entity.name.annotation.kotlin, "- (meta.annotation meta.annotation)"]
+      - span: "class"
+        scopes: [keyword.declaration.class.kotlin, "- meta.annotation"]
+
+  - line: "@kotlin.jvm.JvmStatic fun f() {}"
+    assertions:
+      - span: "kotlin"
+        scopes: [meta.annotation.kotlin, entity.name.annotation.kotlin, "- (meta.annotation meta.annotation)"]
+      - span: "."
+        nth: 0
+        scopes: [meta.annotation.kotlin, punctuation.accessor.dot.kotlin, "- (meta.annotation meta.annotation)"]
+      - span: "JvmStatic"
+        scopes: [entity.name.annotation.kotlin, "- (meta.annotation meta.annotation)"]

@@ -43,3 +43,22 @@ super@Outer.toString()
 //    ^^^^^ entity.name.label.kotlin
 //         ^ punctuation.accessor.dot.kotlin
 //          ^^^^^^^^ variable.function.kotlin
+
+@Suppress("x")
+ // <- entity.name.annotation.kotlin & - (meta.annotation meta.annotation)
+//^^^^^^^ entity.name.annotation.kotlin & - (meta.annotation meta.annotation)
+//       ^ meta.annotation.kotlin meta.annotation.arguments.kotlin
+
+@file:Suppress("x")
+//    ^^^^^^^^ entity.name.annotation.kotlin & - (meta.annotation meta.annotation)
+
+@Target(AnnotationTarget.CLASS) class A
+ // <- meta.annotation.kotlin & entity.name.annotation.kotlin & - (meta.annotation meta.annotation)
+//^^^^^ meta.annotation.kotlin & entity.name.annotation.kotlin & - (meta.annotation meta.annotation)
+//                              ^^^^^ keyword.declaration.class.kotlin & - meta.annotation
+
+@kotlin.jvm.JvmStatic fun f() {}
+ // <- meta.annotation.kotlin & entity.name.annotation.kotlin & - (meta.annotation meta.annotation)
+//^^^^^ meta.annotation.kotlin & entity.name.annotation.kotlin & - (meta.annotation meta.annotation)
+//     ^ meta.annotation.kotlin & punctuation.accessor.dot.kotlin & - (meta.annotation meta.annotation)
+//          ^^^^^^^^^ entity.name.annotation.kotlin & - (meta.annotation meta.annotation)

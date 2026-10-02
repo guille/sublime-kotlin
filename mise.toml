@@ -1,8 +1,0 @@
-[tasks.setup]
-run = "bash .harness/setup_syntax_tests.sh 4200 st_syntax_tests . Kotlin"
-
-[tasks.gen-tests]
-run = ".harness/yaml2syntaxtest.py yaml_tests tests"
-
-[tasks.test]
-run = "bash .harness/run_tests.sh --comment-char '//'"

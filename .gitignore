@@ -2,5 +2,5 @@
 st_syntax_tests
 AGENTS.md
 support/
-.harness/
 tests/.comment_chars.json
+fuzz/

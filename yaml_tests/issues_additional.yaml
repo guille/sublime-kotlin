@@ -141,7 +141,7 @@ tests:
       - span: "Any"
         scopes: [meta.type.kotlin, support.type.kotlin]
 
-  - line: "ReadWriteProperty<Any?, Double> {}"
+  - line: "val d = object : ReadWriteProperty<Any?, Double> {}"
     assertions:
       - span: "ReadWriteProperty"
         scopes: [meta.type.kotlin, support.type.kotlin]

@@ -1,0 +1,304 @@
+syntax: "Kotlin.sublime-syntax"
+comment_char: "//"
+tests:
+  # `where` as an identifier.
+  - line: 'val x = where.set("foo")'
+    assertions:
+      - span: "where"
+        scopes: [variable.other.readwrite.kotlin, "- keyword"]
+      - span: "."
+        scopes: [punctuation.accessor.dot.kotlin]
+      - span: "set"
+        scopes: [variable.function.kotlin]
+      - span: "("
+        scopes: [punctuation.section.group.begin.kotlin]
+
+  - line: "value += where % 2"
+    assertions:
+      - span: "where"
+        scopes: [variable.other.readwrite.kotlin]
+      - span: "%"
+        scopes: [keyword.operator.arithmetic.kotlin]
+      - span: "2"
+        scopes: [constant.numeric.integer.decimal.kotlin]
+
+  - line: "foo { where: Continuation<Unit> -> bar() }"
+    assertions:
+      - span: "where"
+        scopes: ["- keyword"]
+      - span: "Continuation"
+        scopes: [meta.type.kotlin, support.type.kotlin]
+
+  - prefix_lines: ["foo { where: Continuation<Unit> ->"]
+    line: "    if (x < Long.MAX_VALUE) {"
+    assertions:
+      - span: "if"
+        scopes: [keyword.control.conditional.kotlin]
+      - span: "("
+        scopes: [punctuation.section.group.begin.kotlin]
+      - span: "<"
+        scopes: [keyword.operator.comparison.kotlin]
+
+  - prefix_lines: ["    }"]
+    line: "}"
+    assertions:
+      - span: "}"
+        scopes: [meta.lambda.kotlin, punctuation.section.block.end.kotlin]
+
+  - prefix_lines: ["if (x) {", "    where"]
+    line: "}"
+    assertions:
+      - span: "}"
+        scopes: [punctuation.section.block.end.kotlin]
+
+  - line: "foo(1)"
+    assertions:
+      - span: "foo"
+        scopes: [variable.function.kotlin]
+      - span: "("
+        scopes: [punctuation.section.group.begin.kotlin]
+
+  - line: "fun <T> f() where T : Any {}"
+    assertions:
+      - span: "where"
+        scopes: [keyword.declaration.kotlin]
+      - span: "T"
+        nth: 1
+        scopes: [meta.type.kotlin, support.type.kotlin]
+      - span: "Any"
+        scopes: [meta.type.kotlin, support.type.kotlin]
+
+  - line: "obj.where"
+    assertions:
+      - span: "where"
+        scopes: [variable.other.readwrite.kotlin]
+
+  # `import` as an identifier.
+  - line: "for (item in import) continue"
+    assertions:
+      - span: "import"
+        scopes: [variable.other.readwrite.kotlin, "- meta.import", "- keyword"]
+      - span: ")"
+        scopes: [punctuation.section.group.end.kotlin, "- meta.import"]
+      - span: "continue"
+        scopes: [keyword.control.flow.jump.kotlin]
+
+  - line: "val name = import.name"
+    assertions:
+      - span: "import"
+        scopes: [variable.other.readwrite.kotlin, "- meta.import"]
+      - span: "."
+        scopes: [punctuation.accessor.dot.kotlin, "- meta.import"]
+
+  - line: "import foo.bar.Baz"
+    assertions:
+      - span: "import"
+        scopes: [keyword.control.import.kotlin]
+      - span: "foo"
+        scopes: [meta.import.kotlin, support.module.kotlin]
+
+  - line: "    import foo.*"
+    assertions:
+      - span: "import"
+        scopes: [keyword.control.import.kotlin]
+      - span: "*"
+        scopes: [meta.import.kotlin, keyword.operator.wildcard.kotlin]
+
+  # Calls to functions named like modifiers.
+  - prefix_lines: ["with(exception) {"]
+    line: "    const(message, this::class.simpleName, stackTraceToString())"
+    assertions:
+      - span: "const"
+        scopes: [meta.lambda.kotlin, variable.function.kotlin, "- storage.modifier"]
+      - span: "message"
+        scopes: [meta.lambda.kotlin, variable.other.readwrite.kotlin, "- variable.parameter"]
+      - span: "stackTraceToString"
+        scopes: [variable.function.kotlin]
+
+  - line: "}"
+    assertions:
+      - span: "}"
+        scopes: [meta.lambda.kotlin, punctuation.section.block.end.kotlin]
+
+  - line: "flow { actual(arrayOf(this@combine, flow), { emit(it) }) }"
+    assertions:
+      - span: "actual"
+        scopes: [variable.function.kotlin]
+      - span: "flow"
+        nth: 1
+        scopes: [variable.other.readwrite.kotlin, "- variable.parameter"]
+      - span: "it"
+        nth: 1
+        scopes: [variable.language.kotlin]
+
+  - line: "final(it); companion(x)"
+    assertions:
+      - span: "final"
+        scopes: [variable.function.kotlin]
+      - span: "companion"
+        scopes: [variable.function.kotlin]
+
+  # Soft keywords followed by `{` start a lambda.
+  - line: "val answer: Int by by { 42 }"
+    assertions:
+      - span: "by"
+        nth: 0
+        scopes: [keyword.operator.word.kotlin]
+      - span: "by"
+        nth: 1
+        scopes: [variable.function.kotlin]
+      - span: "{"
+        scopes: [meta.lambda.kotlin, punctuation.section.block.begin.kotlin]
+      - span: "42"
+        scopes: [meta.lambda.kotlin]
+
+  - line: "data { open { } }"
+    assertions:
+      - span: "data"
+        scopes: [variable.function.kotlin]
+      - span: "open"
+        scopes: [variable.function.kotlin]
+      - span: "{"
+        nth: 1
+        scopes: [meta.lambda.kotlin meta.lambda.kotlin]
+
+  - line: "val lazyValue: String by lazy { compute() }"
+    assertions:
+      - span: "by"
+        scopes: [keyword.operator.word.kotlin]
+      - span: "lazy"
+        nth: 1
+        scopes: [variable.function.kotlin]
+      - span: "{"
+        scopes: [meta.lambda.kotlin]
+
+  # Generic call with a soft-keyword name.
+  - line: "private val entries = by<String, Any>()"
+    assertions:
+      - span: "by"
+        scopes: [variable.function.kotlin]
+      - span: "<"
+        scopes: [meta.type.parameters.kotlin, punctuation.definition.typeparameters.begin.kotlin]
+      - span: "String"
+        scopes: [support.type.kotlin]
+      - span: ">"
+        scopes: [punctuation.definition.typeparameters.end.kotlin]
+
+  # Soft keywords in expression position.
+  - line: "val x = inline + data"
+    assertions:
+      - span: "inline"
+        scopes: [variable.other.readwrite.kotlin, "- storage.modifier"]
+      - span: "data"
+        scopes: [variable.other.readwrite.kotlin, "- storage.modifier"]
+
+  - line: "foo(constructor, init, catch, finally, open)"
+    assertions:
+      - span: "constructor"
+        scopes: [variable.other.readwrite.kotlin]
+      - span: "init"
+        scopes: [variable.other.readwrite.kotlin]
+      - span: "catch"
+        scopes: [variable.other.readwrite.kotlin]
+      - span: "finally"
+        scopes: [variable.other.readwrite.kotlin]
+      - span: "open"
+        scopes: [variable.other.readwrite.kotlin]
+
+  - line: "x.catch(); y?.constructor(); z.by(0) { a -> a }"
+    assertions:
+      - span: "catch"
+        scopes: [variable.function.kotlin]
+      - span: "constructor"
+        scopes: [variable.function.kotlin]
+      - span: "by"
+        scopes: [variable.function.kotlin]
+      - span: "{"
+        scopes: [meta.lambda.kotlin]
+
+  - line: "fun f(vararg: Int, noinline: () -> Unit, val: Int) {}"
+    assertions:
+      - span: "vararg"
+        scopes: [variable.parameter.kotlin]
+      - span: "noinline"
+        scopes: [variable.parameter.kotlin]
+      - span: "val"
+        scopes: [variable.parameter.kotlin]
+
+  - line: "class P(vararg: Int, val val: Int)"
+    assertions:
+      - span: "vararg"
+        scopes: [variable.parameter.kotlin]
+      - span: "val"
+        nth: 0
+        scopes: [keyword.declaration.kotlin]
+      - span: "val"
+        nth: 1
+        scopes: [variable.parameter.kotlin]
+
+  - line: "fun g(vararg items: Int, noinline block: () -> Unit) {}"
+    assertions:
+      - span: "vararg"
+        scopes: [storage.modifier.kotlin]
+      - span: "items"
+        scopes: [variable.parameter.kotlin]
+      - span: "noinline"
+        scopes: [storage.modifier.kotlin]
+
+  # ...while modifiers in declarations keep their scope.
+  - line: "private inline fun <reified T> f() {}"
+    assertions:
+      - span: "private"
+        scopes: [storage.modifier.kotlin]
+      - span: "inline"
+        scopes: [storage.modifier.kotlin]
+      - span: "reified"
+        scopes: [storage.modifier.kotlin]
+
+  - line: "override @Deprecated(\"x\") suspend fun run() {}"
+    assertions:
+      - span: "override"
+        scopes: [storage.modifier.kotlin]
+      - span: "suspend"
+        scopes: [storage.modifier.kotlin]
+
+  - line: "    companion object Factory"
+    assertions:
+      - span: "companion"
+        scopes: [storage.modifier.kotlin]
+
+  - line: "    private set"
+    assertions:
+      - span: "private"
+        scopes: [storage.modifier.kotlin]
+
+  - line: "    protected constructor(x: Int) : this()"
+    assertions:
+      - span: "protected"
+        scopes: [storage.modifier.kotlin]
+      - span: "constructor"
+        scopes: [keyword.declaration.kotlin]
+
+  - line: "    init {"
+    assertions:
+      - span: "init"
+        scopes: [keyword.declaration.kotlin]
+
+  - line: "try { a() } catch (e: Exception) { } finally { }"
+    assertions:
+      - span: "try"
+        scopes: [keyword.control.exception.kotlin]
+      - span: "catch"
+        scopes: [keyword.control.exception.kotlin]
+      - span: "finally"
+        scopes: [keyword.control.exception.kotlin]
+
+  - line: "} catch"
+    assertions:
+      - span: "catch"
+        scopes: [keyword.control.exception.kotlin]
+
+  - line: "}finally"
+    assertions:
+      - span: "finally"
+        scopes: [keyword.control.exception.kotlin]

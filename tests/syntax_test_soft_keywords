@@ -1,0 +1,180 @@
+// SYNTAX TEST "Kotlin.sublime-syntax"
+
+val x = where.set("foo")
+//      ^^^^^ variable.other.readwrite.kotlin & - keyword
+//           ^ punctuation.accessor.dot.kotlin
+//            ^^^ variable.function.kotlin
+//               ^ punctuation.section.group.begin.kotlin
+
+value += where % 2
+//       ^^^^^ variable.other.readwrite.kotlin
+//             ^ keyword.operator.arithmetic.kotlin
+//               ^ constant.numeric.integer.decimal.kotlin
+
+foo { where: Continuation<Unit> -> bar() }
+//    ^^^^^ - keyword
+//           ^^^^^^^^^^^^ meta.type.kotlin & support.type.kotlin
+
+foo { where: Continuation<Unit> ->
+    if (x < Long.MAX_VALUE) {
+//  ^^ keyword.control.conditional.kotlin
+//     ^ punctuation.section.group.begin.kotlin
+//        ^ keyword.operator.comparison.kotlin
+
+    }
+}
+// <- meta.lambda.kotlin & punctuation.section.block.end.kotlin
+
+if (x) {
+    where
+}
+// <- punctuation.section.block.end.kotlin
+
+foo(1)
+// <- variable.function.kotlin
+ // <- variable.function.kotlin
+//^ variable.function.kotlin
+// ^ punctuation.section.group.begin.kotlin
+
+fun <T> f() where T : Any {}
+//          ^^^^^ keyword.declaration.kotlin
+//                ^ meta.type.kotlin & support.type.kotlin
+//                    ^^^ meta.type.kotlin & support.type.kotlin
+
+obj.where
+//  ^^^^^ variable.other.readwrite.kotlin
+
+for (item in import) continue
+//           ^^^^^^ variable.other.readwrite.kotlin & - meta.import & - keyword
+//                 ^ punctuation.section.group.end.kotlin & - meta.import
+//                   ^^^^^^^^ keyword.control.flow.jump.kotlin
+
+val name = import.name
+//         ^^^^^^ variable.other.readwrite.kotlin & - meta.import
+//               ^ punctuation.accessor.dot.kotlin & - meta.import
+
+import foo.bar.Baz
+// <- keyword.control.import.kotlin
+ // <- keyword.control.import.kotlin
+//^^^^ keyword.control.import.kotlin
+//     ^^^ meta.import.kotlin & support.module.kotlin
+
+    import foo.*
+//  ^^^^^^ keyword.control.import.kotlin
+//             ^ meta.import.kotlin & keyword.operator.wildcard.kotlin
+
+with(exception) {
+    const(message, this::class.simpleName, stackTraceToString())
+//  ^^^^^ meta.lambda.kotlin & variable.function.kotlin & - storage.modifier
+//        ^^^^^^^ meta.lambda.kotlin & variable.other.readwrite.kotlin & - variable.parameter
+//                                         ^^^^^^^^^^^^^^^^^^ variable.function.kotlin
+
+}
+// <- meta.lambda.kotlin & punctuation.section.block.end.kotlin
+
+flow { actual(arrayOf(this@combine, flow), { emit(it) }) }
+//     ^^^^^^ variable.function.kotlin
+//                                  ^^^^ variable.other.readwrite.kotlin & - variable.parameter
+//                                                ^^ variable.language.kotlin
+
+final(it); companion(x)
+// <- variable.function.kotlin
+ // <- variable.function.kotlin
+//^^^ variable.function.kotlin
+//         ^^^^^^^^^ variable.function.kotlin
+
+val answer: Int by by { 42 }
+//              ^^ keyword.operator.word.kotlin
+//                 ^^ variable.function.kotlin
+//                    ^ meta.lambda.kotlin & punctuation.section.block.begin.kotlin
+//                      ^^ meta.lambda.kotlin
+
+data { open { } }
+// <- variable.function.kotlin
+ // <- variable.function.kotlin
+//^^ variable.function.kotlin
+//     ^^^^ variable.function.kotlin
+//          ^ meta.lambda.kotlin meta.lambda.kotlin
+
+val lazyValue: String by lazy { compute() }
+//                    ^^ keyword.operator.word.kotlin
+//                       ^^^^ variable.function.kotlin
+//                            ^ meta.lambda.kotlin
+
+private val entries = by<String, Any>()
+//                    ^^ variable.function.kotlin
+//                      ^ meta.type.parameters.kotlin & punctuation.definition.typeparameters.begin.kotlin
+//                       ^^^^^^ support.type.kotlin
+//                                  ^ punctuation.definition.typeparameters.end.kotlin
+
+val x = inline + data
+//      ^^^^^^ variable.other.readwrite.kotlin & - storage.modifier
+//               ^^^^ variable.other.readwrite.kotlin & - storage.modifier
+
+foo(constructor, init, catch, finally, open)
+//  ^^^^^^^^^^^ variable.other.readwrite.kotlin
+//               ^^^^ variable.other.readwrite.kotlin
+//                     ^^^^^ variable.other.readwrite.kotlin
+//                            ^^^^^^^ variable.other.readwrite.kotlin
+//                                     ^^^^ variable.other.readwrite.kotlin
+
+x.catch(); y?.constructor(); z.by(0) { a -> a }
+//^^^^^ variable.function.kotlin
+//            ^^^^^^^^^^^ variable.function.kotlin
+//                             ^^ variable.function.kotlin
+//                                   ^ meta.lambda.kotlin
+
+fun f(vararg: Int, noinline: () -> Unit, val: Int) {}
+//    ^^^^^^ variable.parameter.kotlin
+//                 ^^^^^^^^ variable.parameter.kotlin
+//                                       ^^^ variable.parameter.kotlin
+
+class P(vararg: Int, val val: Int)
+//      ^^^^^^ variable.parameter.kotlin
+//                   ^^^ keyword.declaration.kotlin
+//                       ^^^ variable.parameter.kotlin
+
+fun g(vararg items: Int, noinline block: () -> Unit) {}
+//    ^^^^^^ storage.modifier.kotlin
+//           ^^^^^ variable.parameter.kotlin
+//                       ^^^^^^^^ storage.modifier.kotlin
+
+private inline fun <reified T> f() {}
+// <- storage.modifier.kotlin
+ // <- storage.modifier.kotlin
+//^^^^^ storage.modifier.kotlin
+//      ^^^^^^ storage.modifier.kotlin
+//                  ^^^^^^^ storage.modifier.kotlin
+
+override @Deprecated("x") suspend fun run() {}
+// <- storage.modifier.kotlin
+ // <- storage.modifier.kotlin
+//^^^^^^ storage.modifier.kotlin
+//                        ^^^^^^^ storage.modifier.kotlin
+
+    companion object Factory
+//  ^^^^^^^^^ storage.modifier.kotlin
+
+    private set
+//  ^^^^^^^ storage.modifier.kotlin
+
+    protected constructor(x: Int) : this()
+//  ^^^^^^^^^ storage.modifier.kotlin
+//            ^^^^^^^^^^^ keyword.declaration.kotlin
+
+    init {
+//  ^^^^ keyword.declaration.kotlin
+
+try { a() } catch (e: Exception) { } finally { }
+// <- keyword.control.exception.kotlin
+ // <- keyword.control.exception.kotlin
+//^ keyword.control.exception.kotlin
+//          ^^^^^ keyword.control.exception.kotlin
+//                                   ^^^^^^^ keyword.control.exception.kotlin
+
+} catch
+//^^^^^ keyword.control.exception.kotlin
+
+}finally
+ // <- keyword.control.exception.kotlin
+//^^^^^^ keyword.control.exception.kotlin

@@ -1,0 +1,282 @@
+// SYNTAX TEST "Kotlin.sublime-syntax"
+
+val age:
+    Int
+//  ^^^ meta.type.kotlin & support.type.kotlin
+
+val age: // comment
+    Int
+//  ^^^ meta.type.kotlin & support.type.kotlin
+
+fun apply(t:
+    T): T
+//  ^ meta.function.parameters.kotlin & meta.type.kotlin & support.type.kotlin
+//   ^ punctuation.section.parameters.end.kotlin
+//      ^ meta.type.kotlin & support.type.kotlin & - meta.function.parameters
+
+fun f():
+    Int = 1
+//  ^^^ meta.type.kotlin & support.type.kotlin
+//      ^ keyword.operator.assignment.kotlin & - meta.type
+
+class Child :
+    Parent(), Interface
+//  ^^^^^^ meta.type.kotlin & support.type.kotlin
+//        ^ meta.type.kotlin & punctuation.section.group.begin.kotlin
+//            ^^^^^^^^^ meta.type.kotlin & support.type.kotlin
+
+class Child : Parent(),
+    Interface {
+//  ^^^^^^^^^ meta.type.kotlin & support.type.kotlin
+//            ^ punctuation.section.block.begin.kotlin & - meta.type
+
+}
+// <- punctuation.section.block.end.kotlin
+
+class Box<out T :
+    Any>
+//  ^^^ meta.type.parameters.kotlin & meta.type.kotlin & support.type.kotlin
+//     ^ punctuation.definition.typeparameters.end.kotlin
+
+private typealias Task =
+    suspend () -> Unit
+//  ^^^^^^^ meta.type.kotlin & storage.modifier.kotlin
+//          ^ meta.type.kotlin & meta.group.kotlin
+//             ^^ meta.type.kotlin & punctuation.separator.return-type.kotlin
+//                ^^^^ meta.type.kotlin & support.type.kotlin
+
+typealias Handler = (Int) ->
+    Unit
+//  ^^^^ meta.type.kotlin & support.type.kotlin
+
+val entry: Map.
+    Entry<String, Int>? = null
+//  ^^^^^ meta.type.kotlin & support.type.kotlin
+//                        ^^^^ constant.language.null.kotlin & - meta.type
+
+if (x is
+    String) {}
+//  ^^^^^^ meta.type.kotlin & support.type.kotlin
+//        ^ punctuation.section.group.end.kotlin & - meta.type
+
+val y = x as
+    String
+//  ^^^^^^ meta.type.kotlin & support.type.kotlin
+
+fun accepts(block: (Int)
+    -> String) {}
+//  ^^ meta.function.parameters.kotlin & meta.type.kotlin & punctuation.separator.return-type.kotlin & - punctuation.separator.when
+//     ^^^^^^ meta.type.kotlin & support.type.kotlin
+//           ^ punctuation.section.parameters.end.kotlin
+
+class C(val m: Map<String, Int>
+    ?, val n: Int)
+//  ^ meta.type.kotlin & keyword.operator.nullable.kotlin
+//         ^ variable.parameter.kotlin
+
+val age: Int
+foo()
+// <- variable.function.kotlin & - meta.type & - meta.declaration
+ // <- variable.function.kotlin & - meta.type & - meta.declaration
+//^ variable.function.kotlin & - meta.type & - meta.declaration
+
+fun apply(t
+    : T): T
+//  ^ meta.function.parameters.kotlin & punctuation.separator.type.kotlin
+//    ^ meta.type.kotlin & support.type.kotlin
+
+fun apply(t
+    : T) {}
+//    ^ meta.type.kotlin & support.type.kotlin
+//     ^ punctuation.section.parameters.end.kotlin
+//       ^ punctuation.section.block.begin.kotlin & - meta.function.parameters
+
+val String.firstLetter
+    : Char get() = this[0]
+//    ^^^^ meta.type.kotlin & support.type.kotlin
+//         ^^^ keyword.declaration.kotlin & - variable.function
+
+val lazyValue
+    by lazy { 1 }
+//  ^^ keyword.operator.word.kotlin
+//     ^^^^ variable.function.kotlin
+
+val x: Int
+    get() = 1
+//  ^^^ keyword.declaration.kotlin
+
+class Child
+    : Parent(), Interface
+//  ^ punctuation.separator.type.kotlin
+//    ^^^^^^ meta.type.kotlin & support.type.kotlin
+//          ^ meta.type.kotlin & punctuation.section.group.begin.kotlin & - meta.group
+//              ^^^^^^^^^ meta.type.kotlin & support.type.kotlin
+
+class Point
+    (val x: Int)
+//  ^ meta.function.parameters.kotlin & punctuation.section.parameters.begin.kotlin
+//       ^ variable.parameter.kotlin
+
+class Empty
+foo()
+// <- variable.function.kotlin & - meta.class
+ // <- variable.function.kotlin & - meta.class
+//^ variable.function.kotlin & - meta.class
+
+class C<T>
+    where T
+    : CharSequence
+//    ^^^^^^^^^^^^ meta.type.kotlin & support.type.kotlin
+
+class C<T>
+    where T
+//  ^^^^^ keyword.declaration.kotlin
+//        ^ meta.type.kotlin & support.type.kotlin
+
+    : CharSequence
+//    ^^^^^^^^^^^^ support.type.kotlin
+
+fun <T> f()
+    where T : Any {}
+//  ^^^^^ keyword.declaration.kotlin
+//        ^ meta.type.kotlin & support.type.kotlin
+
+class Repo<K, V> where K : Any,
+    V
+//  ^ meta.type.kotlin & support.type.kotlin
+
+    : Any {}
+//    ^^^ support.type.kotlin
+
+private object Storage: MutableMap<Symbol, Any?> by mutableMapOf(
+    )
+//  ^ meta.type.kotlin & punctuation.section.group.end.kotlin
+
+class After
+// <- keyword.declaration.class.kotlin & - meta.type
+ // <- keyword.declaration.class.kotlin & - meta.type
+//^^^ keyword.declaration.class.kotlin & - meta.type
+//    ^^^^^ entity.name.class.kotlin
+
+class DelegatedJoke(val joke: Joke) : JokeInterface by
+    joke {
+//  ^^^^ meta.type.kotlin & variable.other.readwrite.kotlin & - variable.function
+//       ^ punctuation.section.block.begin.kotlin & - meta.lambda
+
+}
+// <- punctuation.section.block.end.kotlin & - meta.lambda
+
+class DelegatedJoke(val joke: Joke) : JokeInterface
+    by joke {
+//  ^^ meta.type.kotlin & keyword.operator.word.kotlin
+//     ^^^^ variable.other.readwrite.kotlin
+//          ^ - meta.lambda
+
+}
+// <- punctuation.section.block.end.kotlin
+
+class X : Delay by (dispatcher as? Delay
+    ?: DefaultDelay) {
+//  ^^ meta.type.kotlin & meta.group.kotlin & keyword.operator.elvis.kotlin
+//     ^^^^^^^^^^^^ meta.group.kotlin & variable.other.readwrite.kotlin
+//                 ^ meta.group.kotlin & punctuation.section.group.end.kotlin
+//                   ^ - meta.type & - meta.group
+
+}
+// <- punctuation.section.block.end.kotlin
+
+val m = mapOf(1 to 2)
+//      ^^^^^ variable.function.kotlin & - meta.type
+
+var (left, right
+    ) = pair
+//  ^ meta.declaration.variable.kotlin & punctuation.section.group.end.kotlin
+//      ^^^^ variable.other.readwrite.kotlin & - meta.declaration
+
+var (left,
+    right) = pair
+//  ^^^^^ meta.declaration.variable.kotlin & variable.other.readwrite.kotlin
+
+open class Open protected
+    constructor(x: Int)
+//  ^^^^^^^^^^^ keyword.declaration.kotlin
+//             ^ meta.function.parameters.kotlin & punctuation.section.parameters.begin.kotlin
+//              ^ variable.parameter.kotlin
+
+open class Open protected
+//              ^^^^^^^^^ storage.modifier.kotlin
+
+    constructor(x: Int)
+//              ^ variable.parameter.kotlin
+
+class Plain
+    private val x = 1
+//  ^^^^^^^ storage.modifier.kotlin & - meta.class
+//          ^^^ keyword.declaration.kotlin
+
+    internal constructor(x: Int) : this(x, NonBlockingContext)
+//           ^^^^^^^^^^^ keyword.declaration.kotlin
+//                      ^ meta.function.parameters.kotlin & punctuation.section.parameters.begin.kotlin
+//                       ^ variable.parameter.kotlin
+//                               ^ punctuation.separator.type.kotlin
+//                                 ^^^^ variable.language.kotlin & - meta.type & - support.type
+//                                         ^^^^^^^^^^^^^^^^^^ variable.other.readwrite.kotlin & - meta.type
+
+    internal constructor() :
+        super(0)
+//      ^^^^^ variable.language.kotlin & - meta.type
+//            ^ constant.numeric.integer.decimal.kotlin
+
+    constructor(x: Int)
+        : this(x, 0)
+//      ^ punctuation.separator.type.kotlin
+//        ^^^^ variable.language.kotlin & - meta.type
+
+    constructor(x: Int) { init(x) }
+//              ^ variable.parameter.kotlin
+//                      ^ punctuation.section.block.begin.kotlin & - meta.function.parameters
+//                        ^^^^ variable.function.kotlin
+
+when {
+    timeMillis <= 0 ->
+//  ^^^^^^^^^^ variable.other.readwrite.kotlin & - support.type
+//             ^^ keyword.operator.comparison.kotlin
+//                  ^^ punctuation.separator.when.kotlin
+
+        0L
+    this < min ->
+//  ^^^^ variable.language.kotlin & - support.type
+//       ^ keyword.operator.comparison.kotlin
+
+        min
+}
+// <- punctuation.section.block.end.kotlin
+
+val t = Pair<Int, String> {
+//      ^^^^ variable.function.kotlin & - support.type
+//                        ^ meta.lambda.kotlin
+
+}
+// <- punctuation.section.block.end.kotlin
+
+foo()
+{ x }
+// <- punctuation.section.block.begin.kotlin & - meta.lambda
+
+open class Open protected // c
+    constructor(x: Int)
+//              ^ variable.parameter.kotlin
+
+open class Open protected /* c */
+//              ^^^^^^^^^ storage.modifier.kotlin
+
+    constructor(x: Int)
+//  ^^^^^^^^^^^ keyword.declaration.kotlin
+
+class C<T>
+    where // c
+//  ^^^^^ keyword.declaration.kotlin
+//           ^ comment.line.double-slash.kotlin
+
+    T : Any
+//  ^ meta.type.kotlin & support.type.kotlin

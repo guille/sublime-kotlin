@@ -1,0 +1,467 @@
+syntax: "Kotlin.sublime-syntax"
+comment_char: "//"
+tests:
+  # A type after a line-final `:`, `=`, `,`, `<`, `->`, `.` or `is`.
+  - prefix_lines: ["val age:"]
+    line: "    Int"
+    assertions:
+      - span: "Int"
+        scopes: [meta.type.kotlin, support.type.kotlin]
+
+  - prefix_lines: ["val age: // comment"]
+    line: "    Int"
+    assertions:
+      - span: "Int"
+        scopes: [meta.type.kotlin, support.type.kotlin]
+
+  - prefix_lines: ["fun apply(t:"]
+    line: "    T): T"
+    assertions:
+      - span: "T"
+        nth: 0
+        scopes: [meta.function.parameters.kotlin, meta.type.kotlin, support.type.kotlin]
+      - span: ")"
+        scopes: [punctuation.section.parameters.end.kotlin]
+      - span: "T"
+        nth: 1
+        scopes: [meta.type.kotlin, support.type.kotlin, "- meta.function.parameters"]
+
+  - prefix_lines: ["fun f():"]
+    line: "    Int = 1"
+    assertions:
+      - span: "Int"
+        scopes: [meta.type.kotlin, support.type.kotlin]
+      - span: "="
+        scopes: [keyword.operator.assignment.kotlin, "- meta.type"]
+
+  - prefix_lines: ["class Child :"]
+    line: "    Parent(), Interface"
+    assertions:
+      - span: "Parent"
+        scopes: [meta.type.kotlin, support.type.kotlin]
+      - span: "("
+        scopes: [meta.type.kotlin, punctuation.section.group.begin.kotlin]
+      - span: "Interface"
+        scopes: [meta.type.kotlin, support.type.kotlin]
+
+  - prefix_lines: ["class Child : Parent(),"]
+    line: "    Interface {"
+    assertions:
+      - span: "Interface"
+        scopes: [meta.type.kotlin, support.type.kotlin]
+      - span: "{"
+        scopes: [punctuation.section.block.begin.kotlin, "- meta.type"]
+
+  - line: "}"
+    assertions:
+      - span: "}"
+        scopes: [punctuation.section.block.end.kotlin]
+
+  - prefix_lines: ["class Box<out T :"]
+    line: "    Any>"
+    assertions:
+      - span: "Any"
+        scopes: [meta.type.parameters.kotlin, meta.type.kotlin, support.type.kotlin]
+      - span: ">"
+        scopes: [punctuation.definition.typeparameters.end.kotlin]
+
+  - prefix_lines: ["private typealias Task ="]
+    line: "    suspend () -> Unit"
+    assertions:
+      - span: "suspend"
+        scopes: [meta.type.kotlin, storage.modifier.kotlin]
+      - span: "("
+        scopes: [meta.type.kotlin, meta.group.kotlin]
+      - span: "->"
+        scopes: [meta.type.kotlin, punctuation.separator.return-type.kotlin]
+      - span: "Unit"
+        scopes: [meta.type.kotlin, support.type.kotlin]
+
+  - prefix_lines: ["typealias Handler = (Int) ->"]
+    line: "    Unit"
+    assertions:
+      - span: "Unit"
+        scopes: [meta.type.kotlin, support.type.kotlin]
+
+  - prefix_lines: ["val entry: Map."]
+    line: "    Entry<String, Int>? = null"
+    assertions:
+      - span: "Entry"
+        scopes: [meta.type.kotlin, support.type.kotlin]
+      - span: "null"
+        scopes: [constant.language.null.kotlin, "- meta.type"]
+
+  - prefix_lines: ["if (x is"]
+    line: "    String) {}"
+    assertions:
+      - span: "String"
+        scopes: [meta.type.kotlin, support.type.kotlin]
+      - span: ")"
+        scopes: [punctuation.section.group.end.kotlin, "- meta.type"]
+
+  - prefix_lines: ["val y = x as"]
+    line: "    String"
+    assertions:
+      - span: "String"
+        scopes: [meta.type.kotlin, support.type.kotlin]
+
+  # A type in a parameter list continues on the next line.
+  - prefix_lines: ["fun accepts(block: (Int)"]
+    line: "    -> String) {}"
+    assertions:
+      - span: "->"
+        scopes: [meta.function.parameters.kotlin, meta.type.kotlin, punctuation.separator.return-type.kotlin, "- punctuation.separator.when"]
+      - span: "String"
+        scopes: [meta.type.kotlin, support.type.kotlin]
+      - span: ")"
+        scopes: [punctuation.section.parameters.end.kotlin]
+
+  - prefix_lines: ["class C(val m: Map<String, Int>"]
+    line: "    ?, val n: Int)"
+    assertions:
+      - span: "?"
+        scopes: [meta.type.kotlin, keyword.operator.nullable.kotlin]
+      - span: "n"
+        scopes: [variable.parameter.kotlin]
+
+  # A type at the end of a line still ends the declaration.
+  - prefix_lines: ["val age: Int"]
+    line: "foo()"
+    assertions:
+      - span: "foo"
+        scopes: [variable.function.kotlin, "- meta.type", "- meta.declaration"]
+
+  # `:` starting a line.
+  - prefix_lines: ["fun apply(t"]
+    line: "    : T): T"
+    assertions:
+      - span: ":"
+        nth: 0
+        scopes: [meta.function.parameters.kotlin, punctuation.separator.type.kotlin]
+      - span: "T"
+        nth: 0
+        scopes: [meta.type.kotlin, support.type.kotlin]
+
+  - prefix_lines: ["fun apply(t"]
+    line: "    : T) {}"
+    assertions:
+      - span: "T"
+        scopes: [meta.type.kotlin, support.type.kotlin]
+      - span: ")"
+        scopes: [punctuation.section.parameters.end.kotlin]
+      - span: "{"
+        scopes: [punctuation.section.block.begin.kotlin, "- meta.function.parameters"]
+
+  - prefix_lines: ["val String.firstLetter"]
+    line: "    : Char get() = this[0]"
+    assertions:
+      - span: "Char"
+        scopes: [meta.type.kotlin, support.type.kotlin]
+      - span: "get"
+        scopes: [keyword.declaration.kotlin, "- variable.function"]
+
+  - prefix_lines: ["val lazyValue"]
+    line: "    by lazy { 1 }"
+    assertions:
+      - span: "by"
+        scopes: [keyword.operator.word.kotlin]
+      - span: "lazy"
+        scopes: [variable.function.kotlin]
+
+  - prefix_lines: ["val x: Int"]
+    line: "    get() = 1"
+    assertions:
+      - span: "get"
+        scopes: [keyword.declaration.kotlin]
+
+  - prefix_lines: ["class Child"]
+    line: "    : Parent(), Interface"
+    assertions:
+      - span: ":"
+        scopes: [punctuation.separator.type.kotlin]
+      - span: "Parent"
+        scopes: [meta.type.kotlin, support.type.kotlin]
+      - span: "("
+        scopes: [meta.type.kotlin, punctuation.section.group.begin.kotlin, "- meta.group"]
+      - span: "Interface"
+        scopes: [meta.type.kotlin, support.type.kotlin]
+
+  - prefix_lines: ["class Point"]
+    line: "    (val x: Int)"
+    assertions:
+      - span: "("
+        scopes: [meta.function.parameters.kotlin, punctuation.section.parameters.begin.kotlin]
+      - span: "x"
+        scopes: [variable.parameter.kotlin]
+
+  - prefix_lines: ["class Empty"]
+    line: "foo()"
+    assertions:
+      - span: "foo"
+        scopes: [variable.function.kotlin, "- meta.class"]
+
+  - prefix_lines: ["class C<T>", "    where T"]
+    line: "    : CharSequence"
+    assertions:
+      - span: "CharSequence"
+        scopes: [meta.type.kotlin, support.type.kotlin]
+
+  - prefix_lines: ["class C<T>"]
+    line: "    where T"
+    assertions:
+      - span: "where"
+        scopes: [keyword.declaration.kotlin]
+      - span: "T"
+        scopes: [meta.type.kotlin, support.type.kotlin]
+
+  - line: "    : CharSequence"
+    assertions:
+      - span: "CharSequence"
+        scopes: [support.type.kotlin]
+
+  - prefix_lines: ["fun <T> f()"]
+    line: "    where T : Any {}"
+    assertions:
+      - span: "where"
+        scopes: [keyword.declaration.kotlin]
+      - span: "T"
+        scopes: [meta.type.kotlin, support.type.kotlin]
+
+  - prefix_lines: ["class Repo<K, V> where K : Any,"]
+    line: "    V"
+    assertions:
+      - span: "V"
+        scopes: [meta.type.kotlin, support.type.kotlin]
+
+  - line: "    : Any {}"
+    assertions:
+      - span: "Any"
+        scopes: [support.type.kotlin]
+
+  # Delegation continued on the next line.
+  - prefix_lines: ["private object Storage: MutableMap<Symbol, Any?> by mutableMapOf("]
+    line: "    )"
+    assertions:
+      - span: ")"
+        scopes: [meta.type.kotlin, punctuation.section.group.end.kotlin]
+
+  - line: "class After"
+    assertions:
+      - span: "class"
+        scopes: [keyword.declaration.class.kotlin, "- meta.type"]
+      - span: "After"
+        scopes: [entity.name.class.kotlin]
+
+  - prefix_lines: ["class DelegatedJoke(val joke: Joke) : JokeInterface by"]
+    line: "    joke {"
+    assertions:
+      - span: "joke"
+        scopes: [meta.type.kotlin, variable.other.readwrite.kotlin, "- variable.function"]
+      - span: "{"
+        scopes: [punctuation.section.block.begin.kotlin, "- meta.lambda"]
+
+  - line: "}"
+    assertions:
+      - span: "}"
+        scopes: [punctuation.section.block.end.kotlin, "- meta.lambda"]
+
+  - prefix_lines: ["class DelegatedJoke(val joke: Joke) : JokeInterface"]
+    line: "    by joke {"
+    assertions:
+      - span: "by"
+        scopes: [meta.type.kotlin, keyword.operator.word.kotlin]
+      - span: "joke"
+        nth: 0
+        scopes: [variable.other.readwrite.kotlin]
+      - span: "{"
+        scopes: ["- meta.lambda"]
+
+  - line: "}"
+    assertions:
+      - span: "}"
+        scopes: [punctuation.section.block.end.kotlin]
+
+  - prefix_lines: ["class X : Delay by (dispatcher as? Delay"]
+    line: "    ?: DefaultDelay) {"
+    assertions:
+      - span: "?:"
+        scopes: [meta.type.kotlin, meta.group.kotlin, keyword.operator.elvis.kotlin]
+      - span: "DefaultDelay"
+        scopes: [meta.group.kotlin, variable.other.readwrite.kotlin]
+      - span: ")"
+        scopes: [meta.group.kotlin, punctuation.section.group.end.kotlin]
+      - span: "{"
+        scopes: ["- meta.type", "- meta.group"]
+
+  - line: "}"
+    assertions:
+      - span: "}"
+        scopes: [punctuation.section.block.end.kotlin]
+
+  - line: "val m = mapOf(1 to 2)"
+    assertions:
+      - span: "mapOf"
+        scopes: [variable.function.kotlin, "- meta.type"]
+
+  # Destructuring continued on the next line.
+  - prefix_lines: ["var (left, right"]
+    line: "    ) = pair"
+    assertions:
+      - span: ")"
+        scopes: [meta.declaration.variable.kotlin, punctuation.section.group.end.kotlin]
+      - span: "pair"
+        scopes: [variable.other.readwrite.kotlin, "- meta.declaration"]
+
+  - prefix_lines: ["var (left,"]
+    line: "    right) = pair"
+    assertions:
+      - span: "right"
+        scopes: [meta.declaration.variable.kotlin, variable.other.readwrite.kotlin]
+
+  # Modifier before a constructor at the end of a line.
+  - prefix_lines: ["open class Open protected"]
+    line: "    constructor(x: Int)"
+    assertions:
+      - span: "constructor"
+        scopes: [keyword.declaration.kotlin]
+      - span: "("
+        scopes: [meta.function.parameters.kotlin, punctuation.section.parameters.begin.kotlin]
+      - span: "x"
+        scopes: [variable.parameter.kotlin]
+
+  - line: "open class Open protected"
+    assertions:
+      - span: "protected"
+        scopes: [storage.modifier.kotlin]
+
+  - line: "    constructor(x: Int)"
+    assertions:
+      - span: "x"
+        scopes: [variable.parameter.kotlin]
+
+  - prefix_lines: ["class Plain"]
+    line: "    private val x = 1"
+    assertions:
+      - span: "private"
+        scopes: [storage.modifier.kotlin, "- meta.class"]
+      - span: "val"
+        scopes: [keyword.declaration.kotlin]
+
+  # Secondary constructors.
+  - line: "    internal constructor(x: Int) : this(x, NonBlockingContext)"
+    assertions:
+      - span: "constructor"
+        scopes: [keyword.declaration.kotlin]
+      - span: "("
+        nth: 0
+        scopes: [meta.function.parameters.kotlin, punctuation.section.parameters.begin.kotlin]
+      - span: "x"
+        nth: 0
+        scopes: [variable.parameter.kotlin]
+      - span: ":"
+        nth: 1
+        scopes: [punctuation.separator.type.kotlin]
+      - span: "this"
+        scopes: [variable.language.kotlin, "- meta.type", "- support.type"]
+      - span: "NonBlockingContext"
+        scopes: [variable.other.readwrite.kotlin, "- meta.type"]
+
+  - prefix_lines: ["    internal constructor() :"]
+    line: "        super(0)"
+    assertions:
+      - span: "super"
+        scopes: [variable.language.kotlin, "- meta.type"]
+      - span: "0"
+        scopes: [constant.numeric.integer.decimal.kotlin]
+
+  - prefix_lines: ["    constructor(x: Int)"]
+    line: "        : this(x, 0)"
+    assertions:
+      - span: ":"
+        scopes: [punctuation.separator.type.kotlin]
+      - span: "this"
+        scopes: [variable.language.kotlin, "- meta.type"]
+
+  - line: "    constructor(x: Int) { init(x) }"
+    assertions:
+      - span: "x"
+        nth: 0
+        scopes: [variable.parameter.kotlin]
+      - span: "{"
+        scopes: [punctuation.section.block.begin.kotlin, "- meta.function.parameters"]
+      - span: "init"
+        scopes: [variable.function.kotlin]
+
+  # Comparisons followed by `->` are not type arguments.
+  - prefix_lines: ["when {"]
+    line: "    timeMillis <= 0 ->"
+    assertions:
+      - span: "timeMillis"
+        scopes: [variable.other.readwrite.kotlin, "- support.type"]
+      - span: "<="
+        scopes: [keyword.operator.comparison.kotlin]
+      - span: "->"
+        scopes: [punctuation.separator.when.kotlin]
+
+  - prefix_lines: ["        0L"]
+    line: "    this < min ->"
+    assertions:
+      - span: "this"
+        scopes: [variable.language.kotlin, "- support.type"]
+      - span: "<"
+        scopes: [keyword.operator.comparison.kotlin]
+
+  - prefix_lines: ["        min"]
+    line: "}"
+    assertions:
+      - span: "}"
+        scopes: [punctuation.section.block.end.kotlin]
+
+  - line: "val t = Pair<Int, String> {"
+    assertions:
+      - span: "Pair"
+        scopes: [variable.function.kotlin, "- support.type"]
+      - span: "{"
+        scopes: [meta.lambda.kotlin]
+
+  - line: "}"
+    assertions:
+      - span: "}"
+        scopes: [punctuation.section.block.end.kotlin]
+
+  # A trailing lambda can't start on the next line.
+  - prefix_lines: ["foo()"]
+    line: "{ x }"
+    assertions:
+      - span: "{"
+        scopes: [punctuation.section.block.begin.kotlin, "- meta.lambda"]
+
+  # A trailing comment doesn't change what ends a line.
+  - prefix_lines: ["open class Open protected // c"]
+    line: "    constructor(x: Int)"
+    assertions:
+      - span: "x"
+        scopes: [variable.parameter.kotlin]
+
+  - line: "open class Open protected /* c */"
+    assertions:
+      - span: "protected"
+        scopes: [storage.modifier.kotlin]
+
+  - line: "    constructor(x: Int)"
+    assertions:
+      - span: "constructor"
+        scopes: [keyword.declaration.kotlin]
+
+  - prefix_lines: ["class C<T>"]
+    line: "    where // c"
+    assertions:
+      - span: "where"
+        scopes: [keyword.declaration.kotlin]
+      - span: "c"
+        scopes: [comment.line.double-slash.kotlin]
+
+  - line: "    T : Any"
+    assertions:
+      - span: "T"
+        scopes: [meta.type.kotlin, support.type.kotlin]

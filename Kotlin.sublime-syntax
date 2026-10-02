@@ -14,13 +14,23 @@ variables:
   dec_digits: '(?:\d(?:[\d_]*\d)?)'
   hex_digits: '(?:[0-9A-Fa-f](?:[0-9A-Fa-f_]*[0-9A-Fa-f])?)'
   bin_digits: '(?:[01](?:[01_]*[01])?)'
+  # Lookahead for type arguments on one line, excluding look-alike comparisons.
+  type_arguments: '<(?:[^(){}\n=&|]|&(?!&))+(?<!-)>'
+  # End of line, possibly after a trailing comment.
+  eol: '\s*(?:$|//|/\*)'
+  # A line that can only start a new declaration; ends unclosed lists early.
+  declaration_line: '^(?=\s*(?:{{modifier}}\s+)*(?:fun|class|interface|object|typealias|package|import)\b(?!\s*:))'
+  member_line: '^(?=\s*(?:{{modifier}}\s+)*(?:fun|class|interface|object|typealias|package|import|val|var)\b(?!\s*:))'
+  modifier: '(?:public|private|protected|internal|enum|sealed|annotation|data|inner|tailrec|operator|inline|infix|external|suspend|override|abstract|final|open|const|lateinit|vararg|noinline|crossinline|reified|expect|actual|companion)'
+  # What may follow a modifier keyword in a declaration.
+  modifier_follow: '(?:@|(?:{{modifier}}|value|class|interface|object|fun|val|var|typealias|constructor|init|get|set)\b)'
 
 contexts:
   main:
     - include: shebang
     - include: declarations
     - include: where-clauses
-    - include: standalone-generic-types
+    - include: generic-type-references
     - include: annotations
     - include: strings
     - include: literals
@@ -74,8 +84,9 @@ contexts:
     - match: '\bpackage\b'
       scope: keyword.declaration.package.kotlin
       push: package-statement
-    - match: '\bimport\b'
-      scope: keyword.control.import.kotlin
+    - match: '^\s*(import)\b(?=\s+{{identifier}})'
+      captures:
+        1: keyword.control.import.kotlin
       push: import-statement
     - match: '\btypealias\b'
       scope: keyword.declaration.typealias.kotlin
@@ -139,6 +150,9 @@ contexts:
 
   typealias-declaration:
     - meta_scope: meta.typealias.kotlin
+    - match: '(?=[})\]])'
+      pop: true
+    - include: end-at-member
     - match: '{{identifier}}'
       scope: entity.name.type.alias.kotlin
       set: typealias-after-name
@@ -149,7 +163,7 @@ contexts:
       push: type-arguments
     - match: '='
       scope: keyword.operator.assignment.kotlin
-      set: typealias-value
+      set: [typealias-value, skip-to-token]
     - match: '(?=[=;{])'
       pop: true
     - match: '(?=\b(?:package|import|class|interface|object|fun|val|var|typealias)\b)'
@@ -159,12 +173,16 @@ contexts:
 
   typealias-value:
     - meta_content_scope: meta.type.kotlin
+    - include: end-at-member
     - match: '$'
       pop: true
     - include: type-expression-content
 
   class-declaration:
     - meta_scope: meta.class.kotlin
+    - match: '(?=[})\]])'
+      pop: true
+    - include: end-at-member
     - match: '{{identifier}}'
       scope: entity.name.class.kotlin
       set: class-after-name
@@ -173,7 +191,7 @@ contexts:
     - match: '<'
       scope: punctuation.definition.typeparameters.begin.kotlin
       push: type-arguments
-    - match: '\b(?:public|private|protected|internal|enum|sealed|annotation|data|inner|tailrec|operator|inline|infix|external|suspend|override|abstract|final|open|const|lateinit|vararg|noinline|crossinline|reified|expect|actual|companion|value)\b'
+    - match: '\b{{modifier}}\b(?=\s+(?:@|{{modifier}}\b|constructor\b)|{{eol}})'
       scope: storage.modifier.kotlin
     - match: '\bconstructor\b'
       scope: keyword.declaration.kotlin
@@ -182,18 +200,24 @@ contexts:
       push: class-parameters
     - match: ':'
       scope: punctuation.separator.type.kotlin
+      push: [delegation-specifiers, skip-to-token]
+    - match: '(?=\bby\b)'
       push: delegation-specifiers
-    - match: '(?=\bwhere\b)'
-      pop: true
+    - match: '\bwhere\b(?=\s+(?:@|{{identifier}})|{{eol}})'
+      scope: keyword.declaration.kotlin
+      set: where-constraints
     - match: '(?=[{;=])'
       pop: true
     - match: '(?=\b(?:package|import|class|interface|object|fun|val|var|typealias)\b)'
       pop: true
-    - match: '$'
+    - match: '(?=\S)'
       pop: true
 
   interface-declaration:
     - meta_scope: meta.class.kotlin
+    - match: '(?=[})\]])'
+      pop: true
+    - include: end-at-member
     - match: '{{identifier}}'
       scope: entity.name.interface.kotlin
       set: interface-after-name
@@ -204,18 +228,24 @@ contexts:
       push: type-arguments
     - match: ':'
       scope: punctuation.separator.type.kotlin
+      push: [delegation-specifiers, skip-to-token]
+    - match: '(?=\bby\b)'
       push: delegation-specifiers
-    - match: '(?=\bwhere\b)'
-      pop: true
+    - match: '\bwhere\b(?=\s+(?:@|{{identifier}})|{{eol}})'
+      scope: keyword.declaration.kotlin
+      set: where-constraints
     - match: '(?=[{;=])'
       pop: true
     - match: '(?=\b(?:package|import|class|interface|object|fun|val|var|typealias)\b)'
       pop: true
-    - match: '$'
+    - match: '(?=\S)'
       pop: true
 
   object-declaration:
     - meta_scope: meta.class.kotlin
+    - match: '(?=[})\]])'
+      pop: true
+    - include: end-at-member
     - match: '(?=[:{(])'
       set: object-after-name
     - match: '{{identifier}}'
@@ -225,16 +255,24 @@ contexts:
   object-after-name:
     - match: ':'
       scope: punctuation.separator.type.kotlin
+      push: [delegation-specifiers, skip-to-token]
+    - match: '(?=\bby\b)'
       push: delegation-specifiers
-    - match: '(?=[{(])'
+    - match: '\{'
+      scope: punctuation.section.block.begin.kotlin
+      set: block
+    - match: '(?=\()'
       pop: true
     - match: '(?=\b(?:package|import|class|interface|object|fun|val|var|typealias)\b)'
       pop: true
-    - match: '$'
+    - match: '(?=\S)'
       pop: true
 
   function-declaration:
     - meta_scope: meta.function.kotlin
+    - match: '(?=[})\]])'
+      pop: true
+    - include: end-at-member
     - match: '<'
       scope: punctuation.definition.typeparameters.begin.kotlin
       push: type-arguments
@@ -248,6 +286,9 @@ contexts:
     - match: '{{identifier}}'
       scope: entity.name.function.kotlin
       set: function-after-name
+    - match: '\((?=\s*\()'
+      scope: punctuation.section.group.begin.kotlin
+      push: function-receiver-parentheses
     - match: '\('
       scope: punctuation.section.parameters.begin.kotlin
       set: function-parameters
@@ -255,6 +296,17 @@ contexts:
       pop: true
     - match: '(?=\b(?:package|import|class|interface|object|fun|val|var|typealias)\b)'
       pop: true
+
+  function-receiver-parentheses:
+    - meta_scope: meta.type.kotlin meta.group.kotlin
+    - include: end-at-member
+    - match: '\('
+      scope: punctuation.section.group.begin.kotlin
+      push: type-parentheses
+    - match: '\)'
+      scope: punctuation.section.group.end.kotlin
+      pop: true
+    - include: type-expression-content
 
   function-receiver-type-tail:
     - match: '<'
@@ -267,15 +319,18 @@ contexts:
       pop: true
 
   function-after-name:
+    - match: '\bwhere\b(?=\s+(?:@|{{identifier}})|{{eol}})'
+      scope: keyword.declaration.kotlin
+      set: where-constraints
     - match: '\('
       scope: punctuation.section.parameters.begin.kotlin
       push: function-parameters
     - match: ':'
       scope: punctuation.separator.type.kotlin
-      push: type-expression
+      push: [type-expression, skip-to-token]
     - match: '='
       scope: keyword.operator.assignment.kotlin
-      pop: true
+      set: assigned-lambda
     - match: '(?=[{;])'
       pop: true
     - match: '$'
@@ -285,6 +340,9 @@ contexts:
 
   class-parameters:
     - meta_scope: meta.function.parameters.kotlin
+    - match: '(?=\})'
+      pop: true
+    - include: end-at-declaration
     - match: '\)'
       scope: punctuation.section.parameters.end.kotlin
       pop: true
@@ -301,20 +359,25 @@ contexts:
 
   class-parameter-tokens:
     - include: annotations
-    - match: '\b(?:vararg|noinline|crossinline)\b'
-      scope: storage.modifier.kotlin
-    - match: '\b(?:val|var)\b'
+    - match: '\b(?:val|var)\b(?!\s*[:=,)])'
       scope: keyword.declaration.kotlin
       push: property-parameter
     - match: '{{identifier}}(?=\s*:)'
       scope: variable.parameter.kotlin
     - match: '{{identifier}}(?=\s*(?:=|,|\)))'
       scope: variable.parameter.kotlin
+    - match: '\b(?:vararg|noinline|crossinline)\b'
+      scope: storage.modifier.kotlin
+    - match: '\b{{modifier}}\b(?=\s+(?:@|(?:{{modifier}}|val|var)\b))'
+      scope: storage.modifier.kotlin
+    - match: '{{identifier}}'
+      scope: variable.parameter.kotlin
     - match: ':'
       scope: punctuation.separator.type.kotlin
-      push: type-expression
+      push: [parameter-type, skip-to-token]
     - match: '='
       scope: keyword.operator.assignment.kotlin
+      push: parameter-default-value
     - match: ','
       scope: punctuation.separator.sequence.kotlin
     - include: strings
@@ -330,18 +393,19 @@ contexts:
 
   property-parameter:
     - meta_scope: meta.declaration.variable.kotlin
-    - match: '{{identifier}}(?=\s*:)'
-      scope: variable.parameter.kotlin
-      pop: true
-    - match: '{{identifier}}(?=\s*(?:=|,|\)))'
-      scope: variable.parameter.kotlin
-      pop: true
+    - include: end-at-declaration
     - include: annotations
+    - match: '{{identifier}}'
+      scope: variable.parameter.kotlin
+      pop: true
     - match: '(?=\S)'
       pop: true
 
   function-parameters:
     - meta_scope: meta.function.parameters.kotlin
+    - match: '(?=\})'
+      pop: true
+    - include: end-at-member
     - match: '\)'
       scope: punctuation.section.parameters.end.kotlin
       pop: true
@@ -358,17 +422,20 @@ contexts:
 
   parameter-tokens:
     - include: annotations
-    - match: '\b(?:vararg|noinline|crossinline|val|var)\b'
-      scope: storage.modifier.kotlin
     - match: '{{identifier}}(?=\s*:)'
       scope: variable.parameter.kotlin
     - match: '{{identifier}}(?=\s*(?:=|,|\)))'
       scope: variable.parameter.kotlin
+    - match: '\b(?:vararg|noinline|crossinline|val|var)\b'
+      scope: storage.modifier.kotlin
+    - match: '{{identifier}}'
+      scope: variable.parameter.kotlin
     - match: ':'
       scope: punctuation.separator.type.kotlin
-      push: type-expression
+      push: [parameter-type, skip-to-token]
     - match: '='
       scope: keyword.operator.assignment.kotlin
+      push: parameter-default-value
     - match: ','
       scope: punctuation.separator.sequence.kotlin
     - include: strings
@@ -382,8 +449,26 @@ contexts:
     - include: punctuation
     - include: identifiers
 
+  parameter-default-value:
+    - include: end-at-member
+    - match: '(?=[,)])'
+      pop: true
+    - match: '\('
+      scope: punctuation.section.group.begin.kotlin
+      push: nested-parentheses
+    - match: '\['
+      scope: punctuation.section.brackets.begin.kotlin
+      push: nested-brackets
+    - match: '\{'
+      scope: punctuation.section.block.begin.kotlin
+      push: [lambda-body, lambda-parameters-start]
+    - include: main
+
   property-declaration:
     - meta_scope: meta.declaration.variable.kotlin
+    - match: '(?=[})\]])'
+      pop: true
+    - include: end-at-member
     - match: '<'
       scope: punctuation.definition.typeparameters.begin.kotlin
       push: type-arguments
@@ -418,7 +503,7 @@ contexts:
   property-after-name:
     - match: ':'
       scope: punctuation.separator.type.kotlin
-      push: type-expression
+      push: [type-expression, skip-to-token]
     - match: '\b(?:get|set)\b'
       scope: keyword.declaration.kotlin
       pop: true
@@ -427,12 +512,8 @@ contexts:
       pop: true
     - match: '='
       scope: keyword.operator.assignment.kotlin
-      pop: true
-    - match: '(?=\b(?:get|set)\b)'
-      pop: true
-    - match: '(?=[;{])'
-      pop: true
-    - match: '$'
+      set: assigned-lambda
+    - match: '(?=\S)'
       pop: true
 
   destructuring-property-list:
@@ -443,19 +524,35 @@ contexts:
     - match: '\('
       scope: punctuation.section.group.begin.kotlin
       push: destructuring-property-list
-    - match: '{{identifier}}(?=\s*(?::|,|\)|=))'
+    - match: '{{identifier}}'
       scope: variable.other.readwrite.kotlin
     - match: ':'
       scope: punctuation.separator.type.kotlin
-      push: type-expression
+      push: [type-expression, skip-to-token]
     - match: ','
       scope: punctuation.separator.sequence.kotlin
     - include: annotations
     - include: keywords
 
+  # Recovery for unclosed parameter and type argument lists.
+  end-at-declaration:
+    - match: '{{declaration_line}}'
+      pop: true
+
+  end-at-member:
+    - match: '{{member_line}}'
+      pop: true
+
+  # Pushed on top of a context whose next token may be on a following line.
+  skip-to-token:
+    - include: end-at-member
+    - match: '(?=\S)'
+      pop: true
+
   type-expression:
     - meta_content_scope: meta.type.kotlin
-    - match: '(?=\?:)'
+    - include: end-at-member
+    - match: '(?=\?:|->)'
       pop: true
     - match: '(?=[=,)\]};>{])'
       pop: true
@@ -465,8 +562,17 @@ contexts:
       pop: true
     - include: type-expression-content
 
+  # A type in a parameter list can only end at `,`, `)` or `=`.
+  parameter-type:
+    - meta_content_scope: meta.type.kotlin
+    - include: end-at-member
+    - match: '(?=[=,)\]};{])'
+      pop: true
+    - include: type-expression-content
+
   type-condition:
     - meta_content_scope: meta.type.kotlin
+    - include: end-at-member
     - match: '(?=\s*(?:->|&&|\|\||==|!=|===|!==|\)|,|;|\]|\}|$))'
       pop: true
     - include: type-expression-content
@@ -489,14 +595,13 @@ contexts:
       push: type-parentheses
     - match: '\)'
       scope: punctuation.section.group.end.kotlin
-    - match: '->'
-      scope: punctuation.separator.return-type.kotlin
     - match: '&'
       scope: keyword.operator.type.intersection.kotlin
     - match: '\?'
       scope: keyword.operator.nullable.kotlin
     - match: '\.'
       scope: punctuation.accessor.dot.kotlin
+      push: skip-to-token
     - match: ','
       scope: punctuation.separator.sequence.kotlin
     - match: '\*'
@@ -504,6 +609,7 @@ contexts:
 
   type-expression-list:
     - meta_content_scope: meta.type.kotlin
+    - include: end-at-member
     - match: '(?=[{;=])'
       pop: true
     - match: '$'
@@ -517,23 +623,32 @@ contexts:
 
   delegation-specifiers:
     - meta_content_scope: meta.type.kotlin
+    - include: end-at-member
     - match: '(?=[{;=]|\bwhere\b)'
       pop: true
     - match: '$'
       pop: true
     - match: ','
       scope: punctuation.separator.sequence.kotlin
+      push: skip-to-token
     - match: '\bby\b'
       scope: keyword.operator.word.kotlin
-      push: delegation-expression
+      push: [delegation-expression, skip-to-token]
     - match: '\('
       scope: punctuation.section.group.begin.kotlin
       push: delegation-arguments
     - include: type-expression-content
 
   delegation-expression:
+    - include: end-at-member
     - match: '(?=\s*(?:,|\{|;|$))'
       pop: true
+    - match: '\('
+      scope: punctuation.section.group.begin.kotlin
+      push: nested-parentheses
+    - match: '{{identifier}}(?=\s*\{)'
+      scope: variable.other.readwrite.kotlin
+    - include: function-calls
     - include: strings
     - include: literals
     - include: targeted-keywords
@@ -545,6 +660,7 @@ contexts:
     - include: identifiers
 
   delegation-arguments:
+    - include: end-at-member
     - match: '\('
       scope: punctuation.section.group.begin.kotlin
       push: delegation-arguments
@@ -563,16 +679,28 @@ contexts:
 
   type-parentheses:
     - meta_scope: meta.group.kotlin
+    - include: end-at-member
     - match: '\('
       scope: punctuation.section.group.begin.kotlin
       push: type-parentheses
     - match: '\)'
       scope: punctuation.section.group.end.kotlin
-      pop: true
+      set: function-type-arrow
     - include: type-expression-content
+
+  # In a type, `->` only follows the parameter group of a function type.
+  function-type-arrow:
+    - match: '->'
+      scope: punctuation.separator.return-type.kotlin
+      set: skip-to-token
+    - match: '(?=\S)'
+      pop: true
 
   type-arguments:
     - meta_scope: meta.type.parameters.kotlin
+    - match: '(?=[})\]])'
+      pop: true
+    - include: end-at-member
     - match: '>'
       scope: punctuation.definition.typeparameters.end.kotlin
       pop: true
@@ -581,13 +709,16 @@ contexts:
       push: type-arguments
     - match: ':'
       scope: punctuation.separator.type.kotlin
-      push: type-expression
+      push: [type-expression, skip-to-token]
     - match: '\breified\b'
       scope: storage.modifier.kotlin
     - include: type-expression-content
 
   value-type-arguments:
     - meta_scope: meta.type.parameters.kotlin
+    - match: '(?=[})\]])'
+      pop: true
+    - include: end-at-member
     - match: '>'
       scope: punctuation.definition.typeparameters.end.kotlin
       pop: true
@@ -629,7 +760,7 @@ contexts:
       pop: true
 
   annotation-simple-after-name:
-    - meta_scope: meta.annotation.kotlin
+    - meta_content_scope: meta.annotation.kotlin
     - match: '\.'
       scope: punctuation.accessor.dot.kotlin
       set: annotation-simple
@@ -715,8 +846,6 @@ contexts:
     - match: '\{'
       scope: punctuation.section.block.begin.kotlin
       push: interpolation-block
-    - match: '\bit\b'
-      scope: variable.language.kotlin
     - match: '\}'
       scope: punctuation.section.interpolation.end.kotlin
       pop: true
@@ -728,8 +857,6 @@ contexts:
     - match: '\{'
       scope: punctuation.section.block.begin.kotlin
       push: interpolation-block
-    - match: '\bit\b'
-      scope: variable.language.kotlin
     - match: '\}'
       scope: punctuation.section.block.end.kotlin
       pop: true
@@ -816,29 +943,35 @@ contexts:
         3: entity.name.label.kotlin
 
   where-clauses:
-    - match: '(?<!\.)\bwhere\b'
+    - match: '(?<!\.)\bwhere\b(?=\s+(?:@|{{identifier}}\s*:))'
       scope: keyword.declaration.kotlin
+      push: where-constraints
+    - match: '^\s*(where)(?={{eol}})'
+      captures:
+        1: keyword.declaration.kotlin
       push: where-constraints
 
   where-constraints:
+    - include: end-at-member
     - match: '^(?=\s*(?:@|package|import|class|interface|object|fun|val|var|typealias|public|private|protected|internal|enum|sealed|annotation|data|inner|tailrec|operator|inline|infix|external|suspend|override|abstract|final|open|const|lateinit|vararg|noinline|crossinline|reified|expect|actual|companion)\b)'
       pop: true
-    - match: '(?=[{=])'
+    - match: '(?=[{=})])'
       pop: true
-    - match: '{{identifier}}(?=\s*:)'
+    - include: annotations
+    - match: '{{identifier}}'
       scope: meta.type.kotlin support.type.kotlin
     - match: ':'
       scope: punctuation.separator.type.kotlin
-      push: type-expression
+      push: [type-expression, skip-to-token]
     - match: ','
       scope: punctuation.separator.sequence.kotlin
 
-  standalone-generic-types:
-    - match: '{{identifier}}(?=\s*<[^(){}\n]+>\s*(?:\{|$))'
+  generic-type-references:
+    - match: '{{identifier}}(?=\s*{{type_arguments}}\s*::)'
       scope: meta.type.kotlin support.type.kotlin
-      push: standalone-generic-type-tail
+      push: generic-type-tail
 
-  standalone-generic-type-tail:
+  generic-type-tail:
     - match: '<'
       scope: punctuation.definition.typeparameters.begin.kotlin
       push: value-type-arguments
@@ -870,23 +1003,23 @@ contexts:
       scope: keyword.operator.null-assertion.kotlin
     - match: '!is\b'
       scope: keyword.operator.word.kotlin
-      push: type-condition
+      push: [type-condition, skip-to-token]
     - match: '!in\b'
       scope: keyword.operator.word.kotlin
     - match: '\bas\?'
       scope: keyword.operator.word.kotlin
-      push: type-expression
+      push: [type-expression, skip-to-token]
     - match: '\bas\b'
       scope: keyword.operator.word.kotlin
-      push: type-expression
+      push: [type-expression, skip-to-token]
     - match: '\bis\b'
       scope: keyword.operator.word.kotlin
-      push: type-condition
+      push: [type-condition, skip-to-token]
     - match: '\bin\b'
       scope: keyword.operator.word.kotlin
     - match: '\buntil\b'
       scope: keyword.operator.word.kotlin
-    - match: '\bby\b'
+    - match: '(?<!\.)\bby\b(?!\s*[{<(])'
       scope: keyword.operator.word.kotlin
     - match: '==='
       scope: keyword.operator.comparison.kotlin
@@ -916,6 +1049,9 @@ contexts:
       scope: keyword.operator.assignment.augmented.kotlin
     - match: '%='
       scope: keyword.operator.assignment.augmented.kotlin
+    - match: '=(?=\s*\{)'
+      scope: keyword.operator.assignment.kotlin
+      push: assigned-lambda
     - match: '='
       scope: keyword.operator.assignment.kotlin
     - match: '\+\+'
@@ -944,14 +1080,18 @@ contexts:
       scope: keyword.operator.comparison.kotlin
     - match: ':'
       scope: punctuation.separator.type.kotlin
-      push: type-expression
+      push: [type-expression, skip-to-token]
     - match: '\?'
       scope: keyword.operator.nullable.kotlin
 
   keywords:
     - match: '\b(?:if|else|when)\b'
       scope: keyword.control.conditional.kotlin
-    - match: '\b(?:try|catch|finally)\b'
+    - match: '\btry\b'
+      scope: keyword.control.exception.kotlin
+    - match: '(?<!\.)\bcatch\b(?=\s*\()|(?:(?<=\})|(?<=\}\s))\bcatch\b'
+      scope: keyword.control.exception.kotlin
+    - match: '(?<!\.)\bfinally\b(?=\s*\{)|(?:(?<=\})|(?<=\}\s))\bfinally\b'
       scope: keyword.control.exception.kotlin
     - match: '\b(?:for|while|do)\b'
       scope: keyword.control.loop.kotlin
@@ -959,13 +1099,37 @@ contexts:
       scope: keyword.control.flow.jump.kotlin
     - match: '\b(?:this|super)\b'
       scope: variable.language.kotlin
-    - match: '\b(?:constructor|init)\b'
+    - match: '(?<!\.)\bconstructor\b(?=\s*\()'
       scope: keyword.declaration.kotlin
-    - match: '\b(?:public|private|protected|internal|enum|sealed|annotation|data|inner|tailrec|operator|inline|infix|external|suspend|override|abstract|final|open|const|lateinit|vararg|noinline|crossinline|reified|expect|actual|companion|out)\b'
+      push: secondary-constructor
+    - match: '(?<!\.)\binit\b(?=\s*\{)'
+      scope: keyword.declaration.kotlin
+    - match: '\b{{modifier}}\b(?=\s+{{modifier_follow}})'
       scope: storage.modifier.kotlin
 
+  secondary-constructor:
+    - match: '\('
+      scope: punctuation.section.parameters.begin.kotlin
+      set: [constructor-delegation, function-parameters]
+    - match: '(?=\S)'
+      pop: true
+
+  constructor-delegation:
+    - match: ':'
+      scope: punctuation.separator.type.kotlin
+      set: [constructor-delegation-call, skip-to-token]
+    - match: '(?=\S)'
+      pop: true
+
+  constructor-delegation-call:
+    - match: '\b(?:this|super)\b'
+      scope: variable.language.kotlin
+      set: function-call-tail
+    - match: '(?=\S)'
+      pop: true
+
   function-calls:
-    - match: '{{identifier}}(?=\s*<[^(){}\n]+>\s*\()'
+    - match: '{{identifier}}(?=\s*{{type_arguments}}\s*[({])'
       scope: variable.function.kotlin
       push: function-call-tail
     - match: '{{identifier}}(?=\s*\()'
@@ -984,9 +1148,20 @@ contexts:
       push: function-call-arguments
     - match: '\{'
       scope: punctuation.section.block.begin.kotlin
-      push: lambda-body
-    - match: '(?=\S)'
+      push: [lambda-body, lambda-parameters-start]
+    - match: '(?=\S)|$'
       pop: true
+
+  # Braces balanced without a meta scope, so a `}` inside doesn't end the
+  # enclosing lambda or argument list.
+  block:
+    - match: '\}'
+      scope: punctuation.section.block.end.kotlin
+      pop: true
+    - match: '\{'
+      scope: punctuation.section.block.begin.kotlin
+      push: block
+    - include: main
 
   function-call-arguments:
     - match: '\('
@@ -995,22 +1170,43 @@ contexts:
     - match: '\)'
       scope: punctuation.section.group.end.kotlin
       pop: true
+    - match: '\{'
+      scope: punctuation.section.block.begin.kotlin
+      push: [lambda-body, lambda-parameters-start]
     - include: main
 
   lambda-body:
     - meta_scope: meta.lambda.kotlin
-    - match: '(?={{identifier}}\s*(?:,|->))'
-      push: lambda-parameters
-    - match: '\bit\b'
-      scope: variable.language.kotlin
     - match: '\}'
       scope: punctuation.section.block.end.kotlin
       pop: true
+    - match: '\{'
+      scope: punctuation.section.block.begin.kotlin
+      push: block
     - include: main
 
+  lambda-parameters-start:
+    - match: '(?=(?:{{identifier}}|\([^()]*\))\s*(?:,|->|:))'
+      set: lambda-parameters
+    - match: '(?=\S)'
+      pop: true
+
+  assigned-lambda:
+    - match: '\{'
+      scope: punctuation.section.block.begin.kotlin
+      set: [lambda-body, lambda-parameters-start]
+    - match: '(?=\S)'
+      pop: true
+
   lambda-parameters:
-    - match: '{{identifier}}(?=\s*(?:,|->))'
+    - match: '{{identifier}}(?=\s*(?:,|->|:))'
       scope: variable.parameter.kotlin
+    - match: ':'
+      scope: punctuation.separator.type.kotlin
+      push: [type-expression, skip-to-token]
+    - match: '\('
+      scope: punctuation.section.group.begin.kotlin
+      push: lambda-destructuring-parameters
     - match: ','
       scope: punctuation.separator.sequence.kotlin
     - match: '->'
@@ -1018,6 +1214,18 @@ contexts:
       pop: true
     - match: '(?=\S)'
       pop: true
+
+  lambda-destructuring-parameters:
+    - match: '\)'
+      scope: punctuation.section.group.end.kotlin
+      pop: true
+    - match: '{{identifier}}'
+      scope: variable.parameter.kotlin
+    - match: ','
+      scope: punctuation.separator.sequence.kotlin
+    - match: ':'
+      scope: punctuation.separator.type.kotlin
+      push: [type-expression, skip-to-token]
 
   punctuation:
     - match: '\{'
@@ -1040,5 +1248,7 @@ contexts:
       scope: punctuation.accessor.dot.kotlin
 
   identifiers:
+    - match: '\bit\b'
+      scope: variable.language.kotlin
     - match: '{{identifier}}'
       scope: variable.other.readwrite.kotlin
